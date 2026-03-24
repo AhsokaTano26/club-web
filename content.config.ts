@@ -12,6 +12,15 @@ export default defineContentConfig({
                 type: z.enum(['anniversary', 'exhibition', 'official']), // 限制类型
                 title: z.string()
             })
+        }),
+        timeline: defineCollection({
+            source: 'timeline/*.md', // 确保你的文件夹叫 content/timeline
+            type: 'page',
+            schema: z.object({
+                date: z.string(),
+                title: z.string(),
+                description: z.string()
+            })
         })
     }
 })
