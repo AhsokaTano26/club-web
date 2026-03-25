@@ -20,15 +20,14 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # 必须设为 0 以获取完整历史，否则无法进行增量检测
+          fetch-depth: 0
 
       - name: Lint Code Base
         uses: super-linter/super-linter@v7
         env:
-          VALIDATE_ALL_CODEBASE: false # 仅检测修改的文件（非常重要，否则初次运行会报几千个错）
+          VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # 针对你的 Nuxt 项目开启特定检查
           VALIDATE_TYPESCRIPT_ESLINT: true
           VALIDATE_VUE: true
           VALIDATE_CSS: true

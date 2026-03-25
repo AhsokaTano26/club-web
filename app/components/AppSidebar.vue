@@ -62,6 +62,12 @@ const nav = [
       { name: 'Bilibili', path: 'https://bilibili.com', external: true },
       { name: 'GitHub Repo', path: 'https://github.com', external: true }
     ]
-  }
+  },
+  {
+    title: '致谢',
+    links: [
+      { name: '致谢', path: '/thanks' },
+    ]
+  },
 ];
 </script>

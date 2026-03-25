@@ -72,7 +72,7 @@ a {
   text-decoration: none;
   color: inherit;
 }
-/* 自定义呼吸灯阴影动画（可选，增加细腻感） */
+/* 自定义呼吸灯阴影动画*/
 @keyframes pulse-shadow {
   0%, 100% { box-shadow: 0 0 0 0 rgba(234, 88, 12, 0.4); }
   50% { box-shadow: 0 0 0 8px rgba(234, 88, 12, 0); }

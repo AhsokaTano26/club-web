@@ -52,7 +52,7 @@ if (process.client) {
     if (keys.endsWith('th')) {
       showEgg.value = true;
       keys = '';
-      // 5秒后自动关闭（可选）
+      // 5秒后自动关闭
       setTimeout(() => { showEgg.value = false }, 5000);
     }
 
@@ -79,7 +79,7 @@ useHead({
   opacity: 0;
 }
 
-/* 页面切换动画 (Nuxt 默认支持) */
+/* 页面切换动画 */
 .page-enter-active, .page-leave-active {
   transition: all 0.3s;
 }

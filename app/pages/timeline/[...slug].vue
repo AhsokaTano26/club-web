@@ -61,23 +61,21 @@
 <script setup>
 const route = useRoute()
 
-// 类型颜色映射（与日历保持一致）
+// 类型颜色映射
 const typeColors = {
   anniversary: 'bg-purple-400',
   exhibition: 'bg-green-400',
   official: 'bg-blue-400'
 }
 
-// 核心：使用 useAsyncData 抓取当前路由对应的 Content 数据
-// key 加上 route.path 确保路由切换时数据刷新
 const { data: page } = await useAsyncData(`content-${route.path}`, () => {
   return queryCollection('timeline').path(route.path).first()
 })
 
 // 设置页面 SEO 信息
 useSeoMeta({
-  title: () => page.value?.title ? `${page.value.title} - 社团日历` : '正在加载...',
-  description: () => page.value?.description || '查看社团活动详情'
+  title: () => page.value?.title ? `${page.value.title} - 开发日志` : '正在加载...',
+  description: () => page.value?.description || '查看开发日志详情'
 })
 </script>
 

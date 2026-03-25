@@ -1,13 +1,10 @@
 export default defineNuxtConfig({
   compatibilityDate: '2026-03-24',
-  modules: [
-    '@nuxtjs/tailwindcss',
-    '@nuxt/content'
-  ],
+  modules: ['@nuxtjs/tailwindcss', '@nuxt/content', '@nuxt/icon'],
   devtools: { enabled: false },
   app: {
     head: {
-      title: '同好会官网',
+      title: '跨世界同好会官网',
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' }

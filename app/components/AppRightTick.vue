@@ -29,8 +29,10 @@
       </div>
 
       <div v-if="!upcomingPosts?.length" class="py-12 text-center">
-        <div class="text-2xl mb-2">📅</div>
-        <p class="text-[10px] text-gray-300 uppercase tracking-widest">暂无计划行程</p>
+        <div class="text-4xl mb-2">
+          <Icon name="guidance:calendar" class="text-orange-500" />
+        </div>
+        <p class="text-[15px] text-gray-300 uppercase tracking-widest">暂无计划行程</p>
       </div>
     </div>
 
