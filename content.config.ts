@@ -1,21 +1,25 @@
-// content.config.ts
 import { defineContentConfig, defineCollection, z } from '@nuxt/content'
 
 export default defineContentConfig({
     collections: {
         blog: defineCollection({
-            source: 'blog/*.md',
             type: 'page',
-            // 定义 Schema 确保类型安全
+            source: {
+                repository: 'https://github.com/AhsokaTano26/club-web-content',
+                include: 'blog/**',
+            },
             schema: z.object({
-                date: z.string(), // 格式如 2026-03-24
-                type: z.enum(['anniversary', 'exhibition', 'official']), // 限制类型
+                date: z.string(),
+                type: z.enum(['anniversary', 'exhibition', 'official']),
                 title: z.string()
             })
         }),
         timeline: defineCollection({
-            source: 'timeline/*.md', // 确保你的文件夹叫 content/timeline
             type: 'page',
+            source: {
+                repository: 'https://github.com/AhsokaTano26/club-web-content',
+                include: 'timeline/**',
+            },
             schema: z.object({
                 date: z.string(),
                 title: z.string(),

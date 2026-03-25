@@ -19,19 +19,6 @@ export default defineNuxtConfig({
     }
   },
   content: {
-    // --- 新增远程数据源配置 ---
-    sources: {
-      github: {
-        driver: 'github',
-        prefix: '/', // 挂载到根路径，保持 queryContent('/') 逻辑不变
-        repo: 'AhsokaTano26/club-web-content',
-        branch: 'main',
-        dir: '', // 文档在仓库根目录
-        // 建议在环境变量中配置 GITHUB_TOKEN 以提高 API 限额
-        // token: process.env.GITHUB_TOKEN
-      }
-    },
-    // --- 保留原有高亮配置 ---
     highlight: {
       theme: {
         default: 'github-light',
