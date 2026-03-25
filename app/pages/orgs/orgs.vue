@@ -50,7 +50,7 @@
           <div class="mt-6 pt-4 border-t border-gray-50 flex justify-between items-center">
             <div class="flex items-center gap-2">
               <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-              <span class="text-[9px] font-black text-gray-400 uppercase tracking-widest italic">Status: Verified</span>
+              <span class="text-[9px] font-black text-gray-400 uppercase tracking-widest italic">Status: {{ org.meta.status }}</span>
             </div>
             <NuxtLink :to="org.path" class="text-xs font-black text-gray-900 group-hover:text-blue-500 flex items-center gap-1 transition-all">
               ENTRY ARCHIVE <Icon name="lucide:chevron-right" class="w-4 h-4" />

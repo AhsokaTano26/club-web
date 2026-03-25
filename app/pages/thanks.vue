@@ -180,7 +180,7 @@ const contributors = [
       {
         name: 'SonarCloud',
         desc: '深度的代码质量分析与逻辑审计助手。',
-        icon: 'material-icon-theme:sonarcloud',
+        icon: 'simple-icons:sonarcloud',
         link: 'https://sonarcloud.io'
       },
       {
