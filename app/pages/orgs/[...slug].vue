@@ -8,13 +8,14 @@
 
       <header class="flex flex-col md:flex-row gap-8 items-start mb-16">
         <div class="w-32 h-32 bg-gray-50 flex items-center justify-center border border-gray-100 rounded-sm shadow-inner overflow-hidden">
-          <Icon :name="page.logo || 'lucide:users'" class="w-16 h-16 transition-colors duration-700" :style="{ color: theme.primaryColor }" />
+          <Icon :name="page.meta.theme.logo || 'lucide:users'" class="w-16 h-16 transition-colors duration-700" :style="{ color: theme.primaryColor }" />
         </div>
 
         <div class="flex-1 space-y-4">
           <div class="flex items-center gap-3">
             <h1 class="text-4xl font-black tracking-tighter text-gray-900">{{ page.title }}</h1>
-            <div v-if="page.github" class="px-2 py-1 bg-gray-900 text-white text-[9px] font-black rounded-sm tracking-widest uppercase">Verified Org</div>
+            <div v-if="page.meta.status" class="px-2 py-1 bg-green-400 text-white text-[9px] font-black rounded-sm tracking-widest uppercase">
+              {{ page.meta.status }} Org</div>
           </div>
 
           <p class="text-lg text-gray-500 italic leading-relaxed border-l-4 pl-6 transition-all duration-700" :style="{ borderColor: theme.primaryColor }">
@@ -23,10 +24,10 @@
 
           <div class="flex flex-wrap gap-4 pt-2">
             <div class="flex items-center gap-2 text-xs font-mono text-gray-400">
-              <Icon name="lucide:calendar" class="w-3.5 h-3.5" /> EST. {{ page.founded }}
+              <Icon name="lucide:calendar" class="w-3.5 h-3.5" /> EST. {{ page.meta.founded }}
             </div>
             <div class="flex items-center gap-2 text-xs font-mono text-gray-400">
-              <Icon name="lucide:user-check" class="w-3.5 h-3.5" /> LEADER: {{ page.leader }}
+              <Icon name="lucide:user-check" class="w-3.5 h-3.5" /> LEADER: {{ page.meta.leader }}
             </div>
           </div>
         </div>
@@ -39,10 +40,10 @@
       </article>
 
       <footer class="mt-20 pt-10 border-t border-gray-100 flex justify-between items-center">
-        <div class="text-[10px] font-mono text-gray-300 uppercase">Archive ID: {{ page.id || 'N/A' }}</div>
+        <div class="text-[10px] font-mono text-black uppercase">Archive ID: {{ page.meta.ID || 'N/A' }}</div>
         <div class="flex gap-4">
-          <a v-if="page.website"
-             :href="page.website"
+          <a v-if="page.meta.website"
+             :href="page.meta.website"
              target="_blank"
              class="px-6 py-2 text-[10px] font-black uppercase tracking-widest transition-all duration-300 text-white shadow-lg hover:scale-105 active:scale-95"
              :style="{ backgroundColor: theme.primaryColor }"
@@ -79,7 +80,7 @@ const { data: page } = await useAsyncData(`org-detail-${route.path.replace(/\/$/
   const cleanPath = route.path.replace(/\/$/, '')
   return queryCollection('orgs').path(cleanPath).first()
 })
-
+// console.log('📦 Original Page Data:', JSON.parse(JSON.stringify(page.value)))
 // 2. 修正后的主题应用逻辑
 const applyTheme = (data) => {
   if (data?.meta?.theme) {
