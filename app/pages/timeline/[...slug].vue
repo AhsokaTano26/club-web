@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-white">
     <nav class="border-b border-gray-100 py-4 px-6 mb-8">
       <div class="max-w-3xl mx-auto flex justify-between items-center">
-        <NuxtLink to="/" class="text-sm font-bold text-gray-400 hover:text-orange-500 transition-colors flex items-center gap-2">
+        <NuxtLink to="/" class="text-sm font-bold text-gray-400 hover:text-blue-500 transition-colors flex items-center gap-2">
           ← 返回日历
         </NuxtLink>
         <span class="text-[10px] font-black text-gray-200 uppercase tracking-[0.2em]">Project Club Archive</span>
@@ -28,16 +28,16 @@
           </p>
         </header>
 
-        <article class="prose prose-slate prose-orange max-w-none
+        <article class="prose prose-slate prose-blue max-w-none
                         prose-headings:font-black prose-headings:tracking-tight
-                        prose-a:text-orange-500 prose-img:rounded-sm prose-img:shadow-md">
+                        prose-a:text-blue-500 prose-img:rounded-sm prose-img:shadow-md">
           <ContentRenderer :value="page" />
         </article>
 
         <footer class="mt-20 pt-10 border-t border-gray-100 flex flex-col items-center gap-6">
           <div class="text-center">
             <p class="text-xs text-gray-300 font-bold uppercase tracking-widest mb-4">End of Document</p>
-            <NuxtLink to="/" class="inline-block px-8 py-3 bg-gray-900 text-white text-xs font-bold rounded-full hover:bg-orange-500 transition-colors shadow-lg shadow-gray-200">
+            <NuxtLink to="/" class="inline-block px-8 py-3 bg-gray-900 text-white text-xs font-bold rounded-full hover:bg-blue-500 transition-colors shadow-lg shadow-gray-200">
               回到日历视图
             </NuxtLink>
           </div>
@@ -50,7 +50,7 @@
         </div>
         <h2 class="text-2xl font-black text-gray-800 mb-2">内容未找到</h2>
         <p class="text-gray-400 mb-8 font-medium">路径：<code class="bg-gray-100 px-1 rounded">{{ $route.path }}</code></p>
-        <NuxtLink to="/" class="text-sm font-bold text-orange-500 underline decoration-2 underline-offset-4">
+        <NuxtLink to="/" class="text-sm font-bold text-blue-500 underline decoration-2 underline-offset-4">
           返回基地
         </NuxtLink>
       </div>
@@ -85,6 +85,6 @@ useSeoMeta({
   @apply bg-gray-900 text-gray-100 rounded-sm border border-gray-800;
 }
 .prose blockquote {
-  @apply border-orange-500 bg-orange-50/30 py-1 font-medium;
+  @apply border-blue-500 bg-blue-50/30 py-1 font-medium;
 }
 </style>

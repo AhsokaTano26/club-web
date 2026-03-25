@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-gray-50/20 flex flex-col font-sans">
     <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 py-3 px-6">
       <div class="max-w-4xl mx-auto flex justify-between items-center">
-        <NuxtLink to="/" class="group text-[10px] font-black text-gray-400 hover:text-orange-500 transition-all flex items-center gap-1.5 uppercase tracking-widest">
+        <NuxtLink to="/" class="group text-[10px] font-black text-gray-400 hover:text-blue-500 transition-all flex items-center gap-1.5 uppercase tracking-widest">
           <Icon name="lucide:arrow-left" class="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
           Back to Calendar
         </NuxtLink>
@@ -32,7 +32,7 @@
           </h1>
 
           <div v-if="page.description" class="relative group">
-            <div class="absolute -left-4 top-0 bottom-0 w-1 bg-orange-500 rounded-full opacity-20 group-hover:opacity-100 transition-opacity"></div>
+            <div class="absolute -left-4 top-0 bottom-0 w-1 bg-blue-500 rounded-full opacity-20 group-hover:opacity-100 transition-opacity"></div>
             <p class="text-lg text-gray-500 leading-relaxed font-medium italic">
               {{ page.description }}
             </p>
@@ -45,11 +45,11 @@
           </div>
         </header>
 
-        <article class="prose prose-slate prose-orange max-w-none
+        <article class="prose prose-slate prose-blue max-w-none
                         prose-headings:font-black prose-headings:tracking-tighter
                         prose-p:text-gray-600 prose-p:leading-extra-relaxed
                         prose-strong:text-gray-900 prose-strong:font-black
-                        prose-a:no-underline prose-a:border-b-2 prose-a:border-orange-100 hover:prose-a:border-orange-500 prose-a:transition-all
+                        prose-a:no-underline prose-a:border-b-2 prose-a:border-blue-100 hover:prose-a:border-blue-500 prose-a:transition-all
                         prose-img:rounded-sm prose-img:border prose-img:border-gray-100 prose-img:shadow-xl">
           <ContentRenderer :value="page" />
         </article>
@@ -61,7 +61,7 @@
           </div>
           <br>
 
-          <NuxtLink to="/" class="inline-flex items-center gap-2 px-8 py-3 bg-gray-900 text-white text-xs font-black rounded-sm hover:bg-orange-500 transition-all shadow-md active:scale-95">
+          <NuxtLink to="/" class="inline-flex items-center gap-2 px-8 py-3 bg-gray-900 text-white text-xs font-black rounded-sm hover:bg-blue-500 transition-all shadow-md active:scale-95">
             <Icon name="lucide:layout-grid" class="w-4 h-4" />
             返回日历视图
           </NuxtLink>
@@ -71,9 +71,9 @@
       <div v-else class="py-32 text-center space-y-6">
         <Icon name="lucide:search-x" class="w-20 h-20 text-gray-100 mx-auto" />
         <h2 class="text-2xl font-black text-gray-800 uppercase tracking-tighter">404: Archive Not Found</h2>
-        <NuxtLink to="/" class="inline-flex items-center gap-2 text-sm font-black text-orange-500 group">
+        <NuxtLink to="/" class="inline-flex items-center gap-2 text-sm font-black text-blue-500 group">
           <Icon name="lucide:home" class="w-4 h-4" />
-          <span class="border-b-2 border-orange-100 group-hover:border-orange-500 transition-all">返回基地</span>
+          <span class="border-b-2 border-blue-100 group-hover:border-blue-500 transition-all">返回基地</span>
         </NuxtLink>
       </div>
     </main>
@@ -115,19 +115,19 @@ useSeoMeta({
 }
 .prose h2::before {
   content: "#";
-  @apply text-orange-500 font-mono text-xl;
+  @apply text-blue-500 font-mono text-xl;
 }
 .prose pre {
   @apply bg-[#1a1b26] p-6 rounded-sm border border-gray-800 shadow-inner my-8 !important;
 }
 .prose blockquote {
-  @apply border-l-4 border-orange-400 bg-orange-50/20 px-6 py-1 font-medium rounded-r-sm not-italic;
+  @apply border-l-4 border-blue-400 bg-blue-50/20 px-6 py-1 font-medium rounded-r-sm not-italic;
 }
 .prose ul li {
   @apply flex items-start gap-2;
 }
 .prose ul li::before {
   content: "→";
-  @apply text-orange-400 font-black mr-2;
+  @apply text-blue-400 font-black mr-2;
 }
 </style>

@@ -24,14 +24,14 @@
       <div class="grid grid-cols-7 border-l border-t border-gray-50">
         <div v-for="(day, i) in days" :key="i"
              @click="handleDateClick(day)"
-             class="h-24 border-r border-b border-gray-50 p-2 hover:bg-orange-50/30 transition-colors group relative cursor-pointer"
+             class="h-24 border-r border-b border-gray-50 p-2 hover:bg-blue-50/30 transition-colors group relative cursor-pointer"
              :class="[
                day.isCurrent ? 'bg-white' : 'bg-gray-50/50',
-               selectedDate?.dateStr === day.dateStr ? 'ring-2 ring-orange-500 ring-inset z-10' : ''
+               selectedDate?.dateStr === day.dateStr ? 'ring-2 ring-blue-500 ring-inset z-10' : ''
              ]">
 
           <div class="flex justify-between items-start">
-            <span class="text-lg font-mono leading-none" :class="day.isToday ? 'text-orange-500 font-bold' : 'text-gray-700'">
+            <span class="text-lg font-mono leading-none" :class="day.isToday ? 'text-blue-500 font-bold' : 'text-gray-700'">
               {{ day.d }}
             </span>
             <span class="text-[10px] text-gray-300">{{ day.lunar }}</span>
@@ -61,7 +61,7 @@
           <h4 class="text-xs font-black text-gray-300 uppercase tracking-[0.2em]">
             {{ selectedDate.dateStr }} · Timeline
           </h4>
-          <span class="text-[10px] bg-orange-100 text-orange-600 px-2 py-0.5 rounded-full font-bold">
+          <span class="text-[10px] bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full font-bold">
             {{ selectedDate.events.length }} 条记录
           </span>
         </div>
@@ -76,7 +76,7 @@
               <div class="text-[10px] font-black uppercase tracking-tighter" :class="textColors[ev.type]">
                 {{ ev.type }}
               </div>
-              <div class="text-gray-800 font-bold group-hover:text-orange-500 transition-colors">
+              <div class="text-gray-800 font-bold group-hover:text-blue-500 transition-colors">
                 {{ ev.title }}
               </div>
               <div class="text-xs text-gray-400 line-clamp-1">点击查看详情回顾 →</div>
@@ -114,7 +114,7 @@ const textColors = {
 };
 
 // 1. 从 Nuxt Content v3 抓取数据
-// 注意：'blog' 必须对应你 content.config.ts 里的 collection 名称
+
 const { data: posts } = await useAsyncData('calendar-posts', () =>
     queryCollection('blog').all()
 );

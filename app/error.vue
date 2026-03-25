@@ -11,7 +11,7 @@
         <div class="absolute inset-0 flex items-center justify-center pt-8">
           <div class="px-6 py-2 bg-white/40 backdrop-blur-md border border-white/20 shadow-xl rounded-lg transform -rotate-2">
             <p class="text-2xl md:text-3xl font-bold text-gray-800 tracking-tighter">
-              该页面已进入<span class="text-orange-500 underline decoration-wavy decoration-orange-200 underline-offset-8">“幻想乡”</span>
+              该页面已进入<span class="text-blue-500 underline decoration-wavy decoration-blue-200 underline-offset-8">“幻想乡”</span>
             </p>
           </div>
         </div>
@@ -28,7 +28,7 @@
         <div class="inline-flex flex-col items-center gap-3">
           <a
               href="mailto:public@tano.asia"
-              class="text-orange-500 font-mono font-bold hover:underline decoration-2 underline-offset-4 transition-all"
+              class="text-blue-500 font-mono font-bold hover:underline decoration-2 underline-offset-4 transition-all"
           >
             public@tano.asia
           </a>
@@ -48,12 +48,12 @@
             class="group relative w-full sm:w-auto px-10 py-4 bg-gray-900 text-white font-bold rounded-xl overflow-hidden transition-all hover:ring-4 hover:ring-gray-900/10 active:scale-95"
         >
           <span class="relative z-10">返回首页</span>
-          <div class="absolute inset-0 bg-orange-500 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+          <div class="absolute inset-0 bg-blue-500 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
         </button>
 
         <NuxtLink
             to="/blog/blog"
-            class="w-full sm:w-auto px-10 py-4 bg-white border-2 border-gray-100 text-gray-600 font-bold rounded-xl hover:border-orange-200 hover:text-orange-500 transition-all shadow-sm"
+            class="w-full sm:w-auto px-10 py-4 bg-white border-2 border-gray-100 text-gray-600 font-bold rounded-xl hover:border-blue-200 hover:text-blue-500 transition-all shadow-sm"
         >
           查看最新日志
         </NuxtLink>
