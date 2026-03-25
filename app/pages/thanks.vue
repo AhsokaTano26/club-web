@@ -19,7 +19,7 @@
           </h1>
           <p class="text-sm text-gray-400 font-medium leading-relaxed max-w-2xl">
             本站 <span class="text-gray-700 font-bold underline decoration-gray-200">club-web</span>
-            采用 Nuxt 4 + D1 架构开发。感激每一位在代码、内容与基础设施上提供支持的伙伴。
+            采用 Nuxt 4 架构开发。感激每一位在代码、内容与基础设施上提供支持的伙伴。
           </p>
         </div>
 
@@ -46,9 +46,9 @@
                   <Icon
                       :name="item.icon || 'lucide:box'"
                       class="w-4 h-4
-                       grayscale opacity-100
+                       opacity-100
                        group-hover/item:grayscale-0 group-hover/item:opacity-100
-                       transition-all duration-300 ease-in-out"
+                       transition-all duration-300 ease-in-out text-orange-500"
                   />
 
                   <span class="font-bold text-gray-800 text-sm">{{ item.name }}</span>
@@ -103,6 +103,29 @@
             hover-color="group-hover/item:text-orange-500"
         />
       </div>
+        <div class="mt-8 bg-gray-900 rounded-sm p-6 text-white group overflow-hidden relative">
+          <Icon name="lucide:scale" class="absolute -right-0 -bottom-5 w-24 h-24 opacity-5 -rotate-12 text-white" />
+
+          <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div class="space-y-1">
+              <div class="flex items-center gap-2">
+                <Icon name="lucide:scale" class="w-4 h-4 text-orange-400" />
+                <span class="text-xs font-black uppercase tracking-[0.2em]">Open Source Notice</span>
+              </div>
+              <h4 class="text-lg font-bold tracking-tight">基于 MIT 协议开放</h4>
+              <p class="text-[11px] text-gray-400 leading-relaxed max-w-xl">
+                本站源代码采用 MIT 许可证授权。这意味着你可以自由地使用、复制、修改和分发本站的代码，
+                唯请保留原作者版权声明及许可声明。
+              </p>
+            </div>
+
+            <a href="https://github.com/AhsokaTano26/club-web/blob/main/LICENSE" target="_blank"
+               class="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-white text-gray-900 text-[10px] font-black uppercase tracking-widest hover:bg-orange-500 hover:text-white transition-all active:scale-95">
+              View Source
+              <Icon name="line-md:github" class="w-3.5 h-3.5" />
+            </a>
+          </div>
+        </div>
     </div>
 </template>
 
@@ -138,7 +161,7 @@ const contributors = [
       {
         name: 'Nuxt Content v3',
         desc: '基于 Git 的远程内容驱动，实现了代码与内容的完美分离。',
-        icon: 'material-icon-theme:folder-nuxt',
+        icon: 'line-md:folder',
         link: 'https://content.nuxt.com'
       },
       {

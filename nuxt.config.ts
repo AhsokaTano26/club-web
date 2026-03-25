@@ -1,7 +1,13 @@
 export default defineNuxtConfig({
   compatibilityDate: '2026-03-24',
-  modules: ['@nuxtjs/tailwindcss', '@nuxt/content', '@nuxt/icon'],
+  modules: [
+      '@nuxtjs/tailwindcss',
+      '@nuxt/content',
+      '@nuxt/icon'
+  ],
+
   devtools: { enabled: false },
+
   app: {
     head: {
       title: '跨世界同好会官网',
@@ -13,7 +19,12 @@ export default defineNuxtConfig({
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
         { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
       ],
-    }
+    },
+    pageTransition: {
+          name: 'page',
+          mode: 'out-in'
+    },
+    loadingIndicator: false
   },
   content: {
     highlight: {
