@@ -19,8 +19,9 @@
 
     <div class="flex flex-col lg:flex-row min-h-screen">
       <AppSidebar
-          class="w-full lg:w-64 lg:fixed lg:h-screen border-r border-gray-100 backdrop-blur-md z-40 transition-all duration-700"
-          :style="{ backgroundColor: `rgba(255, 255, 255, ${themeConfig.sidebarOpacity})` }"
+          class="w-full lg:w-64 lg:fixed lg:h-screen border-r border-gray-100 z-40 transition-all duration-700"
+          :class="{ '!bg-white !opacity-100': isOpen }"
+          :style="!isOpen ? { backgroundColor: `rgba(255, 255, 255, ${themeConfig.sidebarOpacity})` } : { backgroundColor: '#ffffff' }"
       />
 
       <div class="flex-1 flex flex-col lg:flex-row lg:ml-64">
@@ -73,7 +74,6 @@ const DEFAULT_THEME = {
   mainOpacity: 0.9,
   rightTickOpacity: 0.85
 }
-
 // --- 2. 使用 useState 创建全局响应式主题状态 ---
 // 这允许子页面直接修改此状态，无需 inject
 const themeConfig = useState('themeConfig', () => ({ ...DEFAULT_THEME }))
