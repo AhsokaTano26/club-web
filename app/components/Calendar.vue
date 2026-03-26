@@ -49,6 +49,13 @@
           </div>
         </div>
       </div>
+      <div class="p-3 bg-gray-50/10 flex justify-between items-center ">
+        <div class="flex gap-4 text-[10px] font-bold text-gray-50 uppercase tracking-widest">
+          <span class="flex items-center gap-1.5"><i class="w-2 h-2 rounded-full bg-purple-400"></i> 纪念日</span>
+          <span class="flex items-center gap-1.5"><i class="w-2 h-2 rounded-full bg-green-400"></i> 展会活动</span>
+          <span class="flex items-center gap-1.5"><i class="w-2 h-2 rounded-full bg-blue-400"></i> 官方发布</span>
+        </div>
+      </div>
     </div>
 
     <transition name="slide-up">

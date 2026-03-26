@@ -14,7 +14,7 @@
       <div v-for="(item, i) in items" :key="item.name" class="group/item">
         <div class="text-[9px] font-mono text-gray-300 mb-1.5 flex justify-between items-center">
           <span>#0{{i+1}} · {{ label }}</span>
-          <Icon v-if="item.link" name="lucide:link-2" class="w-2.5 h-2.5 opacity-0 group-hover/item:opacity-100 transition-opacity text-gray-400" />
+          <Icon v-if="item.link" name="lucide:link-2" class="w-2.5 h-2.5 opacity-0 group-hover/item:opacity-100 transition-opacity text-gray-200" />
         </div>
 
         <component
@@ -33,7 +33,7 @@
               class="w-4 h-4 grayscale opacity-60 group-hover/item:grayscale-0 group-hover/item:opacity-100 transition-all duration-300"
           />
 
-          <span class="leading-tight">{{ item.name }}</span>
+          <span class="leading-tight text-gray-100 text-sm">{{ item.name }}</span>
 
           <Icon v-if="item.link" name="lucide:arrow-up-right" class="w-3 h-3 opacity-20 group-hover/item:opacity-100 group-hover/item:translate-x-0.5 group-hover/item:-translate-y-0.5 transition-all" />
         </component>

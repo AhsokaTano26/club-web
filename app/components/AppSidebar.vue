@@ -76,45 +76,37 @@ const nav = [
         path: '/'
       },
       {
+        name: '官方公告',
+        path: '/notice/notice'
+      },
+      {
         name: '官方博客',
         path: '/blog/blog'
       },
       {
-        name: '进度时间轴',
+        name: '官方进度',
         path: '/timeline/timeline'
       },
-      {
-        name: '项目进度',
-        path: '/projects/projects'
-      }
     ]
   },
   {
-    title: '社群动态',
+    title: '联协印象',
     links: [
+      {
+        name: '关于联协',
+        path: '/about'
+      },
       {
         name: '联协组织',
         path: '/orgs/orgs'
-      }
-    ]
-  },
-  {
-    title: '外部链接',
-    links: [
-      {
-        name: '官方微博',
-        path: 'https://weibo.com',
-        external: true
       },
       {
-        name: 'Bilibili',
-        path: 'https://bilibili.com',
-        external: true
+        name: '项目公招',
+        path: '/projects/projects'
       },
       {
-        name: 'GitHub Repo',
-        path: 'https://github.com/AhsokaTano26/club-web',
-        external: true
+        name: '联协映像',
+        path: '/activities/activities'
       }
     ]
   },

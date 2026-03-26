@@ -3,7 +3,7 @@
     <header class="mb-12">
       <h2 class="text-3xl font-black text-gray-800 tracking-tight flex items-center gap-3">
         <span class="w-2 h-8 bg-blue-400 rounded-full"></span>
-        所有博文 <span class="text-sm font-normal text-gray-400">({{ allBlogs?.length || 0 }})</span>
+        所有博文 <span class="text-sm font-normal text-gray-50">({{ allBlogs?.length || 0 }})</span>
       </h2>
       <p class="text-gray-400 mt-2">记录同好会的点滴与未来计划</p>
     </header>
