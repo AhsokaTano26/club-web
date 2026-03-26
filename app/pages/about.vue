@@ -6,7 +6,7 @@
     </div>
 
     <div class="max-w-3xl mx-auto space-y-6">
-      <div class="bg-gray-900/40 backdrop-blur-xl border border-white/10 rounded-2xl p-6 shadow-xl flex flex-wrap gap-4 items-center justify-between">
+      <div class="bg-white/20 backdrop-blur-xl border border-white/20 rounded-2xl p-6 shadow-xl flex flex-wrap gap-4 items-center justify-between">
         <div class="space-y-1">
           <span class="text-[10px] font-black uppercase tracking-widest text-blue-400">Document Meta</span>
           <div class="flex items-center gap-4">
@@ -24,7 +24,7 @@
         <Icon name="lucide:shield-check" class="w-10 h-10 text-white/10" />
       </div>
 
-      <article class="bg-gray-900/30 backdrop-blur-3xl border border-white/10 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
+      <article class="bg-white/10 backdrop-blur-xl border border-white/10 rounded-2xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
 
         <header class="relative z-10 mb-10 border-b border-white/10 pb-8">
           <h1 class="text-2xl md:text-4xl font-black text-white tracking-tighter leading-tight">
@@ -81,7 +81,7 @@
       </article>
 
       <div class="flex justify-center pt-8 mb-12">
-        <NuxtLink to="/archives" class="group flex items-center gap-2 px-6 py-2 bg-gray-800/40 backdrop-blur-md border border-white/10 rounded-full text-xs font-bold text-gray-300 hover:text-white hover:bg-gray-700/60 transition-all shadow-md">
+        <NuxtLink to="/" class="group flex items-center gap-2 px-6 py-2 bg-gray-800/40 backdrop-blur-md border border-white/10 rounded-full text-xs font-bold text-gray-300 hover:text-white hover:bg-gray-700/60 transition-all shadow-md">
           <Icon name="lucide:chevron-left" class="w-4 h-4 group-hover:-translate-x-1 transition-transform text-blue-400" />
           返回归档中心
         </NuxtLink>
