@@ -62,10 +62,11 @@
 </template>
 
 <script setup>
-const isOpen = ref(false)
-// 监听路由变化自动关闭菜单
+// AppSidebar.vue 的 script setup 中
+const isOpen = useState('sidebar-open') // 自动同步 app.vue 中的值
+
 const route = useRoute()
-watch(() => route.path, () => { isOpen.value = false })
+// 移除这里的 watch，因为 app.vue 已经监听了，避免重复逻辑
 
 const nav = [
   {

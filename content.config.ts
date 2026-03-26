@@ -11,7 +11,8 @@ export default defineContentConfig({
             schema: z.object({
                 date: z.string(),
                 type: z.enum(['anniversary', 'exhibition', 'official']),
-                title: z.string()
+                title: z.string(),
+                author: z.string(),
             })
         }),
         timeline: defineCollection({
@@ -68,6 +69,33 @@ export default defineContentConfig({
                     mainOpacity: z.number().optional(),
                     rightTickOpacity: z.number().optional()
                 })
+            })
+        }),
+        notice: defineCollection({
+            type: 'page',
+            source: {
+                repository: 'https://github.com/AhsokaTano26/club-web-content',
+                include: 'notice/**',
+            },
+            schema: z.object({
+                title: z.string(),
+                description: z.string(),
+                type: z.string(),
+                date: z.string(),
+                author: z.string(),
+            })
+        }),
+        activities: defineCollection({
+            type: 'page',
+            source: {
+                repository: 'https://github.com/AhsokaTano26/club-web-content',
+                include: 'activities/**',
+            },
+            schema: z.object({
+                date: z.string(),
+                type: z.enum(['anniversary', 'exhibition', 'official']),
+                title: z.string(),
+                author: z.string(),
             })
         }),
     }

@@ -17,6 +17,16 @@
       </div>
     </Transition>
 
+    <div class="lg:hidden fixed top-0 left-0 right-0 h-16 flex items-center justify-end px-4 z-[80] bg-transparent">
+      <button
+          @click="isOpen = !isOpen"
+          class="p-3 text-gray-600 hover:text-blue-500 transition-colors bg-white/20 backdrop-blur-sm rounded-full shadow-sm"
+      >
+        <Icon v-if="!isOpen" name="lucide:menu" class="w-6 h-6" />
+        <Icon v-else name="lucide:x" class="w-6 h-6" />
+      </button>
+    </div>
+
     <div class="flex flex-col lg:flex-row min-h-screen">
       <AppSidebar
           class="w-full lg:w-64 lg:fixed lg:h-screen  z-40 transition-all duration-700"
@@ -67,8 +77,10 @@
 </template>
 
 <script setup>
-const isOpen = ref(false)
-// 监听路由变化自动关闭菜单
+// app.vue 的 script setup 中
+const isOpen = useState('sidebar-open', () => false)
+
+// 路由变化时关闭
 const route = useRoute()
 watch(() => route.path, () => { isOpen.value = false })
 // --- 1. 定义默认配置常量 ---
@@ -131,5 +143,15 @@ html {
 /* 定义 CSS 变量方便在其他组件调用 */
 :root {
   --brand-primary: var(--theme-primary);
+}
+/* app.vue */
+.page-enter-active,
+.page-leave-active {
+  transition: all 0.4s;
+}
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+  filter: blur(1rem);
 }
 </style>
