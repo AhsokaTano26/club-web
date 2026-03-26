@@ -6,7 +6,7 @@
         <h1 class="text-2xl font-black uppercase tracking-tighter">Project Archives</h1>
       </div>
       <p class="text-sm text-gray-400 font-medium max-w-2xl">
-        实时监控社团内部项目的生命周期。从概念孵化（TODO）到最终归档（COMPLETED）。
+        实时监控组织内部项目的生命周期。从概念孵化（TODO）到最终归档（COMPLETED）。
       </p>
     </header>
 
@@ -73,6 +73,12 @@ if (error.value) {
 const projectGroups = computed(() => {
   const all = projects.value || []
   return [
+    {
+      id: 'need help',
+      label: 'Need Help / 需要帮助',
+      color: 'bg-red-800',
+      items: all.filter(p => p.status === 'need_help')
+    },
     {
       id: 'ongoing',
       label: 'Executing / 正在进行',

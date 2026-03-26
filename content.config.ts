@@ -48,10 +48,11 @@ export default defineContentConfig({
                 include: 'orgs/**',
             },
             schema: z.object({
-                ID: z.string(),
+                orgs_id: z.string(),
                 status: z.string(),
                 date: z.string(),
                 title: z.string(),
+                joined_at: z.string(),
                 description: z.string(),
                 founded: z.string(),
                 leader: z.string(),
@@ -59,7 +60,7 @@ export default defineContentConfig({
                 website: z.string(),
                 github: z.string(),
                 theme: z.object({
-                    logo: z.string(),
+                    logo: z.string().optional(),
                     primaryColor: z.string().optional(),
                     bgImage: z.string().optional(),
                     bgOverlayOpacity: z.number().optional(),
@@ -67,7 +68,7 @@ export default defineContentConfig({
                     mainOpacity: z.number().optional(),
                     rightTickOpacity: z.number().optional()
                 })
-            }).optional()
+            })
         }),
     }
 })

@@ -96,11 +96,11 @@
             label="CREDIT"
             icon="line-md:star"
             :items="specialThanks"
-            header-bg="bg-blue-50/50"
-            title-color="text-blue-600"
-            icon-color="text-blue-500"
-            dot-color="bg-blue-400"
-            hover-color="group-hover/item:text-blue-500"
+            header-bg="bg-orange-50/50"
+            title-color="text-orange-600"
+            icon-color="text-orange-500"
+            dot-color="bg-orange-400"
+            hover-color="group-hover/item:text-orange-500"
         />
       </div>
         <div class="mt-8 bg-gray-900 rounded-sm p-6 text-white group overflow-hidden relative">
@@ -109,7 +109,7 @@
           <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div class="space-y-1">
               <div class="flex items-center gap-2">
-                <Icon name="line-md:hazard-lights-loop" class="w-4 h-4 text-blue-400" />
+                <Icon name="line-md:hazard-lights-loop" class="w-4 h-4 text-orange-400" />
                 <span class="text-xs font-black uppercase tracking-[0.2em]">Open Source Notice</span>
               </div>
               <h4 class="text-lg font-bold tracking-tight">基于 MIT 协议开放</h4>

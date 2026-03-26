@@ -43,6 +43,6 @@ const { data: allBlogs } = await useAsyncData('all-blogs', () =>
         .order('date', 'DESC') // 按时间倒序
         .all()
 )
-
+// console.log('📦 Original Page Data:', JSON.parse(JSON.stringify(allBlogs.value)))
 useHead({ title: '博客存档' })
 </script>
