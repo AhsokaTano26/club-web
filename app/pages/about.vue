@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen py-12 px-4 relative overflow-hidden bg-gray-950 text-gray-200 antialiased">
+  <div class="min-h-screen py-12 px-4 relative overflow-hidden  text-gray-200 antialiased">
     <div class="fixed inset-0 -z-10 pointer-events-none">
       <div class="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-500/15 blur-[120px] rounded-full"></div>
       <div class="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-indigo-500/15 blur-[120px] rounded-full"></div>
