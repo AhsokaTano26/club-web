@@ -11,15 +11,18 @@
 
     <div class="grid grid-cols-1 gap-4 md:gap-6">
       <div v-for="org in orgs" :key="org.path"
-           class="group relative bg-white border border-gray-100 p-1 flex flex-col md:flex-row gap-4 md:gap-6 hover:border-blue-500 transition-all duration-500 shadow-sm md:shadow-none">
+           class="group relative bg-white
+           /* 毛玻璃核心配置 */
+           bg-white/20 backdrop-blur-xl border border-white/20 rounded-2xl
+           flex flex-col md:flex-row gap-4 md:gap-6 hover:border-blue-500 transition-all duration-500 shadow-sm md:shadow-none">
 
-        <div class="w-full md:w-48 h-40 md:h-48 bg-gray-50 flex items-center justify-center overflow-hidden relative">
+        <div class="w-full md:w-48 h-40 md:h-48 bg-gray-50 flex items-center justify-center overflow-hidden relative rounded-xl border border-gray-100/50 shadow-sm">
           <template v-if="org.theme?.logo && org.theme.logo.includes('.')">
             <img
                 :src="org.theme.logo"
                 :alt="org.title"
                 class="w-full h-full object-cover transition-all duration-700 md:group-hover:scale-110"
-                @error="(e) => e.target.src = '/default/aimi.jpg'"
+                @error="(e) => (e.target.src = '/default/aimi.jpg')"
             />
           </template>
 
@@ -61,16 +64,16 @@
               </div>
 
               <div class="flex gap-1 md:gap-2">
-                <a v-if="org.github" :href="org.github" target="_blank" class="p-2 text-gray-400 hover:text-gray-900 transition-colors">
+                <a v-if="org.github" :href="org.github" target="_blank" class="p-2 text-gray-200 hover:text-gray-900 transition-colors">
                   <Icon name="lucide:github" class="w-5 h-5 md:w-4 md:h-4" />
                 </a>
-                <a v-if="org.website" :href="org.website" target="_blank" class="p-2 text-gray-400 hover:text-blue-500 transition-colors">
+                <a v-if="org.website" :href="org.website" target="_blank" class="p-2 text-gray-200 hover:text-blue-500 transition-colors">
                   <Icon name="lucide:globe" class="w-5 h-5 md:w-4 md:h-4" />
                 </a>
               </div>
             </div>
 
-            <p class="text-xs md:text-sm text-gray-500 leading-relaxed italic line-clamp-2 md:line-clamp-none">
+            <p class="text-xs md:text-sm text-gray-200 leading-relaxed italic line-clamp-2 md:line-clamp-none">
               "{{ org.description }}"
             </p>
           </div>
@@ -78,7 +81,7 @@
           <div class="mt-4 pt-3 border-t border-gray-50 flex justify-between items-center">
             <div class="flex items-center gap-2">
               <div class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></div>
-              <span class="text-[8px] md:text-[9px] font-black text-gray-400 uppercase tracking-widest italic truncate max-w-[80px] md:max-w-none">
+              <span class="text-[8px] md:text-[9px] font-black text-gray-200 uppercase tracking-widest italic truncate max-w-[80px] md:max-w-none">
                 {{ org.status }}
               </span>
             </div>

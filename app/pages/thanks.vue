@@ -1,15 +1,20 @@
 <template>
-  <div class="min-h-screen bg-gray-50/30 py-12 px-4">
+  <div class="min-h-screen py-12 px-4 relative overflow-hidden">
+    <div class="fixed inset-0 -z-10 pointer-events-none">
+      <div class="absolute top-1/4 -left-20 w-96 h-96 bg-blue-400/10 blur-[120px] rounded-full"></div>
+      <div class="absolute bottom-1/4 -right-20 w-96 h-96 bg-purple-400/10 blur-[120px] rounded-full"></div>
+    </div>
+
     <div class="max-w-4xl mx-auto space-y-8 pb-20">
 
-      <div class="bg-white border border-gray-200 rounded-sm shadow-sm overflow-hidden">
-        <div class="bg-gray-50 border-b border-gray-200 p-8 flex flex-col gap-3">
+      <div class="bg-white/5 backdrop-blur-xl border border-white/5 rounded-2xl shadow-sm overflow-hidden transition-all duration-500 hover:shadow-xl hover:shadow-blue-500/5">
+        <div class="bg-white/30 p-8 flex flex-col gap-3 border-b border-white/10">
           <div class="flex items-center gap-3">
-            <div class="flex items-center gap-1.5 bg-blue-500 text-white px-2 py-0.5 rounded-sm">
+            <div class="flex items-center gap-1.5 bg-blue-500 text-white px-2 py-0.5 rounded-lg shadow-sm">
               <Icon name="lucide:award" class="w-3 h-3" />
               <span class="text-[10px] font-black tracking-[0.2em] uppercase">Credits</span>
             </div>
-            <div class="flex items-center gap-1 text-gray-400">
+            <div class="flex items-center gap-1 text-gray-100">
               <Icon name="lucide:git-branch" class="w-3 h-3" />
               <span class="text-xs font-mono">V1.0.4-STABLE</span>
             </div>
@@ -17,116 +22,90 @@
           <h1 class="text-4xl font-bold text-gray-800 tracking-tighter flex items-center gap-3">
             致谢与鸣谢
           </h1>
-          <p class="text-sm text-gray-400 font-medium leading-relaxed max-w-2xl">
-            本站 <span class="text-gray-700 font-bold underline decoration-gray-200">club-web</span>
+          <p class="text-sm text-gray-200 font-medium leading-relaxed max-w-2xl">
+            本站 <span class="text-gray-700 font-bold underline decoration-blue-100/20">club-web</span>
             采用 Nuxt 4 架构开发。感激每一位在代码、内容与基础设施上提供支持的伙伴。
           </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 border-l border-t border-gray-50">
+        <div class="grid grid-cols-1 md:grid-cols-2">
           <div v-for="(blue, index) in contributors" :key="index"
-               class="border-r border-b border-gray-100 p-6 hover:bg-gray-50/20 transition-colors group">
+               class="p-6 transition-all duration-300 group
+                      /* 毛玻璃配置 */
+                      bg-white/10 backdrop-blur-lg border-r border-b border-white/10
+                      hover:bg-white/40">
 
             <div class="flex items-center justify-between mb-4">
               <div class="flex items-center gap-2">
                 <Icon :name="blue.icon || 'lucide:component'"
-                      class="w-3.5 h-3.5 text-gray-300 group-hover:text-blue-400 transition-colors" />
-                <span class="text-[10px] font-black uppercase tracking-widest text-gray-300 group-hover:text-blue-400 transition-colors">
+                      class="w-3.5 h-3.5 text-gray-50 group-hover:text-blue-800 transition-colors" />
+                <span class="text-[10px] font-black uppercase tracking-widest text-gray-50 group-hover:text-blue-500 transition-colors">
                   {{ blue.type }}
                 </span>
               </div>
-              <span class="font-mono text-[10px] text-gray-200">REF_{{ index + 1 }}</span>
+              <span class="font-mono text-[10px] text-gray-200 opacity-50">REF_{{ index + 1 }}</span>
             </div>
 
-            <h3 class="text-lg font-bold text-gray-700 mb-4">{{ blue.title }}</h3>
+            <h3 class="text-lg font-bold text-gray-100 mb-4">{{ blue.title }}</h3>
 
             <ul class="space-y-4">
-              <li v-for="item in blue.items" :key="item.name" class="flex flex-col gap-1">
+              <li v-for="item in blue.items" :key="item.name" class="flex flex-col gap-1 group/item">
                 <div class="flex items-center gap-2">
                   <Icon
                       :name="item.icon || 'lucide:box'"
-                      class="w-4 h-4
-                       opacity-100
-                       group-hover/item:grayscale-0 group-hover/item:opacity-100
-                       transition-all duration-300 ease-in-out text-blue-500"
+                      class="w-4 h-4 text-blue-500 group-hover/item:scale-110 transition-transform"
                   />
-
-                  <span class="font-bold text-gray-800 text-sm">{{ item.name }}</span>
-
+                  <span class="font-bold text-gray-100 text-sm group-hover/item:text-blue-600 transition-colors">{{ item.name }}</span>
                   <a v-if="item.link" :href="item.link" target="_blank"
                      class="flex items-center gap-0.5 text-[9px] text-blue-400 hover:text-blue-600 font-mono">
                     LINK <Icon name="lucide:external-link" class="w-2.5 h-2.5" />
                   </a>
                 </div>
-                <p class="text-[11px] text-gray-400 pl-5 leading-snug">{{ item.desc }}</p>
+                <p class="text-[11px] text-gray-200 pl-6 leading-snug font-light">{{ item.desc }}</p>
               </li>
             </ul>
           </div>
         </div>
       </div>
-      </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <CreditGroup
-            title="Organizer"
-            label="EST"
-            icon="lucide:building-2"
-            :items="organizers"
-            header-bg="bg-blue-50/50"
-            title-color="text-blue-600"
-            icon-color="text-blue-500"
-            dot-color="bg-blue-400"
-            hover-color="group-hover/item:text-blue-500"
-        />
-
-        <CreditGroup
-            title="Sponsors"
-            label="FUND"
-            icon="line-md:person"
-            :items="sponsors"
-            header-bg="bg-purple-50/50"
-            title-color="text-purple-600"
-            icon-color="text-purple-500"
-            dot-color="bg-purple-400"
-            hover-color="group-hover/item:text-purple-500"
-        />
-
-        <CreditGroup
-            title="Special Thanks"
-            label="CREDIT"
-            icon="line-md:star"
-            :items="specialThanks"
-            header-bg="bg-orange-50/50"
-            title-color="text-orange-600"
-            icon-color="text-orange-500"
-            dot-color="bg-orange-400"
-            hover-color="group-hover/item:text-orange-500"
+            v-for="group in [
+              { title: 'Organizer', label: 'EST', icon: 'lucide:building-2', items: organizers, headerBg: 'bg-blue-500/10', titleColor: 'text-blue-600' },
+              { title: 'Sponsors', label: 'FUND', icon: 'line-md:person', items: sponsors, headerBg: 'bg-purple-500/10', titleColor: 'text-purple-600' },
+              { title: 'Special Thanks', label: 'CREDIT', icon: 'line-md:star', items: specialThanks, headerBg: 'bg-orange-500/10', titleColor: 'text-orange-600' }
+            ]"
+            :key="group.title"
+            v-bind="group"
+            class="bg-white/10 backdrop-blur-xl border border-white/10 rounded-2xl p-1"
         />
       </div>
-        <div class="mt-8 bg-gray-900 rounded-sm p-6 text-white group overflow-hidden relative">
-          <Icon name="lucide:scale" class="absolute -right-0 -bottom-5 w-24 h-24 opacity-5 -rotate-12 text-white" />
 
-          <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div class="space-y-1">
-              <div class="flex items-center gap-2">
-                <Icon name="line-md:hazard-lights-loop" class="w-4 h-4 text-orange-400" />
-                <span class="text-xs font-black uppercase tracking-[0.2em]">Open Source Notice</span>
-              </div>
-              <h4 class="text-lg font-bold tracking-tight">基于 MIT 协议开放</h4>
-              <p class="text-[11px] text-gray-400 leading-relaxed max-w-xl">
-                本站源代码采用 MIT 许可证授权。这意味着你可以自由地使用、复制、修改和分发本站的代码，
-                唯请保留原作者版权声明及许可声明。
-              </p>
+      <div class="bg-gray-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-6 text-white group overflow-hidden relative shadow-2xl">
+        <Icon name="lucide:scale" class="absolute -right-4 -bottom-6 w-32 h-32 opacity-10 -rotate-12 text-blue-400 group-hover:rotate-0 transition-transform duration-700" />
+
+        <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div class="space-y-2">
+            <div class="flex items-center gap-2">
+              <Icon name="line-md:hazard-lights-loop" class="w-4 h-4 text-orange-400" />
+              <span class="text-xs font-black uppercase tracking-[0.2em] text-orange-400/80">Open Source Notice</span>
             </div>
-
-            <a href="https://github.com/AhsokaTano26/club-web/blob/main/LICENSE" target="_blank"
-               class="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-white text-gray-900 text-[10px] font-black uppercase tracking-widest hover:bg-blue-500 hover:text-white transition-all active:scale-95">
-              View Source
-              <Icon name="line-md:github" class="w-3.5 h-3.5" />
-            </a>
+            <h4 class="text-xl font-bold tracking-tight">基于 MIT 协议开放</h4>
+            <p class="text-[11px] text-gray-400 leading-relaxed max-w-xl font-light">
+              本站源代码采用 MIT 许可证授权。这意味着你可以自由地使用、复制、修改和分发本站的代码，
+              唯请保留原作者版权声明及许可声明。
+            </p>
           </div>
+
+          <a href="https://github.com/AhsokaTano26/club-web/blob/main/LICENSE" target="_blank"
+             class="inline-flex items-center justify-center gap-2 px-8 py-3 bg-white text-gray-900 text-[10px] font-black uppercase tracking-[0.2em] rounded-xl hover:bg-blue-600 hover:text-white transition-all active:scale-95 shadow-lg shadow-white/5">
+            View Source
+            <Icon name="line-md:github" class="w-4 h-4" />
+          </a>
         </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script setup>

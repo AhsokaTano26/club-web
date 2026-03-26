@@ -1,61 +1,78 @@
 <template>
-  <div class="space-y-8 md:space-y-12 px-4 md:px-0">
+
+  <div class="space-y-8 md:space-y-12 px-4 md:px-0 py-8 max-w-6xl mx-auto">
     <header class="space-y-3 md:space-y-4">
-      <div class="flex items-center gap-2 text-blue-500">
-        <Icon name="lucide:folder-kanban" class="w-5 h-5 md:w-6 md:h-6" />
-        <h1 class="text-xl md:text-2xl font-black uppercase tracking-tighter">Project Archives</h1>
+      <div class="flex items-center gap-3 text-blue-600">
+        <div class="p-2 bg-blue-600/10 rounded-lg">
+          <Icon name="lucide:folder-kanban" class="w-5 h-5 md:w-6 md:h-6" />
+        </div>
+        <h1 class="text-xl md:text-3xl font-black uppercase tracking-tighter">Project Archives</h1>
       </div>
-      <p class="text-xs md:text-sm text-gray-400 font-medium max-w-2xl leading-relaxed">
+      <p class="text-xs md:text-sm text-gray-500 font-medium max-w-2xl leading-relaxed">
         实时监控组织内部项目的生命周期。从概念孵化（TODO）到最终归档（COMPLETED）。
       </p>
     </header>
 
     <div v-for="group in projectGroups" :key="group.id" class="space-y-4 md:space-y-6">
       <div class="flex items-center gap-3 md:gap-4">
-        <div :class="['px-2.5 py-1 text-[9px] md:text-[10px] font-black uppercase tracking-[0.15em] md:tracking-[0.2em] rounded-sm shadow-sm text-white shrink-0', group.color]">
+        <div :class="['px-3 py-1 text-[9px] md:text-[10px] font-bold uppercase tracking-widest rounded-full shadow-sm text-white shrink-0', group.color]">
           {{ group.label }}
         </div>
-        <div class="h-px flex-grow bg-gray-100"></div>
-        <span class="text-[10px] font-mono text-gray-300 whitespace-nowrap">{{ group.items.length }} UNITS</span>
+        <div class="h-px flex-grow bg-gray-200/50"></div>
+        <span class="text-[10px] font-mono text-gray-200 whitespace-nowrap">{{ group.items.length }} UNITS</span>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
         <div v-for="project in group.items" :key="project.path"
-             class="group/card bg-white border border-gray-100 p-4 md:p-5 rounded-sm active:scale-[0.98] md:active:scale-100 hover:border-blue-500/50 hover:shadow-lg transition-all relative overflow-hidden">
+             class="group/card relative overflow-hidden transition-all duration-500
+                    /* 毛玻璃核心配置 */
+                    bg-white/20 backdrop-blur-xl border border-white/20 rounded-2xl
+                    /* 交互效果 */
+                    hover:bg-white/60 hover:shadow-2xl hover:shadow-blue-500/10 hover:-translate-y-1
+                    active:scale-[0.98] p-5 md:p-6 shadow-sm">
 
           <Icon :name="project.icon || 'lucide:box'"
-                class="absolute -right-2 -bottom-2 w-16 h-16 md:w-24 md:h-24 text-gray-50 opacity-10 md:opacity-0 md:group-hover/card:opacity-100 transition-opacity -rotate-12" />
+                class="absolute -right-6 -bottom-6 w-28 h-28 text-blue-500/20 opacity-[0.2]
+                       group-hover/card:opacity-10 group-hover/card:scale-110 group-hover/card:-rotate-12 transition-all duration-700" />
 
-          <div class="relative z-10 space-y-3">
+          <div class="relative z-10 space-y-4">
             <div class="flex justify-between items-start">
-              <Icon :name="project.icon || 'lucide:box'" class="w-5 h-5 text-gray-300 group-hover/card:text-blue-500 transition-colors" />
-              <time class="text-[9px] md:text-[10px] font-mono text-gray-300">{{ project.date }}</time>
+              <div class="p-2.5 bg-white rounded-xl shadow-sm border border-white/50 group-hover/card:bg-blue-600 group-hover/card:text-white transition-all duration-300">
+                <Icon :name="project.icon || 'lucide:box'" class="w-5 h-5 text-gray-400 group-hover/card:text-white" />
+              </div>
+              <time class="text-[10px] font-mono text-black-400 bg-white/50 px-2 py-1 rounded-md border border-white/60">
+                {{ project.date }}
+              </time>
             </div>
 
-            <div>
-              <h3 class="font-black text-gray-800 text-sm md:text-base group-hover/card:text-blue-600 transition-colors">
+            <div class="space-y-2">
+              <h3 class="font-bold text-gray-100 text-base md:text-lg group-hover/card:text-blue-800 transition-colors">
                 {{ project.title }}
               </h3>
-              <p class="text-[11px] md:text-xs text-gray-400 mt-1 line-clamp-2 leading-relaxed italic">
+              <p class="text-[11px]  text-gray-200 md:text-lg group-hover/card:text-blue-400 line-clamp-2 leading-relaxed font-light italic opacity-80">
                 {{ project.description }}
               </p>
             </div>
 
-            <div class="pt-2 flex items-center justify-between">
-              <NuxtLink :to="project.path" class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-gray-500 hover:text-blue-500 flex items-center gap-1 transition-colors py-1">
-                View Details <Icon name="lucide:arrow-right" class="w-3 h-3" />
+            <div class="pt-4 flex items-center justify-between border-t border-gray-200/30">
+              <NuxtLink :to="project.path"
+                        class="text-[10px] font-black uppercase tracking-widest text-blue-600/70 hover:text-blue-600 flex items-center gap-1.5 transition-colors">
+                Explore Details <Icon name="lucide:arrow-right" class="w-3.5 h-3.5" />
               </NuxtLink>
-              <a v-if="project.link" :target="_blank" :href="project.link" class="p-2 -mr-2 text-gray-300 hover:text-gray-900 transition-colors">
-                <Icon name="lucide:github" class="w-4.5 h-4.5 md:w-4 md:h-4" />
+
+              <a v-if="project.link" :target="_blank" :href="project.link"
+                 class="p-2 text-black-400 hover:text-blue-600 hover:bg-white/80 rounded-full transition-all shadow-none hover:shadow-sm">
+                <Icon name="lucide:github" class="w-5 h-5" />
               </a>
             </div>
           </div>
         </div>
       </div>
 
-      <div v-if="group.items.length === 0" class="py-6 md:py-8 border border-dashed border-gray-100 rounded-sm flex flex-col items-center justify-center grayscale opacity-40 scale-90 md:scale-100">
-        <Icon name="lucide:ghost" class="w-6 h-6 md:w-8 md:h-8 mb-2 text-gray-300" />
-        <span class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-gray-400">No Active Records</span>
+      <div v-if="group.items.length === 0"
+           class="py-12 border border-dashed border-gray-200/50 bg-white/20 backdrop-blur-sm rounded-2xl flex flex-col items-center justify-center grayscale opacity-60">
+        <Icon name="lucide:ghost" class="w-8 h-8 mb-3 text-gray-300" />
+        <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400">No Active Records</span>
       </div>
     </div>
   </div>

@@ -1,5 +1,13 @@
 <template>
   <div class="calendar-container max-w-4xl mx-auto space-y-6" :style="glassStyles">
+    <header class="mb-8 pl-2">
+      <h1 class="text-4xl font-black text-white tracking-tighter mb-2">
+        欢迎来到 <span class="text-blue-500">跨世界同好会官方网站</span>
+      </h1>
+      <p class="text-white/40 text-sm font-light tracking-widest uppercase">
+        {{ quote || 'Stay focused, be present.' }}
+      </p>
+    </header>
 
     <div class="glass-effect rounded-xl overflow-hidden border border-[var(--glass-border)] shadow-2xl">
 

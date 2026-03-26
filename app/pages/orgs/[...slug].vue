@@ -102,7 +102,6 @@ const { data: page } = await useAsyncData(`org-detail-${route.path.replace(/\/$/
   const cleanPath = route.path.replace(/\/$/, '')
   return queryCollection('orgs').path(cleanPath).first()
 })
-// console.log('📦 Original Page Data:', JSON.parse(JSON.stringify(page.value)))
 // 2. 修正后的主题应用逻辑
 const applyTheme = (data) => {
   if (data?.theme) {
