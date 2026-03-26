@@ -19,15 +19,17 @@
 
     <div class="flex flex-col lg:flex-row min-h-screen">
       <AppSidebar
-          class="w-full lg:w-64 lg:fixed lg:h-screen border-r border-gray-100 z-40 transition-all duration-700"
-          :class="{ '!bg-white !opacity-100': isOpen }"
+          class="w-full lg:w-64 lg:fixed lg:h-screen  z-40 transition-all duration-700"
+          :class="{ '!bg-white': isOpen }"
           :style="!isOpen ? { backgroundColor: `rgba(255, 255, 255, ${themeConfig.sidebarOpacity})` } : { backgroundColor: '#ffffff' }"
       />
 
       <div class="flex-1 flex flex-col lg:flex-row lg:ml-64">
         <main
             class="flex-1 p-4 md:p-8 lg:p-12 backdrop-blur-sm transition-all duration-700"
-            :style="{ backgroundColor: `rgba(255, 255, 255, ${themeConfig.mainOpacity})` }"
+            :style="!isOpen
+            ? { backdropFilter: `blur(${themeConfig.blurRadius})` }
+            : { backdropFilter: 'none' }"
         >
           <div class="max-w-4xl mx-auto">
             <NuxtPage />
@@ -35,14 +37,14 @@
         </main>
 
         <AppRightTick
-            class="w-full lg:w-80 border-l border-gray-50 backdrop-blur-md transition-all duration-700"
+            class="w-full lg:w-80 "
             :style="{ backgroundColor: `rgba(255, 255, 255, ${themeConfig.rightTickOpacity})` }"
         />
       </div>
     </div>
 
     <footer
-        class="relative z-10 w-full p-8 text-center text-gray-500 text-[11px] border-t border-gray-100/50 backdrop-blur-md tracking-widest uppercase transition-all duration-700"
+        class="relative z-10 w-full p-8 text-center text-gray-500 text-[11px]  backdrop-blur-md tracking-widest uppercase transition-all duration-700"
         :style="{ backgroundColor: `rgba(255, 255, 255, ${themeConfig.sidebarOpacity})` }"
     >
       <div class="lg:pl-64 flex flex-col items-center gap-2">
@@ -65,14 +67,19 @@
 </template>
 
 <script setup>
+const isOpen = ref(false)
+// 监听路由变化自动关闭菜单
+const route = useRoute()
+watch(() => route.path, () => { isOpen.value = false })
 // --- 1. 定义默认配置常量 ---
 const DEFAULT_THEME = {
   primaryColor: '#5b92e5',
   bgImage: '/2043253.jpg',
-  bgOverlayOpacity: 0.5,
-  sidebarOpacity: 0.95,
-  mainOpacity: 0.9,
-  rightTickOpacity: 0.85
+  bgOverlayOpacity: 0,
+  sidebarOpacity: 0,
+  mainOpacity: 0,
+  rightTickOpacity: 0,
+  blurRadius: '0px'
 }
 // --- 2. 使用 useState 创建全局响应式主题状态 ---
 // 这允许子页面直接修改此状态，无需 inject
@@ -110,16 +117,6 @@ html {
   scroll-behavior: smooth;
 }
 
-/* 页面切换动画 */
-.page-enter-active, .page-leave-active {
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.page-enter-from { opacity: 0; transform: translateY(8px); }
-.page-leave-to { opacity: 0; transform: translateY(-8px); }
-
-/* 加载动画淡入淡出 */
-.loading-fade-enter-active, .loading-fade-leave-active { transition: opacity 0.4s ease; }
-.loading-fade-enter-from, .loading-fade-leave-to { opacity: 0; }
 
 /* 滚动条美化：跟随变量 */
 ::-webkit-scrollbar { width: 6px; }

@@ -1,5 +1,5 @@
 <template>
-  <aside class="w-full lg:w-72 p-4 md:p-8 border-l border-gray-100 bg-white/50 backdrop-blur-sm">
+  <aside class="w-full lg:w-72 p-4 md:p-8">
     <h3 class="text-xs font-bold text-gray-400 uppercase tracking-[0.2em] mb-8 flex items-center gap-3">
       <Icon
           :name="'line-md:cog-loop'"
@@ -23,7 +23,7 @@
         </div>
 
         <NuxtLink :to="post.path" class="block group-hover:translate-x-1 transition-transform">
-          <h4 class="text-sm font-bold text-gray-700 group-hover:text-blue-600 transition-colors line-clamp-1">
+          <h4 class="text-sm font-bold text-gray-100 group-hover:text-blue-600 transition-colors line-clamp-1">
             {{ post.title }}
           </h4>
           <p class="text-xs text-gray-400 mt-1.5 leading-relaxed line-clamp-2">

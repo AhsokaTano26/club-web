@@ -91,10 +91,10 @@ const theme = useState('themeConfig')
 const DEFAULT_THEME = {
   primaryColor: '#5b92e5',
   bgImage: '/2043253.jpg',
-  bgOverlayOpacity: 0.5,
-  sidebarOpacity: 0.95,
-  mainOpacity: 0.9,
-  rightTickOpacity: 0.85
+  bgOverlayOpacity: 0,
+  sidebarOpacity: 0,
+  mainOpacity: 0,
+  rightTickOpacity: 0
 }
 
 // 1. 获取数据

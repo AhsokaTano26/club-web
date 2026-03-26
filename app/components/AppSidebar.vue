@@ -1,43 +1,42 @@
 <template>
   <div class="relative">
-    <div class="md:hidden flex items-center justify-between p-4 border-b bg-white sticky top-0 z-100">
-      <NuxtLink to="/">
-        <img src="/logo.png" alt="Logo" class="h-8 w-auto" />
-      </NuxtLink>
-      <button @click="isOpen = !isOpen" class="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
-        <Icon :name="isOpen ? 'lucide:x' : 'lucide:menu'" class="w-6 h-6" />
-      </button>
-    </div>
-
     <aside
         :class="[
-        'fixed inset-y-0 left-0 w-72 bg-white !opacity-100 shadow-2xl transform transition-transform duration-300 ease-in-out p-6 shrink-0',
-        'md:relative md:translate-x-0 md:w-64 md:border-r border-gray-100',
-        isOpen ? 'translate-x-0 shadow-2xl z-[100]' : '-translate-x-full z-100'
+        /* 基础样式与移动端：保持一定的背景和阴影以便遮盖内容 */
+        'fixed inset-y-0 left-0 w-72 bg-gray-900/90 backdrop-blur-lg transform transition-transform duration-300 ease-in-out p-6 z-[100]',
+
+        /* 桌面端 (md): 背景完全透明，移除模糊，移除阴影 */
+        'md:relative md:translate-x-0 md:w-64 md:bg-transparent md:backdrop-blur-none md:shadow-none',
+
+        /* 控制显隐 */
+        isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
       ]"
-        style="background-color: #FFFFFF !important;"
     >
-      <div class="hidden md:block mb-10 px-6 py-8">
+      <div class="hidden md:block mb-10 px-4 py-8">
         <NuxtLink to="/" class="block group">
-          <img src="/logo.png" alt="Logo" class="h-12 w-auto transition-transform group-hover:scale-105" />
+          <img src="/logo.png" alt="Logo" class="h-auto w-48 opacity-90 group-hover:opacity-100 transition-all group-hover:scale-105" />
         </NuxtLink>
       </div>
 
       <nav class="space-y-6">
         <div v-for="group in nav" :key="group.title">
-          <h3 class="text-xs font-bold text-gray-400 mb-3 pb-1 border-b border-gray-50 uppercase tracking-widest">
+          <h3 class="text-[10px] font-black text-gray-100 mb-4 pb-1 border-b border-white/5 uppercase tracking-[0.2em]">
             {{ group.title }}
           </h3>
           <ul class="space-y-1">
             <li v-for="link in group.links" :key="link.path">
               <NuxtLink
                   :to="link.path"
+                  :target="link.external ? '_blank' : '_self'"
                   @click="isOpen = false"
-                  class="group flex items-center justify-between py-2 px-3 rounded-lg text-sm text-gray-600 hover:text-blue-500 hover:bg-blue-50 transition-all"
-                  active-class="text-blue-600 bg-blue-50 font-bold"
+                  class="group flex items-center justify-between py-2 px-3 rounded-xl text-sm text-gray-300/80 hover:text-white hover:bg-white/5 transition-all duration-300"
+                  active-class="text-blue-400 bg-blue-500/10 font-bold shadow-[inset_0_0_20px_rgba(59,130,246,0.1)]"
               >
-                <span>{{ link.name }}</span>
-                <span class="text-gray-300 group-hover:text-blue-300 transform group-hover:translate-x-1 transition-transform">→</span>
+                <span class="relative">
+                  {{ link.name }}
+                  <span v-if="route.path === link.path" class="absolute -left-2 top-1/2 -translate-y-1/2 w-1 h-1 bg-blue-600 rounded-full"></span>
+                </span>
+                <span class="text-white/10 group-hover:text-white/40 transform group-hover:translate-x-1 transition-transform text-xs">→</span>
               </NuxtLink>
             </li>
           </ul>
@@ -132,7 +131,11 @@ const nav = [
 </script>
 
 <style scoped>
-.router-link-active {
-  @apply text-blue-600 font-bold bg-blue-50;
+aside {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+.fade-enter-active, .fade-leave-active { transition: opacity 0.3s; }
+.fade-enter-from, .fade-leave-to { opacity: 0; }
 </style>

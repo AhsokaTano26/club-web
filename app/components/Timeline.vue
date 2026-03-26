@@ -1,6 +1,6 @@
 <template>
   <div class="py-8 px-4">
-    <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-10 flex items-center gap-2">
+    <h3 class="text-sm font-bold text-gray-50 uppercase tracking-widest mb-10 flex items-center gap-2">
       <Icon
           :name="'line-md:cog-loop'"
           class="w-4 h-4
@@ -8,7 +8,7 @@
                        group-hover/item:grayscale-0 group-hover/item:opacity-100
                        transition-all duration-300 ease-in-out text-blue-500"
       />
-      <span class="w-8 h-px bg-gray-200"></span> 进度时间轴
+      <span class="w-8 h-px bg-gray-50 "></span> 进度时间轴
     </h3>
 
     <div class="ml-4 border-l-2 border-blue-100 space-y-12">
@@ -36,13 +36,13 @@
 
         <h4 :class="[
           'text-base font-black mt-1 transition-colors flex items-center gap-2 group-hover:text-blue-600',
-          p.isToday ? 'text-gray-900' : 'text-gray-700'
+          p.isToday ? 'text-gray-100' : 'text-gray-300'
         ]">
           {{ p.title }}
           <span class="text-xs opacity-0 group-hover:opacity-100 transition-opacity text-blue-300">→</span>
         </h4>
 
-        <p class="text-sm text-gray-500 mt-1 max-w-md leading-relaxed group-hover:text-gray-600">
+        <p class="text-sm text-gray-100 mt-1 max-w-md leading-relaxed group-hover:text-gray-200">
           {{ p.description }}
         </p>
       </NuxtLink>

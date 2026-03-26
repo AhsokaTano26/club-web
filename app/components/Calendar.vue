@@ -1,97 +1,96 @@
 <template>
-  <div class="max-w-4xl mx-auto space-y-6">
-    <div class="bg-white border border-gray-200 rounded-sm shadow-sm overflow-hidden">
-      <div class="bg-gray-50 border-b border-gray-200 p-4 flex justify-between items-center">
+  <div class="calendar-container max-w-4xl mx-auto space-y-6" :style="glassStyles">
+
+    <div class="glass-effect rounded-xl overflow-hidden border border-[var(--glass-border)] shadow-2xl">
+
+      <div class="p-4 flex justify-between items-center border-b border-[var(--glass-border)] bg-white/[var(--glass-opacity)]">
         <div class="flex items-center gap-3">
-          <span class="text-lg font-bold text-gray-700">{{ year }}年{{ month + 1 }}月</span>
-          <span class="text-xs bg-white px-2 py-0.5 border border-gray-200 rounded text-gray-400 tracking-wider uppercase">
-            {{ monthNamesEn[month] }} {{ year }}
+          <span class="text-xl font-bold text-white">{{ year }}年{{ month + 1 }}月</span>
+          <span class="text-xs px-2 py-0.5 border border-white/20 rounded text-white/50 tracking-wider">
+            {{ monthNamesEn[month] }}
           </span>
         </div>
-        <div class="flex gap-1">
-          <button @click="prevMonth" class="p-2 hover:bg-white border border-transparent hover:border-gray-200 rounded transition-all">◀</button>
-          <button @click="resetDate" class="px-4 py-1 text-xs font-bold hover:bg-white border border-transparent hover:border-gray-200 rounded uppercase tracking-tighter">今天</button>
-          <button @click="nextMonth" class="p-2 hover:bg-white border border-transparent hover:border-gray-200 rounded transition-all">▶</button>
+        <div class="flex gap-1 text-white/70">
+          <button @click="prevMonth" class="p-2 hover:bg-white/10 rounded-lg transition-all">◀</button>
+          <button @click="resetDate" class="px-4 py-1 text-xs font-bold hover:bg-white/10 rounded-lg">今天</button>
+          <button @click="nextMonth" class="p-2 hover:bg-white/10 rounded-lg transition-all">▶</button>
         </div>
       </div>
 
-      <div class="grid grid-cols-7 bg-white border-b border-gray-100">
-        <div v-for="d in ['一', '二', '三', '四', '五', '六', '日']" :key="d" class="py-2 text-[11px] font-bold text-gray-400 text-center">
+      <div class="grid grid-cols-7 border-b border-white/5 bg-white/5">
+        <div v-for="d in ['一', '二', '三', '四', '五', '六', '日']" :key="d" class="py-3 text-[11px] font-bold text-white/40 text-center uppercase">
           {{ d }}
         </div>
       </div>
 
-      <div class="grid grid-cols-7 border-l border-t border-gray-50">
+      <div class="grid grid-cols-7">
         <div v-for="(day, i) in days" :key="i"
              @click="handleDateClick(day)"
-             class="h-24 border-r border-b border-gray-50 p-2 hover:bg-blue-50/30 transition-colors group relative cursor-pointer"
-             :class="[
-               day.isCurrent ? 'bg-white' : 'bg-gray-50/50',
-               selectedDate?.dateStr === day.dateStr ? 'ring-2 ring-blue-500 ring-inset z-10' : ''
-             ]">
+             class="h-24 border-r border-b border-white/5 p-2 hover:bg-white/10 transition-colors group relative cursor-pointer"
+             :class="[day.isCurrent ? 'opacity-100' : 'opacity-20']">
 
           <div class="flex justify-between items-start">
-            <span class="text-lg font-mono leading-none" :class="day.isToday ? 'text-blue-500 font-bold' : 'text-gray-700'">
-              {{ day.d }}
-            </span>
-            <span class="text-[10px] text-gray-300">{{ day.lunar }}</span>
+            <span class="text-lg font-mono" :class="day.isToday ? 'text-blue-400 font-bold' : 'text-white/80'">{{ day.d }}</span>
+            <span class="text-[10px] text-white/20">{{ day.lunar }}</span>
           </div>
 
           <div class="mt-2 flex flex-wrap gap-1">
             <div v-for="ev in day.events" :key="ev.id"
-                 :class="['w-1.5 h-1.5 rounded-full', colors[ev.type] || colors.default]"
-                 :title="ev.title">
+                 :class="['w-1.5 h-1.5 rounded-full shadow-glow', colors[ev.type]]">
             </div>
           </div>
-        </div>
-      </div>
-
-      <div class="p-3 bg-gray-50/50 flex justify-between items-center border-t border-gray-100">
-        <div class="flex gap-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-          <span class="flex items-center gap-1.5"><i class="w-2 h-2 rounded-full bg-purple-400"></i> 纪念日</span>
-          <span class="flex items-center gap-1.5"><i class="w-2 h-2 rounded-full bg-green-400"></i> 展会活动</span>
-          <span class="flex items-center gap-1.5"><i class="w-2 h-2 rounded-full bg-blue-400"></i> 官方发布</span>
         </div>
       </div>
     </div>
 
     <transition name="slide-up">
-      <div v-if="selectedDate && selectedDate.events.length > 0" class="bg-white p-6 border border-gray-200 rounded-sm shadow-sm">
+      <div v-if="selectedDate && selectedDate.events.length > 0" class="bg-white/5 backdrop-blur-xl p-6 border border-white/10 rounded-lg shadow-2xl">
         <div class="flex items-center justify-between mb-6">
-          <h4 class="text-xs font-black text-gray-300 uppercase tracking-[0.2em]">
+          <h4 class="text-xs font-black text-white/30 uppercase tracking-[0.2em]">
             {{ selectedDate.dateStr }} · Timeline
           </h4>
-          <span class="text-[10px] bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full font-bold">
+          <span class="text-[10px] bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded-full font-bold border border-blue-500/30">
             {{ selectedDate.events.length }} 条记录
           </span>
         </div>
 
-        <div class="relative border-l-2 border-gray-100 ml-2 pl-6 space-y-8">
+        <div class="relative border-l-2 border-white/10 ml-2 pl-6 space-y-8">
           <div v-for="ev in selectedDate.events" :key="ev.id"
                @click="navigateTo(ev.id)"
                class="relative group cursor-pointer">
-            <div :class="['absolute -left-[31px] top-1 w-4 h-4 rounded-full border-4 border-white shadow-sm transition-transform group-hover:scale-125', colors[ev.type] || colors.default]"></div>
+            <div :class="['absolute -left-[31px] top-1 w-4 h-4 rounded-full border-4 border-[#1a1a1a] shadow-lg transition-transform group-hover:scale-125', colors[ev.type] || colors.default]"></div>
 
             <div class="space-y-1">
-              <div class="text-[10px] font-black uppercase tracking-tighter" :class="textColors[ev.type]">
+              <div class="text-[10px] font-black uppercase tracking-tighter text-blue-400">
                 {{ ev.type }}
               </div>
-              <div class="text-gray-800 font-bold group-hover:text-blue-500 transition-colors">
+              <div class="text-white/90 font-bold group-hover:text-blue-400 transition-colors">
                 {{ ev.title }}
               </div>
-              <div class="text-xs text-gray-400 line-clamp-1">点击查看详情回顾 →</div>
+              <div class="text-xs text-white/40 line-clamp-1">DETAILS →</div>
             </div>
           </div>
         </div>
-      </div>
-      <div v-else-if="selectedDate" class="text-center py-12 bg-gray-50/30 border border-dashed border-gray-200 rounded-sm">
-        <p class="text-gray-300 text-sm font-medium tracking-widest">NO RECORDED EVENTS FOR THIS DAY</p>
       </div>
     </transition>
   </div>
 </template>
 
 <script setup>
+// 2. 这里是你的“控制面板”
+const glassConfig = {
+  opacity: '0.1',      // 背景透明度 (0-1)
+  blur: '20px',         // 模糊程度
+  borderOpacity: '0.1', // 边框透明度
+  tintColor: '255, 255, 255' // 这里的颜色决定了玻璃是白玻还是黑玻
+};
+
+const glassStyles = computed(() => ({
+  '--glass-opacity': glassConfig.opacity,
+  '--glass-blur': glassConfig.blur,
+  '--glass-border': `rgba(${glassConfig.tintColor}, ${glassConfig.borderOpacity})`,
+  '--glass-bg': `rgba(${glassConfig.tintColor}, ${glassConfig.opacity})`
+}));
 import { Solar, Lunar } from 'lunar-javascript';
 
 // 状态管理
@@ -209,5 +208,15 @@ const resetDate = () => {
 ::-webkit-scrollbar-thumb {
   background: #e2e8f0;
   border-radius: 10px;
+}
+/* 3. 核心毛玻璃 CSS */
+.glass-effect {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur)); /* 兼容 Safari */
+}
+
+.shadow-glow {
+  box-shadow: 0 0 8px currentColor;
 }
 </style>
