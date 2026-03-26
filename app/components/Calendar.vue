@@ -76,7 +76,7 @@
             <div :class="['absolute -left-[31px] top-1 w-4 h-4 rounded-full border-4 border-[#1a1a1a] shadow-lg transition-transform group-hover:scale-125', colors[ev.type] || colors.default]"></div>
 
             <div class="space-y-1">
-              <div class="text-[10px] font-black uppercase tracking-tighter text-blue-400">
+              <div :class="['text-[10px] font-black uppercase tracking-tighter', (colors[ev.type] || colors.default).replace('bg-', 'text-')]">
                 {{ ev.type }}
               </div>
               <div class="text-white/90 font-bold group-hover:text-blue-400 transition-colors">
@@ -129,9 +129,21 @@ const textColors = {
 
 // 1. 从 Nuxt Content v3 抓取数据
 
-const { data: posts } = await useAsyncData('calendar-posts', () =>
-    queryCollection('blog').all()
-);
+const { data: posts } = await useAsyncData('combined-posts', async () => {
+  // 1. 同时发起两个集合的查询
+  const [blogPosts, activityPosts] = await Promise.all([
+    queryCollection('blog').all(),
+    queryCollection('activities').all()
+  ])
+
+  // 2. 将结果合并成一个数组
+  const combined = [...blogPosts, ...activityPosts]
+
+  // 3. 根据日期（date）进行全局倒序排序
+  return combined.sort((a, b) => {
+    return new Date(b.date) - new Date(a.date)
+  })
+})
 
 // 2. 生成日历阵列 (6行7列)
 const days = computed(() => {

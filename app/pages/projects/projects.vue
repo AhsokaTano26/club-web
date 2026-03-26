@@ -1,17 +1,13 @@
 <template>
 
-  <div class="space-y-8 md:space-y-12 px-4 md:px-0 py-8 max-w-6xl mx-auto">
-    <header class="space-y-3 md:space-y-4">
-      <div class="flex items-center gap-3 text-gray-100">
-        <div class="p-2 bg-blue-600/10 rounded-lg">
-          <Icon name="lucide:folder-kanban" class="w-5 h-5 md:w-6 md:h-6" />
-        </div>
-        <h1 class="text-xl md:text-3xl font-black uppercase tracking-tighter">Project Archives</h1>
-      </div>
-      <p class="text-xs md:text-sm text-gray-500 font-medium max-w-2xl leading-relaxed">
-        实时监控组织内部项目的生命周期。从概念孵化（TODO）到最终归档（COMPLETED）。
-      </p>
-    </header>
+  <div class="space-y-12 pb-24">
+    <PageHeader
+        title="Project Archives"
+        :count="projectGroups?.length|| 0"
+        subTitle="实时监控组织内部项目的生命周期。从概念孵化（TODO）到最终归档（COMPLETED）。"
+        :themeColor="themeConfig.primaryColor"
+    />
+
 
     <div v-for="group in projectGroups" :key="group.id" class="space-y-4 md:space-y-6">
       <div class="flex items-center gap-3 md:gap-4">
@@ -79,6 +75,9 @@
 </template>
 
 <script setup>
+// 使用 app.vue 中定义的全局主题状态
+const themeConfig = useState('themeConfig')
+
 const { data: projects, error } = await useAsyncData('projects-list', () => {
   return queryCollection('projects').all()
 })

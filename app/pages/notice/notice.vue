@@ -1,14 +1,11 @@
 <template>
   <div class="space-y-12 pb-24">
-    <header class="relative py-12 border-b border-black/5">
-      <div class="absolute -left-4 top-0 w-1 h-full" :style="{ backgroundColor: themeConfig.primaryColor }"></div>
-      <h1 class="text-4xl font-black tracking-tighter text-gray-200 uppercase italic">
-        Archive <span class="text-gray-400">/</span> Notices
-      </h1>
-      <p class="mt-4 text-[10px] font-black uppercase tracking-[0.5em] text-gray-400">
-        Official synchronization logs & announcements
-      </p>
-    </header>
+    <PageHeader
+        title="Notices"
+        :count="notices?.length|| 0"
+        subTitle="Official synchronization logs & announcements"
+        :themeColor="themeConfig.primaryColor"
+    />
 
     <div class="grid gap-8">
       <NuxtLink

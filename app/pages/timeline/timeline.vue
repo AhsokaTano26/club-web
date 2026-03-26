@@ -1,12 +1,11 @@
 <template>
-  <div class="max-w-3xl mx-auto py-10">
-    <header class="mb-12">
-      <h2 class="text-3xl font-black text-gray-100 tracking-tight flex items-center gap-3">
-        <span class="w-2 h-8 bg-blue-400 rounded-full"></span>
-        项目里程碑 <span class="text-sm font-normal text-gray-50">({{ allTimelines?.length || 0 }})</span>
-      </h2>
-      <p class="text-gray-400 mt-2">从零到一的完整开发足迹</p>
-    </header>
+  <div class="space-y-12 pb-24">
+    <PageHeader
+        title="Milestones"
+        :count="allTimelines?.length|| 0"
+        subTitle="从零到一的完整开发足迹 · FOOTPRINTS"
+        :themeColor="themeConfig.primaryColor"
+    />
 
     <div class="relative ml-4 border-l-2 border-gray-100 pl-8 space-y-12">
       <div v-for="item in allTimelines" :key="item.path" class="relative">
@@ -27,6 +26,9 @@
 </template>
 
 <script setup>
+// 使用 app.vue 中定义的全局主题状态
+const themeConfig = useState('themeConfig')
+
 const { data: allTimelines } = await useAsyncData('all-timelines', () =>
     queryCollection('timeline')
         .order('date', 'DESC')

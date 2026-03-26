@@ -1,12 +1,11 @@
 <template>
-  <div class="max-w-3xl mx-auto py-10">
-    <header class="mb-12">
-      <h2 class="text-3xl font-black text-gray-800 tracking-tight flex items-center gap-3">
-        <span class="w-2 h-8 bg-blue-400 rounded-full"></span>
-        所有博文 <span class="text-sm font-normal text-gray-50">({{ allBlogs?.length || 0 }})</span>
-      </h2>
-      <p class="text-gray-400 mt-2">记录同好会的点滴与未来计划</p>
-    </header>
+  <div class="space-y-12 pb-24">
+    <PageHeader
+        title="Archive"
+        :count="allBlogs?.length|| 0"
+        subTitle="记录同好会的点滴与未来计划 · SYNC LOGS"
+        :themeColor="themeConfig.primaryColor"
+    />
 
     <div class="space-y-8">
       <NuxtLink
@@ -41,6 +40,9 @@
 </template>
 
 <script setup>
+// 使用 app.vue 中定义的全局主题状态
+const themeConfig = useState('themeConfig')
+
 const { data: allBlogs } = await useAsyncData('all-blogs', () =>
     queryCollection('blog')
         .order('date', 'DESC') // 按时间倒序

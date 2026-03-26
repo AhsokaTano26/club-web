@@ -1,13 +1,11 @@
 <template>
-  <div class="space-y-8 md:space-y-12 px-4 md:px-0">
-    <header class="relative border-l-4 border-blue-500 pl-4 md:pl-6 py-1 md:py-2">
-      <h1 class="text-2xl md:text-3xl font-black uppercase tracking-tighter text-gray-900 leading-none">
-        Organization Directory
-      </h1>
-      <p class="text-[10px] md:text-xs font-mono text-gray-400 mt-2 uppercase tracking-widest">
-        已连接的组织节点数据库 / Total: {{ orgs?.length || 0 }}
-      </p>
-    </header>
+  <div class="space-y-12 pb-24">
+    <PageHeader
+        title="Organization Directory"
+        :count="orgs?.length|| 0"
+        subTitle="核心成员与协作协议 · ACTIVE NODES"
+        :themeColor="themeConfig.primaryColor"
+    />
 
     <div class="grid grid-cols-1 gap-4 md:gap-6">
       <div v-for="org in orgs" :key="org.path"
@@ -104,6 +102,10 @@
 </template>
 
 <script setup>
+// 使用 app.vue 中定义的全局主题状态
+const themeConfig = useState('themeConfig')
+
+
 // 获取组织数据并增加索引编号
 const { data: rawOrgs, refresh } = await useAsyncData('orgs-list-v1', async () => {
   const docs = await queryCollection('orgs').all()
