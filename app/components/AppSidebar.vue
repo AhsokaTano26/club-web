@@ -107,6 +107,10 @@ const nav = [
       },
       {
         name: '联协映像',
+        path: '/archive/archive'
+      },
+      {
+        name: '联协活动',
         path: '/activities/activities'
       }
     ]

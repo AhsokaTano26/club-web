@@ -105,27 +105,27 @@ const projectGroups = computed(() => {
   // 统一定义分组元数据
   const categories = [
     {
-      id: 'need help',
-      label: 'Need Help / 需要帮助',
+      id: 'Funding',
+      label: 'Funding / 众筹中',
       color: 'bg-red-800',
-      status:'need_help'
+      status:'funding'
     },
     {
-      id: 'ongoing',
-      label: 'Executing / 正在进行',
+      id: 'Need Creator',
+      label: 'Need Creator / 需要创作者',
       color: 'bg-orange-500',
-      status: 'ongoing'
+      status: 'need_creator'
     },
     {
-      id: 'todo',
-      label: 'Planned / 待开发',
+      id: 'Finding Resonance',
+      label: 'Finding resonance / 寻求共鸣',
       color: 'bg-blue-500',
-      status: 'todo' },
+      status: 'finding_resonance' },
     {
-      id: 'completed',
-      label: 'Archived / 已结束',
+      id: 'others',
+      label: 'others / 其他',
       color: 'bg-gray-800',
-      status: 'completed'
+      status: 'others'
     }
   ]
 

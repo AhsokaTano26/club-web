@@ -98,5 +98,18 @@ export default defineContentConfig({
                 author: z.string(),
             })
         }),
+        archive: defineCollection({
+            type: 'page',
+            source: {
+                repository: 'https://github.com/AhsokaTano26/club-web-content',
+                include: 'archive/**',
+            },
+            schema: z.object({
+                date: z.string(),
+                type: z.string(),
+                title: z.string(),
+                author: z.string(),
+            })
+        }),
     }
 })

@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-12 pb-24">
     <PageHeader
-        title="Activities"
+        title="Archive"
         :count="allBlogs?.length|| 0"
         subTitle="记录同好会的点滴与未来计划 · SYNC LOGS"
         :themeColor="themeConfig.primaryColor"
@@ -52,7 +52,7 @@ const pageSize = 10
 
 // 获取所有数据
 const { data: allBlogs } = await useAsyncData('all-activities', () =>
-    queryCollection('activities').order('date', 'DESC').all()
+    queryCollection('archive').order('date', 'DESC').all()
 )
 
 // 计算总页数
@@ -67,5 +67,5 @@ const paginatedBlogs = computed(() => {
   return allBlogs.value.slice(start, start + pageSize)
 })
 
-useHead({ title: '联协活动' })
+useHead({ title: '联协映像' })
 </script>
