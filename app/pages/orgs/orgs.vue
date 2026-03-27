@@ -8,7 +8,7 @@
     />
 
     <div class="grid grid-cols-1 gap-4 md:gap-6">
-      <div v-for="org in orgs" :key="org.path"
+      <div v-for="org in paginatedorgs" :key="org.path"
            class="group relative bg-white
            /* 毛玻璃核心配置 */
            bg-white/20 backdrop-blur-xl border border-white/20 rounded-2xl
@@ -90,6 +90,10 @@
         </div>
       </div>
     </div>
+    <AppPagination
+        v-model="currentPage"
+        :total="totalPages"
+    />
 
     <div class="mt-8 md:mt-12 p-6 md:p-8 border-2 border-dashed border-gray-100 rounded-sm text-center">
       <h3 class="text-xs md:text-sm font-black uppercase tracking-widest text-gray-400 mb-2">想要加入组织名录？</h3>
@@ -104,6 +108,8 @@
 <script setup>
 // 使用 app.vue 中定义的全局主题状态
 const themeConfig = useState('themeConfig')
+const currentPage = ref(1)
+const pageSize = 10
 
 
 // 获取组织数据并增加索引编号
@@ -124,7 +130,19 @@ const orgs = computed(() => {
   }))
 })
 
+// 计算总页数
+const totalPages = computed(() =>
+    Math.ceil((orgs.value?.length || 0) / pageSize)
+)
+
+// **核心：根据当前页码，动态切分要显示的文章**
+const paginatedorgs = computed(() => {
+  if (!orgs.value) return []
+  const start = (currentPage.value - 1) * pageSize
+  return orgs.value.slice(start, start + pageSize)
+})
+
 useHead({
-  title: '组织名录'
+  title: '联协组织'
 })
 </script>

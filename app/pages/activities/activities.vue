@@ -9,7 +9,7 @@
 
     <div class="space-y-8">
       <NuxtLink
-          v-for="post in allBlogs"
+          v-for="post in paginatedBlogs"
           :key="post.path"
           :to="post.path"
           class="group block p-6
@@ -35,6 +35,10 @@
           阅读全文 <span class="ml-1">→</span>
         </div>
       </NuxtLink>
+      <AppPagination
+          v-model="currentPage"
+          :total="totalPages"
+      />
     </div>
   </div>
 </template>
@@ -43,12 +47,25 @@
 // 使用 app.vue 中定义的全局主题状态
 const themeConfig = useState('themeConfig')
 
+const currentPage = ref(1)
+const pageSize = 10
+
+// 获取所有数据
 const { data: allBlogs } = await useAsyncData('all-activities', () =>
-    queryCollection('activities')
-        .order('date', 'DESC') // 按时间倒序
-        .all()
+    queryCollection('activities').order('date', 'DESC').all()
 )
 
-// console.log('📦 Original Page Data:', JSON.parse(JSON.stringify(allBlogs.value)))
-useHead({ title: '博客存档' })
+// 计算总页数
+const totalPages = computed(() =>
+    Math.ceil((allBlogs.value?.length || 0) / pageSize)
+)
+
+// **核心：根据当前页码，动态切分要显示的文章**
+const paginatedBlogs = computed(() => {
+  if (!allBlogs.value) return []
+  const start = (currentPage.value - 1) * pageSize
+  return allBlogs.value.slice(start, start + pageSize)
+})
+
+useHead({ title: '联协映像' })
 </script>
