@@ -1,9 +1,9 @@
 <template>
   <MarkdownContainer
       collection="projects"
-      backTo="/calendar"
-      backLabel="Back to Calendar"
-      backBtnLabel="返回日历视图"
-      archiveName="Activity Logs"
+      backTo="/projects/projects"
+      backLabel="Back to Nexus Projects"
+      backBtnLabel="返回联协公招"
+      archiveName="Projects Logs"
   />
 </template>

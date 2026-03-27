@@ -54,10 +54,24 @@
     </div>
 
     <footer
-        class="relative z-10 w-full p-8 text-center text-gray-500 text-[11px]  backdrop-blur-md tracking-widest uppercase transition-all duration-700"
+        class="relative z-10 w-full p-8 text-center text-gray-500 text-[11px] backdrop-blur-md tracking-widest uppercase transition-all duration-700"
         :style="{ backgroundColor: `rgba(255, 255, 255, ${themeConfig.sidebarOpacity})` }"
     >
-      <div class="lg:pl-64 flex flex-col items-center gap-2">
+      <div class="lg:pl-64 flex flex-col items-center gap-4">
+
+        <div class="flex items-center gap-5">
+          <a
+              v-for="link in socialLinks"
+              :key="link.name"
+              :href="link.url"
+              target="_blank"
+              class="transition-all duration-300 hover:scale-110"
+              :title="link.name"
+          >
+            <Icon :name="link.icon" class="w-5 h-5" :style="{ color: themeConfig.primaryColor }" />
+          </a>
+        </div>
+
         <div class="flex flex-wrap justify-center items-center gap-2">
           <span>&copy; 2026 跨世界同好会项目组</span>
           <span class="hidden sm:inline mx-1">/</span>
@@ -121,6 +135,25 @@ useHead({
     { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono&display=swap' }
   ]
 })
+
+const socialLinks = [
+  {
+    name: 'GitHub',
+    url: 'https://github.com/AhsokaTano26/club-web',
+    icon: 'lucide:github'
+  },
+  {
+    name: 'Bilibili',
+    url: 'https://space.bilibili.com/',
+    icon: 'ri:bilibili-line'
+  },
+  {
+    name: 'Weibo',
+    url: 'https://weibo.com/',
+    icon: 'ri:weibo-fill'
+  }
+];
+
 </script>
 
 <style>

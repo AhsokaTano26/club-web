@@ -92,6 +92,9 @@
 </template>
 
 <script setup>
+
+const quote = "Stay focused, be present."
+
 // 2. 这里是你的“控制面板”
 const glassConfig = {
   opacity: '0.1',      // 背景透明度 (0-1)

@@ -6,7 +6,7 @@ export default <Partial<Config>>{
     theme: {
         extend: {
             colors: {
-                primary: '#f97316', // 橙色主题
+                primary: '#5b92e5',
             }
         }
     },

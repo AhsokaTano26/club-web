@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gray-50/20 flex flex-col font-sans selection:bg-blue-100">
+  <div class="min-h-screen bg-white/20 backdrop-blur-xl border border-white/20 rounded-2xl flex flex-col font-sans  selection:bg-blue-100">
     <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-black/5 py-3 px-6">
       <div class="max-w-4xl mx-auto flex justify-between items-center">
         <NuxtLink :to="backTo" class="group text-[10px] font-black text-gray-400 hover:text-blue-600 transition-all flex items-center gap-1.5 uppercase tracking-[0.2em]">
@@ -23,12 +23,12 @@
               {{ page.type || page.status }}
             </div>
 
-            <div v-if="page.date" class="flex items-center gap-1.5 text-gray-400 font-mono text-xs">
+            <div v-if="page.date" class="flex items-center gap-1.5 text-gray-200 font-mono text-xs">
               <Icon name="lucide:calendar-range" class="w-3.5 h-3.5" />
               {{ page.date }}
             </div>
 
-            <div v-if="page.author" class="flex items-center gap-1.5 text-gray-400 font-mono text-xs border-l border-gray-200 pl-3">
+            <div v-if="page.author" class="flex items-center gap-1.5 text-gray-200 font-mono text-xs border-l border-gray-200 pl-3">
               <Icon name="lucide:user" class="w-3.5 h-3.5" />
               {{ page.author }}
             </div>
@@ -40,8 +40,8 @@
           </h1>
 
           <div v-if="page.description" class="relative pl-6 py-1">
-            <div class="absolute left-0 top-0 bottom-0 w-1 bg-blue-500/20 rounded-full"></div>
-            <p class="text-xl text-gray-500 leading-relaxed font-medium italic italic-font">
+            <div class="absolute left-0 top-0 bottom-0 w-1 bg-blue-500 rounded-full"></div>
+            <p class="text-xl text-gray-200 leading-relaxed font-medium italic italic-font">
               {{ page.description }}
             </p>
           </div>
@@ -56,22 +56,15 @@
           <div class="h-px w-full bg-gradient-to-r from-gray-100 via-transparent to-transparent"></div>
         </header>
 
-        <article class="prose prose-slate prose-blue max-w-none
-                        prose-headings:font-black prose-headings:tracking-tighter
-                        prose-blockquote:border-l-4 prose-blockquote:border-blue-500 prose-blockquote:bg-blue-50/30 prose-blockquote:py-1
-                        prose-img:rounded-lg prose-img:shadow-2xl">
-          <ContentRenderer :value="page" />
-
-          <div v-if="page.link" class="mt-12">
-            <a :href="page.link" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white text-sm font-black rounded-lg hover:bg-blue-700 transition-all shadow-lg shadow-blue-200">
-              <Icon name="lucide:external-link" class="w-4 h-4" />
-              访问项目仓库 / 链接
-            </a>
-          </div>
-        </article>
+        <ProseGlass :value="page" />
 
       </div>
     </main>
+
+    <footer class="mt-24 pt-8 border-t border-white/5 text-[10px] font-mono
+    text-gray-100 uppercase tracking-widest text-center">
+      End of File // {{ new Date().toLocaleDateString() }}
+    </footer>
   </div>
 </template>
 

@@ -55,11 +55,7 @@
         </div>
       </header>
 
-      <article class="prose prose-slate max-w-none
-                      prose-headings:font-black prose-headings:tracking-tighter
-                      custom-article-theme">
-        <ContentRenderer :value="page" />
-      </article>
+      <ProseGlass :value="page" />
 
 
       <footer class="mt-20 pt-10 border-t border-gray-100 flex justify-between items-center">
