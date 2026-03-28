@@ -30,27 +30,56 @@
         <div class="flex-1 space-y-4">
           <div class="flex items-center gap-3">
             <h1 class="text-4xl font-black tracking-tighter text-gray-900">{{ page.title }}</h1>
-            <div v-if="page.status" class="px-2 py-1 bg-green-400 text-white text-[9px] font-black rounded-sm tracking-widest uppercase">
-              {{ page.status }} Org</div>
+
+            <span v-if="page.status"
+                  class="flex items-center gap-1 text-[9px] md:text-[10px] font-mono px-1.5 py-0.5 rounded-sm shadow-sm transition-all duration-500 text-white"
+                  :style="{ backgroundColor: theme.primaryColor }">
+              <Icon name="lucide:layers" class="w-2.5 h-2.5" />
+              <span class="tracking-widest uppercase">{{ page.status }} Org</span>
+            </span>
           </div>
 
-          <p class="text-lg text-gray-500 italic leading-relaxed border-l-4 pl-6 transition-all duration-700" :style="{ borderColor: theme.primaryColor }">
+          <p class="text-lg text-gray-200 italic leading-relaxed border-l-4 pl-6 transition-all duration-700" :style="{ borderColor: theme.primaryColor }">
             {{ page.description }}
           </p>
 
-          <div class="flex flex-wrap gap-4 pt-2">
-            <div class="flex items-center gap-2 text-xs font-mono text-gray-400">
-              <Icon name="lucide:calendar" class="w-3.5 h-3.5" /> EST. {{ page.founded }}
-            </div>
-            <div class="flex items-center gap-2 text-xs font-mono text-gray-400">
-              <Icon name="lucide:user-plus" class="w-3.5 h-3.5" /> JOINED: {{ page.joined_at || '2026-03-26' }}
-            </div>
-            <div class="flex items-center gap-2 text-xs font-mono text-gray-400">
-              <Icon name="fluent-mdl2:party-leader" class="w-3.5 h-3.5" /> LEADER: {{ page.leader }}
-            </div>
-            <div class="flex items-center gap-2 text-xs font-mono text-gray-400">
-              <Icon name="tabler:number" class="w-3.5 h-3.5" /> Orgs ID: {{ page.orgs_id || 'N/A' }}
-            </div>
+          <div class="flex flex-wrap gap-2 pt-3">
+
+            <span v-if="page.type" class="flex items-center gap-1 text-[9px] md:text-[10px] font-mono px-1.5 py-0.5 bg-indigo-600 text-white rounded-sm shadow-sm">
+              <Icon name="lucide:tag" class="w-2.5 h-2.5" />
+              {{ page.type }}
+            </span>
+
+            <span v-if="page.founded" class="flex items-center gap-1 text-[9px] md:text-[10px] font-mono px-1.5 py-0.5 bg-orange-50 text-orange-600 rounded-sm">
+              <Icon name="lucide:flag" class="w-2.5 h-2.5" />
+              EST. {{ page.founded }}
+            </span>
+
+            <span v-if="page.joined_at" class="flex items-center gap-1 text-[9px] md:text-[10px] font-mono px-1.5 py-0.5 bg-emerald-50 text-emerald-600 rounded-sm">
+              <Icon name="lucide:user-plus" class="w-2.5 h-2.5" />
+              JOINED: {{ page.joined_at }}
+            </span>
+
+            <span v-if="page.leader" class="flex items-center gap-1 text-[9px] md:text-[10px] font-mono px-1.5 py-0.5 bg-rose-50 text-rose-600 rounded-sm">
+              <Icon name="lucide:user" class="w-2.5 h-2.5" />
+              LEADER: {{ page.leader }}
+            </span>
+
+            <span v-if="page.members_count" class="flex items-center gap-1 text-[9px] md:text-[10px] font-mono px-1.5 py-0.5 bg-teal-50 text-teal-600 rounded-sm">
+              <Icon name="lucide:users" class="w-2.5 h-2.5" />
+              MEMBERS: {{ page.members_count }}
+            </span>
+
+            <span v-if="page.orgs_id" class="flex items-center gap-1 text-[9px] md:text-[10px] font-mono px-1.5 py-0.5 bg-slate-100 text-slate-600 rounded-sm">
+              <Icon name="lucide:fingerprint" class="w-2.5 h-2.5" />
+              ID: {{ page.orgs_id }}
+            </span>
+
+            <span v-if="page.location" class="flex items-center gap-1 text-[9px] md:text-[10px] font-mono px-1.5 py-0.5 bg-red-50 text-red-600 rounded-sm uppercase">
+              <Icon name="lucide:map-pin" class="w-2.5 h-2.5" />
+              {{ page.location }}
+            </span>
+
           </div>
         </div>
       </header>

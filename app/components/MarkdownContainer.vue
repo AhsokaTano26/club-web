@@ -26,10 +26,9 @@
                   @error="(e) => e.target.src = '/default/aimi.jpg'"
               />
             </template>
-
             <Icon
                 v-else
-                :name="page.icon || getAutoIcon"
+                :name="page.icon || page.theme?.logo || getAutoIcon"
                 class="w-16 h-16 transition-all duration-700 group-hover:scale-110"
                 :style="{ color: theme?.primaryColor || '#3b82f6' }"
             />
@@ -37,56 +36,84 @@
           </div>
 
           <div class="flex-1 space-y-4">
-            <div class="flex items-center gap-3 flex-wrap">
-              <h1 class="text-4xl font-black tracking-tighter text-gray-900">{{ page.title }}</h1>
-
-              <div v-if="page.type"
-                   :class="['px-2 py-1 text-[9px] font-black rounded-sm tracking-widest uppercase text-white shadow-sm transition-colors duration-500', getTypeColor]">
-                {{ formatLabel(page.type) }}
-              </div>
-
-              <div v-if="page.status"
-                   class="px-2 py-0.5 text-[9px] font-bold rounded-sm tracking-widest uppercase border transition-all duration-500"
-                   :style="{ borderColor: theme?.primaryColor || '#3b82f6', color: theme?.primaryColor || '#3b82f6' }">
-                {{ formatLabel(page.status) }}
-              </div>
-            </div>
+            <h1 class="text-4xl font-black tracking-tighter text-gray-900">{{ page.title }}</h1>
 
             <p v-if="page.description" class="text-lg text-gray-500 italic leading-relaxed border-l-4 pl-6 transition-all duration-700" :style="{ borderColor: theme?.primaryColor || '#3b82f6' }">
               {{ page.description }}
             </p>
 
-            <div class="flex flex-wrap gap-4 pt-2">
-              <div v-if="page.date" class="flex items-center gap-2 text-xs font-mono text-gray-400">
-                <Icon name="lucide:calendar-range" class="w-3.5 h-3.5" /> {{ page.date }}
-              </div>
+            <div class="flex flex-wrap gap-2 pt-3">
 
-              <div v-if="page.author" class="flex items-center gap-2 text-xs font-mono text-gray-400">
-                <Icon name="lucide:user-pen" class="w-3.5 h-3.5" /> {{ page.author }}
-              </div>
+              <span v-if="page.type" :class="['flex items-center gap-1 text-[9px] md:text-[10px] font-mono px-1.5 py-0.5 rounded-sm text-white shadow-sm', getTypeColor]">
+                <Icon name="lucide:tag" class="w-2.5 h-2.5" />
+                {{ formatLabel(page.type) }}
+              </span>
 
-              <div v-if="page.org || page.orgs" class="flex items-center gap-2 text-xs font-mono text-gray-400">
-                <Icon name="lucide:building-2" class="w-3.5 h-3.5" />
-                {{ Array.isArray(page.orgs) ? page.orgs.join(' / ') : page.org }}
-              </div>
-            </div>
+              <span v-if="page.status" class="flex items-center gap-1 text-[9px] md:text-[10px] font-mono px-1.5 py-0.5 bg-amber-50 text-amber-600 rounded-sm uppercase">
+                <Icon name="lucide:activity" class="w-2.5 h-2.5" />
+                {{ formatLabel(page.status) }}
+              </span>
 
-            <div class="flex flex-wrap items-center gap-4 pt-1">
-              <div v-if="allTags && allTags.length" class="flex flex-wrap gap-2">
-                <span v-for="tag in allTags" :key="tag"
-                      class="text-[9px] font-bold text-gray-400 border border-gray-200 px-2 py-0.5 rounded-sm uppercase">
-                  # {{ tag }}
-                </span>
-              </div>
+              <span v-if="page.date" class="flex items-center gap-1 text-[9px] md:text-[10px] font-mono px-1.5 py-0.5 bg-blue-50 text-blue-600 rounded-sm">
+                <Icon name="lucide:calendar-range" class="w-2.5 h-2.5" />
+                {{ page.date }}
+              </span>
 
-              <div v-if="page.link || page.website" :class="{'border-l border-gray-200 pl-4': allTags && allTags.length}">
-                <a :href="page.link || page.website" target="_blank"
-                   class="inline-flex items-center gap-2 font-bold text-xs uppercase tracking-widest hover:opacity-80 transition-opacity"
-                   :style="{ color: theme?.primaryColor || '#3b82f6' }">
-                  <Icon name="lucide:external-link" class="w-4 h-4" />
-                  Connect to Source
-                </a>
-              </div>
+              <span v-if="page.author" class="flex items-center gap-1 text-[9px] md:text-[10px] font-mono px-1.5 py-0.5 bg-purple-50 text-purple-600 rounded-sm">
+                <Icon name="lucide:user-pen" class="w-2.5 h-2.5" />
+                {{ page.author }}
+              </span>
+
+              <span v-if="page.org || page.orgs" class="flex items-center gap-1 text-[9px] md:text-[10px] font-mono px-1.5 py-0.5 bg-indigo-50 text-indigo-600 rounded-sm">
+                <Icon name="lucide:building-2" class="w-2.5 h-2.5" />
+                {{ Array.isArray(page.orgs) ? page.orgs.join(' / ') : (page.orgs || page.org) }}
+              </span>
+
+              <span v-if="page.orgs_id" class="flex items-center gap-1 text-[9px] md:text-[10px] font-mono px-1.5 py-0.5 bg-slate-50 text-slate-600 rounded-sm">
+                <Icon name="lucide:fingerprint" class="w-2.5 h-2.5" />
+                ID: {{ page.orgs_id }}
+              </span>
+
+              <span v-if="page.founded" class="flex items-center gap-1 text-[9px] md:text-[10px] font-mono px-1.5 py-0.5 bg-orange-50 text-orange-600 rounded-sm">
+                <Icon name="lucide:flag" class="w-2.5 h-2.5" />
+                Founded: {{ page.founded }}
+              </span>
+
+              <span v-if="page.joined_at" class="flex items-center gap-1 text-[9px] md:text-[10px] font-mono px-1.5 py-0.5 bg-emerald-50 text-emerald-600 rounded-sm">
+                <Icon name="lucide:user-plus" class="w-2.5 h-2.5" />
+                Joined: {{ page.joined_at }}
+              </span>
+
+              <span v-if="page.members_count" class="flex items-center gap-1 text-[9px] md:text-[10px] font-mono px-1.5 py-0.5 bg-teal-50 text-teal-600 rounded-sm">
+                <Icon name="lucide:users" class="w-2.5 h-2.5" />
+                Members: {{ page.members_count }}
+              </span>
+
+              <span v-if="page.leader" class="flex items-center gap-1 text-[9px] md:text-[10px] font-mono px-1.5 py-0.5 bg-rose-50 text-rose-600 rounded-sm">
+                <Icon name="lucide:user" class="w-2.5 h-2.5" />
+                Leader: {{ page.leader }}
+              </span>
+
+              <span v-if="page.location" class="flex items-center gap-1 text-[9px] md:text-[10px] font-mono px-1.5 py-0.5 bg-red-50 text-red-600 rounded-sm uppercase">
+                <Icon name="lucide:map-pin" class="w-2.5 h-2.5" />
+                {{ formatLabel(page.location) }}
+              </span>
+
+              <a v-if="page.link || page.website" :href="page.link || page.website" target="_blank" class="flex items-center gap-1 text-[9px] md:text-[10px] font-mono px-1.5 py-0.5 bg-sky-50 text-sky-600 hover:bg-sky-100 transition-colors rounded-sm cursor-pointer">
+                <Icon name="lucide:external-link" class="w-2.5 h-2.5" />
+                Source Link
+              </a>
+
+              <a v-if="page.github" :href="page.github" target="_blank" class="flex items-center gap-1 text-[9px] md:text-[10px] font-mono px-1.5 py-0.5 bg-zinc-100 text-zinc-700 hover:bg-zinc-200 transition-colors rounded-sm cursor-pointer">
+                <Icon name="lucide:github" class="w-2.5 h-2.5" />
+                GitHub
+              </a>
+
+              <span v-for="tag in allTags" :key="tag" class="flex items-center gap-1 text-[9px] md:text-[10px] font-mono px-1.5 py-0.5 bg-gray-50 text-gray-500 border border-gray-100 rounded-sm uppercase">
+                <Icon name="lucide:hash" class="w-2 h-2 opacity-50" />
+                {{ tag }}
+              </span>
+
             </div>
           </div>
         </header>
@@ -104,7 +131,7 @@
 
 <script setup>
 const props = defineProps({
-  collection: String, // activities, blog, notice, timeline, project, archive
+  collection: String, // activities, blog, notice, timeline, project, archive, orgs
   backTo: { type: String, default: '/' },
   backLabel: { type: String, default: 'Protocol: Return' },
   archiveName: { type: String, default: 'SYSTEM_ARCHIVE' }
@@ -138,7 +165,10 @@ const getTypeColor = computed(() => {
     rese: 'bg-emerald-600',
     // 映像
     gallery: 'bg-pink-500',
-    tweet: 'bg-blue-400'
+    tweet: 'bg-blue-400',
+    // 组织类型
+    fc: 'bg-pink-400',
+    dkk: 'bg-orange-500'
   }
   return colorMap[val] || 'bg-gray-500'
 })
@@ -159,7 +189,9 @@ const getAutoIcon = computed(() => {
     gallery: 'lucide:image',
     regula: 'lucide:scroll-text',
     event: 'lucide:megaphone',
-    tweet: 'lucide:message-circle'
+    tweet: 'lucide:message-circle',
+    fc: 'lucide:heart-handshake',
+    dkk: 'lucide:users'
   }
   return iconMap[type] || categoryIcon.value
 })
@@ -172,7 +204,8 @@ const categoryIcon = computed(() => {
     notice: 'lucide:megaphone',
     timeline: 'lucide:git-branch',
     project: 'lucide:briefcase',
-    archive: 'lucide:clapperboard'
+    archive: 'lucide:clapperboard',
+    orgs: 'lucide:network'
   }
   return map[props.collection] || 'lucide:file-text'
 })

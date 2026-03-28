@@ -34,4 +34,11 @@ export default defineNuxtConfig({
       }
     }
   },
+  routeRules: {
+      '/date_model': {
+        redirect: {
+          to: 'https://cfe6knlepl.apifox.cn',
+        }
+      }
+    }
 })

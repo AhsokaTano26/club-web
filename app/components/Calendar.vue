@@ -10,7 +10,6 @@
     </header>
 
     <div class="glass-effect rounded-xl overflow-hidden border border-[var(--glass-border)] shadow-2xl">
-
       <div class="p-4 flex justify-between items-center border-b border-[var(--glass-border)] bg-white/[var(--glass-opacity)]">
         <div class="flex items-center gap-3">
           <span class="text-xl font-bold text-white">{{ year }}年{{ month + 1 }}月</span>
@@ -44,16 +43,37 @@
 
           <div class="mt-2 flex flex-wrap gap-1">
             <div v-for="ev in day.events" :key="ev.id"
-                 :class="['w-1.5 h-1.5 rounded-full shadow-glow', colors[ev.type]]">
+                 :class="['w-1.5 h-1.5 rounded-full shadow-glow', colors[ev.type] || colors.default]">
             </div>
           </div>
         </div>
       </div>
-      <div class="p-3 bg-gray-50/10 flex justify-between items-center ">
-        <div class="flex gap-4 text-[10px] font-bold text-gray-50 uppercase tracking-widest">
-          <span class="flex items-center gap-1.5"><i class="w-2 h-2 rounded-full bg-purple-400"></i> 纪念日</span>
-          <span class="flex items-center gap-1.5"><i class="w-2 h-2 rounded-full bg-green-400"></i> 展会活动</span>
-          <span class="flex items-center gap-1.5"><i class="w-2 h-2 rounded-full bg-blue-400"></i> 官方发布</span>
+
+      <div class="p-3 bg-white/5 flex flex-wrap gap-x-6 gap-y-2 items-center border-t border-white/5">
+        <div class="flex gap-4 text-[9px] font-black text-white/80 uppercase tracking-[0.15em]">
+          <span class="flex items-center gap-1.5">
+            <i class="w-2 h-2 rounded-full bg-blue-400 shadow-[0_0_8px_rgba(96,165,250,0.6)]"></i> 官方 Official
+          </span>
+                <span class="flex items-center gap-1.5">
+            <i class="w-2 h-2 rounded-full bg-purple-400 shadow-[0_0_8px_rgba(192,132,252,0.6)]"></i> 纪念 Anniversary
+          </span>
+                <span class="flex items-center gap-1.5">
+            <i class="w-2 h-2 rounded-full bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.6)]"></i> 联协 Nexus
+          </span>
+              </div>
+
+              <div class="hidden md:block w-px h-3 bg-white"></div>
+
+              <div class="flex gap-4 text-[9px] font-black text-white/80 uppercase tracking-[0.15em]">
+          <span class="flex items-center gap-1.5">
+            <i class="w-2 h-2 rounded-full bg-emerald-500"></i> 文件 Docu
+          </span>
+                <span class="flex items-center gap-1.5">
+            <i class="w-2 h-2 rounded-full bg-sky-400"></i> 推文 Artic
+          </span>
+                <span class="flex items-center gap-1.5">
+            <i class="w-2 h-2 rounded-full bg-amber-500"></i> 研究 Rese
+          </span>
         </div>
       </div>
     </div>
@@ -61,7 +81,7 @@
     <transition name="slide-up">
       <div v-if="selectedDate && selectedDate.events.length > 0" class="bg-white/5 backdrop-blur-xl p-6 border border-white/10 rounded-lg shadow-2xl">
         <div class="flex items-center justify-between mb-6">
-          <h4 class="text-xs font-black text-white/30 uppercase tracking-[0.2em]">
+          <h4 class="text-xs font-black text-white/80 uppercase tracking-[0.2em]">
             {{ selectedDate.dateStr }} · Timeline
           </h4>
           <span class="text-[10px] bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded-full font-bold border border-blue-500/30">
@@ -69,20 +89,19 @@
           </span>
         </div>
 
-        <div class="relative border-l-2 border-white/10 ml-2 pl-6 space-y-8">
+        <div class="relative border-l-2 border-white/80 ml-2 pl-6 space-y-8">
           <div v-for="ev in selectedDate.events" :key="ev.id"
-               @click="navigateTo(ev.id)"
                class="relative group cursor-pointer">
             <div :class="['absolute -left-[31px] top-1 w-4 h-4 rounded-full border-4 border-[#1a1a1a] shadow-lg transition-transform group-hover:scale-125', colors[ev.type] || colors.default]"></div>
 
             <div class="space-y-1">
-              <div :class="['text-[10px] font-black uppercase tracking-tighter', (colors[ev.type] || colors.default).replace('bg-', 'text-')]">
+              <div :class="['text-[10px] font-black uppercase tracking-tighter', (textColors[ev.type] || 'text-gray-200')]">
                 {{ ev.type }}
               </div>
               <div class="text-white/90 font-bold group-hover:text-blue-400 transition-colors">
                 {{ ev.title }}
               </div>
-              <div class="text-xs text-white/40 line-clamp-1">DETAILS →</div>
+              <NuxtLink :to="ev.id" class="text-[10px] text-white/80 hover:text-white/90 transition-colors block mt-1">查看详情 DETAILS →</NuxtLink>
             </div>
           </div>
         </div>
@@ -92,15 +111,47 @@
 </template>
 
 <script setup>
+import { computed, ref } from 'vue';
+import { Solar, Lunar } from 'lunar-javascript';
 
-const quote = "Stay focused, be present."
+// --- 配置与样式 ---
+const quote = "Stay focused, be present.";
+const monthNamesEn = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+// 背景色配置（用于日历小圆点、Badge 标签背景）
+const colors = {
+  // --- 活动性质 ---
+  Official: 'bg-blue-400',       // 官方
+  Anniversary: 'bg-purple-400',  // 纪念日
+  Nexus: 'bg-indigo-500',        // 联协（使用靛蓝色区别于官方蓝）
 
-// 2. 这里是你的“控制面板”
+  // --- 内容载体 ---
+  docu: 'bg-emerald-500',        // 文件（翠绿色，给人正式感）
+  artic: 'bg-sky-400',           // 推文（天蓝色，类似 Twitter/X）
+  rese: 'bg-amber-500',          // 研究成果（琥珀色，代表学术/成果）
+
+  default: 'bg-gray-400'
+};
+
+// 文字颜色配置（用于标题、详情页文本、幽灵按钮）
+const textColors = {
+  // --- 活动性质 ---
+  Official: 'text-blue-400',
+  Anniversary: 'text-purple-400',
+  Nexus: 'text-indigo-500',
+
+  // --- 内容载体 ---
+  docu: 'text-emerald-500',
+  artic: 'text-sky-400',
+  rese: 'text-amber-500',
+
+  default: 'text-gray-400'
+};
+
 const glassConfig = {
-  opacity: '0.1',      // 背景透明度 (0-1)
-  blur: '20px',         // 模糊程度
-  borderOpacity: '0.1', // 边框透明度
-  tintColor: '255, 255, 255' // 这里的颜色决定了玻璃是白玻还是黑玻
+  opacity: '0.1',
+  blur: '20px',
+  borderOpacity: '0.1',
+  tintColor: '255, 255, 255'
 };
 
 const glassStyles = computed(() => ({
@@ -109,85 +160,77 @@ const glassStyles = computed(() => ({
   '--glass-border': `rgba(${glassConfig.tintColor}, ${glassConfig.borderOpacity})`,
   '--glass-bg': `rgba(${glassConfig.tintColor}, ${glassConfig.opacity})`
 }));
-import { Solar, Lunar } from 'lunar-javascript';
 
-// 状态管理
-const year = ref(2026);
-const month = ref(2); // 0 = 1月，因此 2 = 3月
+// --- 状态管理 ---
+const now = new Date();
+const year = ref(now.getFullYear());
+const month = ref(now.getMonth());
 const selectedDate = ref(null);
 
-// 配置项
-const monthNamesEn = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-const colors = {
-  anniversary: 'bg-purple-400',
-  exhibition: 'bg-green-400',
-  official: 'bg-blue-400',
-  default: 'bg-gray-300'
-};
-const textColors = {
-  anniversary: 'text-purple-400',
-  exhibition: 'text-green-400',
-  official: 'text-blue-400'
-};
-
-// 1. 从 Nuxt Content v3 抓取数据
-
-const { data: posts } = await useAsyncData('combined-posts', async () => {
-  // 1. 同时发起两个集合的查询
+// --- 数据抓取与预处理 ---
+// 获取数据并建立以 "YYYY-MM-DD" 为 Key 的 Map
+const { data: eventMap } = await useAsyncData('calendar-events', async () => {
   const [blogPosts, activityPosts] = await Promise.all([
     queryCollection('blog').all(),
     queryCollection('activities').all()
-  ])
+  ]);
 
-  // 2. 将结果合并成一个数组
-  const combined = [...blogPosts, ...activityPosts]
+  const combined = [...blogPosts, ...activityPosts];
+  const map = {};
 
-  // 3. 根据日期（date）进行全局倒序排序
-  return combined.sort((a, b) => {
-    return new Date(b.date) - new Date(a.date)
-  })
-})
+  combined.forEach(post => {
+    if (!post.date) return;
 
-// 2. 生成日历阵列 (6行7列)
+    // 关键修复：统一将各种日期输入转为 YYYY-MM-DD 字符串
+    const d = new Date(post.date);
+    if (isNaN(d.getTime())) return;
+
+    const dateKey = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+
+    if (!map[dateKey]) map[dateKey] = [];
+    map[dateKey].push({
+      id: post.path,
+      title: post.title,
+      type: post.type || 'N/A'
+    });
+  });
+
+  return map;
+});
+
+// --- 日历生成逻辑 ---
 const days = computed(() => {
   const res = [];
-  const firstDay = new Date(year.value, month.value, 1).getDay(); // 0是周日
-  const shift = firstDay === 0 ? 6 : firstDay - 1; // 调整为周一开头
+  // 获取本月第一天是周几 (0是周日)
+  const firstDayInstance = new Date(year.value, month.value, 1);
+  let firstDay = firstDayInstance.getDay();
 
-  // 生成 42 个格子
+  // 调整周一为开始 (如果周日则设为7，以便计算)
+  const startOffset = firstDay === 0 ? 6 : firstDay - 1;
+
+  // 生成 6x7 共 42 个格子
   for (let i = 0; i < 42; i++) {
-    const date = new Date(year.value, month.value, i - shift + 1);
+    const date = new Date(year.value, month.value, i - startOffset + 1);
     const isCurrent = date.getMonth() === month.value;
-    res.push(formatDay(date, isCurrent));
+
+    // 生成格式化的 Key 用于从 Map 中取数据
+    const dateKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+
+    const lunar = Lunar.fromDate(date);
+
+    res.push({
+      dateStr: dateKey,
+      d: date.getDate(),
+      isCurrent,
+      isToday: new Date().toDateString() === date.toDateString(),
+      lunar: lunar.getJieQi() || lunar.getDayInChinese(),
+      events: eventMap.value?.[dateKey] || []
+    });
   }
   return res;
 });
 
-// 3. 格式化单日数据与事件匹配
-function formatDay(date, isCurrent) {
-  const lunar = Lunar.fromDate(date);
-  const dateStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
-
-  // 匹配文章
-  const dayEvents = (posts.value || [])
-      .filter(post => post.date === dateStr)
-      .map(post => ({
-        id: post.path,
-        title: post.title,
-        type: post.type || 'official'
-      }));
-
-  return {
-    dateStr,
-    d: date.getDate(),
-    isCurrent,
-    isToday: new Date().toDateString() === date.toDateString(),
-    lunar: lunar.getJieQi() || lunar.getDayInChinese(),
-    events: dayEvents
-  };
-}
-
-// 4. 交互逻辑
+// --- 交互方法 ---
 const handleDateClick = (day) => {
   selectedDate.value = day;
 };
@@ -199,6 +242,7 @@ const prevMonth = () => {
   } else {
     month.value--;
   }
+  selectedDate.value = null;
 };
 
 const nextMonth = () => {
@@ -208,10 +252,10 @@ const nextMonth = () => {
   } else {
     month.value++;
   }
+  selectedDate.value = null;
 };
 
 const resetDate = () => {
-  const now = new Date();
   year.value = now.getFullYear();
   month.value = now.getMonth();
   selectedDate.value = null;
@@ -219,6 +263,7 @@ const resetDate = () => {
 </script>
 
 <style scoped>
+/* 保持原有样式不变 */
 .slide-up-enter-active, .slide-up-leave-active {
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -231,22 +276,20 @@ const resetDate = () => {
   transform: translateY(-10px);
 }
 
-/* 自定义滚动条风格（如果需要） */
-::-webkit-scrollbar {
-  width: 4px;
-}
-::-webkit-scrollbar-thumb {
-  background: #e2e8f0;
-  border-radius: 10px;
-}
-/* 3. 核心毛玻璃 CSS */
 .glass-effect {
   background: var(--glass-bg);
   backdrop-filter: blur(var(--glass-blur));
-  -webkit-backdrop-filter: blur(var(--glass-blur)); /* 兼容 Safari */
+  -webkit-backdrop-filter: blur(var(--glass-blur));
 }
 
 .shadow-glow {
   box-shadow: 0 0 8px currentColor;
+}
+
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
 }
 </style>

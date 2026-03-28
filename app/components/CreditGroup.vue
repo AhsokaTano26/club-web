@@ -1,9 +1,9 @@
 <template>
   <div class="bg-white border border-gray-200 rounded-sm shadow-sm flex flex-col group/card">
     <div :class="['p-3 border-b border-gray-200 flex justify-between items-center transition-colors', headerBg]">
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-2 text-stone-50">
         <Icon :name="icon" :class="['w-4 h-4', iconColor]" />
-        <span :class="['text-[10px] font-black uppercase tracking-[0.2em]', titleColor]">
+        <span :class="['text-[10px] font-white uppercase bg-white/30 tracking-[0.2em]', titleColor]">
           {{ title }}
         </span>
       </div>

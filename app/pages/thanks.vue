@@ -71,9 +71,9 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <CreditGroup
             v-for="group in [
-              { title: 'Organizer', label: 'EST', icon: 'lucide:building-2', items: organizers, headerBg: 'bg-blue-500/10', titleColor: 'text-blue-600' },
-              { title: 'Sponsors', label: 'FUND', icon: 'line-md:person', items: sponsors, headerBg: 'bg-purple-500/10', titleColor: 'text-purple-600' },
-              { title: 'Special Thanks', label: 'CREDIT', icon: 'line-md:star', items: specialThanks, headerBg: 'bg-orange-500/10', titleColor: 'text-orange-600' }
+              { title: 'Organizer', label: 'EST', icon: 'lucide:building-2', items: organizers, headerBg: 'bg-blue-500/50', titleColor: 'text-blue-600' },
+              { title: 'Sponsors', label: 'FUND', icon: 'line-md:person', items: sponsors, headerBg: 'bg-purple-500/50', titleColor: 'text-purple-600' },
+              { title: 'Special Thanks', label: 'CREDIT', icon: 'line-md:star', items: specialThanks, headerBg: 'bg-orange-500/50', titleColor: 'text-orange-600' }
             ]"
             :key="group.title"
             v-bind="group"

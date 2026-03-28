@@ -9,10 +9,11 @@ export default defineContentConfig({
                 include: 'blog/**',
             },
             schema: z.object({
-                date: z.string(),
-                type: z.enum(['anniversary', 'exhibition', 'official']),
                 title: z.string(),
+                date: z.string(),
+                description: z.string(),
                 author: z.string(),
+                type: z.string(),
             })
         }),
         timeline: defineCollection({
@@ -22,9 +23,11 @@ export default defineContentConfig({
                 include: 'timeline/**',
             },
             schema: z.object({
-                date: z.string(),
                 title: z.string(),
-                description: z.string()
+                date: z.string(),
+                description: z.string(),
+                author: z.string(),
+                status: z.string(),
             })
         }),
         projects: defineCollection({
@@ -36,10 +39,11 @@ export default defineContentConfig({
             schema: z.object({
                 title: z.string(),
                 description: z.string(),
-                status: z.string(),
+                orgs: z.string(),
                 date: z.string(),
-                icon: z.string(),
-                link: z.string(),
+                author: z.string(),
+                status: z.string(),
+                link: z.string().optional(),
             })
         }),
         orgs: defineCollection({
@@ -50,16 +54,18 @@ export default defineContentConfig({
             },
             schema: z.object({
                 orgs_id: z.string(),
-                status: z.string(),
-                date: z.string(),
                 title: z.string(),
-                joined_at: z.string(),
                 description: z.string(),
                 founded: z.string(),
-                leader: z.string(),
+                joined_at: z.string(),
                 members_count: z.string(),
-                website: z.string(),
-                github: z.string(),
+                website: z.string().optional(),
+                github: z.string().optional(),
+                status: z.string(),
+                leader: z.string(),
+                location: z.string(),
+                type: z.string(),
+                tag: z.string(),
                 theme: z.object({
                     logo: z.string().optional(),
                     primaryColor: z.string().optional(),
@@ -67,7 +73,7 @@ export default defineContentConfig({
                     bgOverlayOpacity: z.number().optional(),
                     sidebarOpacity: z.number().optional(),
                     mainOpacity: z.number().optional(),
-                    rightTickOpacity: z.number().optional()
+                    rightTickOpacity: z.number().optional(),
                 })
             })
         }),
@@ -79,10 +85,10 @@ export default defineContentConfig({
             },
             schema: z.object({
                 title: z.string(),
-                description: z.string(),
-                type: z.string(),
                 date: z.string(),
+                description: z.string(),
                 author: z.string(),
+                type: z.string(),
             })
         }),
         activities: defineCollection({
@@ -92,10 +98,13 @@ export default defineContentConfig({
                 include: 'activities/**',
             },
             schema: z.object({
-                date: z.string(),
-                type: z.enum(['anniversary', 'exhibition', 'official']),
                 title: z.string(),
+
+                date: z.string(),
+                status: z.string(),
+                org: z.string(),
                 author: z.string(),
+                type: z.string(),
             })
         }),
         archive: defineCollection({
@@ -105,10 +114,12 @@ export default defineContentConfig({
                 include: 'archive/**',
             },
             schema: z.object({
-                date: z.string(),
-                type: z.string(),
                 title: z.string(),
+                description: z.string(),
+                orgs: z.string(),
+                date: z.string(),
                 author: z.string(),
+                type: z.string(),
             })
         }),
     }
