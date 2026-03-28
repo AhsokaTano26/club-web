@@ -12,7 +12,7 @@
       <span class="text-2xl not-italic opacity-40 font-mono tracking-normal">{{ count }}</span>
     </h1>
 
-    <p class="mt-4 text-[10px] font-black uppercase tracking-[0.5em] text-gray-400 truncate leading-none">
+    <p class="mt-4 text-[10px] font-black uppercase tracking-[0.5em] text-gray-200 truncate leading-none">
       {{ subTitle }}
     </p>
 

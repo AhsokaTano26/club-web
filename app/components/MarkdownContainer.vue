@@ -38,7 +38,7 @@
           <div class="flex-1 space-y-4">
             <h1 class="text-4xl font-black tracking-tighter text-gray-900">{{ page.title }}</h1>
 
-            <p v-if="page.description" class="text-lg text-gray-500 italic leading-relaxed border-l-4 pl-6 transition-all duration-700" :style="{ borderColor: theme?.primaryColor || '#3b82f6' }">
+            <p v-if="page.description" class="text-lg text-gray-300 italic leading-relaxed border-l-4 pl-6 transition-all duration-700" :style="{ borderColor: theme?.primaryColor || '#3b82f6' }">
               {{ page.description }}
             </p>
 
