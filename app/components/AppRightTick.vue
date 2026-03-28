@@ -51,6 +51,23 @@
 </template>
 
 <script setup>
+/**
+ * @component UpcomingSidebar
+ * @description 侧边栏“未来预告”组件。从 Nuxt Content 集合中检索日期晚于今天的文章，
+ * 并以垂直列表形式展示即将发布的计划。
+ * * @example
+ * <UpcomingSidebar />
+ * * @requires @nuxt/content - 用于执行 queryCollection 检索。
+ * @requires Icon - 用于渲染图标组件。
+ * * @logic
+ * 1. 自动获取当前 ISO 日期作为过滤基准。
+ * 2. 检索 'blog' 集合，按时间升序排列（确保最近的事件排在最前）。
+ * 3. 动态计算距离天数，若小于等于 7 天则激活 "Soon" 动画标签。
+ * * @style
+ * - 响应式设计：在 LG 断点以下占据全宽，以上则固定为 72 像素宽度。
+ * - 交互反馈：悬停时标题位移并变色，渐变分割线提供节奏感。
+ */
+
 const today = new Date().toISOString().split('T')[0]
 
 // 查询 blog 集合中日期 > 今天的文章

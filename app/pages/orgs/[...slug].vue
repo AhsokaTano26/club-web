@@ -119,7 +119,8 @@ const DEFAULT_THEME = {
   bgOverlayOpacity: 0,
   sidebarOpacity: 0,
   mainOpacity: 0,
-  rightTickOpacity: 0
+  rightTickOpacity: 0,
+  blurRadius: '0px'
 }
 
 // 1. 获取数据

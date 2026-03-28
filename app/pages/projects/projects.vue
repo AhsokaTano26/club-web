@@ -1,81 +1,96 @@
 <template>
   <div class="space-y-12 pb-24">
     <PageHeader
-        title="Project Archives"
+        title="Project Recruitment"
         :count="projects?.length || 0"
-        subTitle="实时监控组织内部项目的生命周期。从概念孵化（TODO）到最终归档（COMPLETED）。"
+        subTitle="联协公招：连接创作者与组织，共同孵化卓越项目。"
         :themeColor="themeConfig.primaryColor"
     />
 
     <div v-for="group in projectGroups" :key="group.id" class="space-y-4 md:space-y-6">
-
       <div class="flex items-center gap-3 md:gap-4">
         <div :class="['px-3 py-1 text-[9px] md:text-[10px] font-bold uppercase tracking-widest rounded-full shadow-sm text-white shrink-0', group.color]">
           {{ group.label }}
         </div>
         <div class="h-px flex-grow bg-gray-200/50"></div>
-        <span class="text-[10px] font-mono text-gray-200 whitespace-nowrap">
-          {{ group.allCount }} UNITS
+        <span class="text-[10px] font-mono text-gray-400 whitespace-nowrap">
+          {{ group.allCount }} PROJECTS
         </span>
       </div>
 
       <div v-if="group.items.length > 0" class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
         <div v-for="project in group.items" :key="project.path"
              class="group/card relative overflow-hidden transition-all duration-500
-                    bg-white/20 backdrop-blur-xl border border-white/20 rounded-2xl
-                    hover:bg-white/60 hover:shadow-2xl hover:shadow-blue-500/10 hover:-translate-y-1
-                    active:scale-[0.98] p-5 md:p-6 shadow-sm">
+                    bg-white/10 backdrop-blur-xl border border-white/10 rounded-2xl
+                    hover:bg-white/20 hover:border-blue-500/30 hover:-translate-y-1 p-5 md:p-6 shadow-sm">
 
-          <Icon :name="project.icon || 'lucide:box'"
-                class="absolute -right-6 -bottom-6 w-28 h-28 text-blue-500/20 opacity-[0.2]
-                       group-hover/card:opacity-10 group-hover/card:scale-110 group-hover/card:-rotate-12 transition-all duration-700" />
+          <Icon :name="project.icon || 'lucide:component'"
+                class="absolute -right-6 -bottom-6 w-28 h-28 text-blue-500/10 opacity-[0.15]
+                       group-hover/card:scale-110 group-hover/card:-rotate-12 transition-all duration-700" />
 
           <div class="relative z-10 space-y-4">
-            <div class="flex justify-between items-start">
-              <div class="p-2.5 bg-white rounded-xl shadow-sm border border-white/50 group-hover/card:bg-blue-600 group-hover/card:text-white transition-all duration-300">
-                <Icon :name="project.icon || 'lucide:box'" class="w-5 h-5 text-gray-400 group-hover/card:text-white" />
+            <div class="flex justify-between items-center">
+              <div v-if="project.status"
+                   :class="[
+                     'text-[10px] font-mono px-2 py-0.5 rounded-sm border transition-colors',
+                     project.status === 'funding' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
+                     project.status === 'need_creator' ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' :
+                     project.status === 'finding_resonance' ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' :
+                     'bg-gray-500/10 text-gray-400 border-gray-500/20'
+                   ]">
+                {{
+                  project.status === 'funding' ? '众筹中' :
+                      project.status === 'need_creator' ? '寻找创作者' :
+                          project.status === 'finding_resonance' ? '寻求共鸣' : '其他公招'
+                }}
               </div>
-              <time class="text-[10px] font-mono text-black-400 bg-white/50 px-2 py-1 rounded-md border border-white/60">
+              <time class="text-[10px] font-mono text-blue-400 font-bold bg-blue-950/40 px-2 py-0.5 rounded border border-blue-500/20">
                 {{ project.date }}
               </time>
             </div>
 
             <div class="space-y-2">
-              <h3 class="font-bold text-gray-100 text-base md:text-lg group-hover/card:text-blue-800 transition-colors">
+              <h3 class="font-bold text-gray-100 text-lg group-hover/card:text-blue-400 transition-colors">
                 {{ project.title }}
               </h3>
-              <p class="text-[11px] text-gray-200 md:text-lg group-hover/card:text-blue-400 line-clamp-2 leading-relaxed font-light italic opacity-80">
+              <p class="text-[13px] text-gray-400 line-clamp-2 leading-relaxed font-light">
                 {{ project.description }}
               </p>
             </div>
 
-            <div class="pt-4 flex items-center justify-between border-t border-gray-200/30">
+            <div class="flex flex-wrap gap-2">
+              <span v-if="project.orgs" class="flex items-center gap-1 text-[10px] font-mono px-1.5 py-0.5 bg-white/5 text-blue-300 rounded-sm border border-white/10">
+                <Icon name="lucide:building-2" class="w-2.5 h-2.5 text-blue-400" />
+                {{ project.orgs }}
+              </span>
+              <span v-if="project.author" class="flex items-center gap-1 text-[10px] font-mono px-1.5 py-0.5 bg-white/5 text-gray-300 rounded-sm border border-white/10">
+                <Icon name="lucide:user-pen" class="w-2.5 h-2.5 text-blue-400" />
+                {{ project.author }}
+              </span>
+            </div>
+
+            <div class="pt-4 flex items-center justify-between border-t border-white/5">
               <NuxtLink :to="project.path"
-                        class="text-[10px] font-black uppercase tracking-widest text-blue-600/70 hover:text-blue-600 flex items-center gap-1.5 transition-colors">
-                Explore Details <Icon name="lucide:arrow-right" class="w-3.5 h-3.5" />
+                        class="text-[10px] font-black uppercase tracking-widest text-blue-400/80 hover:text-blue-400 flex items-center gap-1.5 transition-colors">
+                VIEW DETAILS <Icon name="lucide:chevron-right" class="w-3.5 h-3.5" />
               </NuxtLink>
 
-              <a v-if="project.link" :target="_blank" :href="project.link"
-                 class="p-2 text-black-400 hover:text-blue-600 hover:bg-white/80 rounded-full transition-all shadow-none hover:shadow-sm">
-                <Icon name="lucide:github" class="w-5 h-5" />
-              </a>
+              <div class="flex gap-2">
+                <a v-if="project.link" :target="'_blank'" :href="project.link"
+                   class="p-1.5 text-gray-400 hover:text-blue-400 hover:bg-white/5 rounded transition-all"
+                   title="组织链接">
+                  <Icon name="lucide:external-link" class="w-4 h-4" />
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div v-if="group.total > 1" class="flex justify-end mt-4">
-        <AppPagination
-            v-model="groupPages[group.id]"
-            :total="group.total"
-            :scroll-to-top="false"
-        />
-      </div>
-
       <div v-if="group.allCount === 0"
-           class="py-12 border border-dashed border-gray-200/50 bg-white/20 backdrop-blur-sm rounded-2xl flex flex-col items-center justify-center grayscale opacity-60">
-        <Icon name="lucide:ghost" class="w-8 h-8 mb-3 text-gray-300" />
-        <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400">No Active Records</span>
+           class="py-12 border border-dashed border-white/10 bg-white/5 backdrop-blur-sm rounded-2xl flex flex-col items-center justify-center opacity-60">
+        <Icon name="lucide:box-select" class="w-8 h-8 mb-3 text-gray-500" />
+        <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">No Projects Found</span>
       </div>
     </div>
   </div>

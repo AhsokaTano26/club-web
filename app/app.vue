@@ -54,8 +54,8 @@
     </div>
 
     <footer
-        class="relative z-10 w-full p-8 text-center text-gray-500 text-[11px] backdrop-blur-md tracking-widest uppercase transition-all duration-700"
-        :style="{ backgroundColor: `rgba(255, 255, 255, ${themeConfig.sidebarOpacity})` }"
+        class="relative z-10 w-full p-8 text-center text-gray-500 text-[11px] tracking-widest uppercase transition-all duration-700"
+        :style="{ backgroundColor: 'transparent' }"
     >
       <div class="lg:pl-64 flex flex-col items-center gap-4">
 

@@ -62,6 +62,17 @@
 </template>
 
 <script setup>
+/**
+ * @component AppSidebar
+ * @description 应用程序核心侧边栏组件。包含品牌 Logo、多级导航分类及移动端适配逻辑。
+ * * @features
+ * 1. **混合布局**：移动端作为全屏/半屏抽屉（Drawer），桌面端自动转为左侧常驻布局。
+ * 2. **共享状态**：利用 Nuxt `useState` 实现跨组件（如 Navbar 切换按钮）的开关同步。
+ * 3. **视觉反馈**：包含当前路由高亮、悬停位移、内阴影光效及左侧指示圆点。
+ * 4. **交互体验**：移动端点击链接或遮罩层（Backdrop）会自动触发侧边栏收起。
+ * * @state {Ref<boolean>} isOpen - 全局侧边栏可见性状态，源自 'sidebar-open'。
+ * @data {Array} nav - 导航结构数组，定义了分类标题、路径及外部链接属性。
+ */
 // AppSidebar.vue 的 script setup 中
 const isOpen = useState('sidebar-open') // 自动同步 app.vue 中的值
 

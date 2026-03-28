@@ -55,6 +55,19 @@
 </template>
 
 <script setup>
+/**
+ * @component ProjectTimeline
+ * @description 项目进度时间轴组件。通过 Nuxt Content 自动抓取并按时间倒序排列项目里程碑，支持自动识别并高亮“今日”状态。
+ * * @features
+ * 1. **动态数据驱动**：自动检索 `timeline` 集合，无需手动维护列表。
+ * 2. **智能状态识别**：逻辑层自动对比 `item.date` 与系统当前日期，匹配项将获得 `isToday` 标记。
+ * 3. **视觉焦点系统**：针对“今日”节点，应用 `animate-pulse` 缩放动画与自定义投影，增强仪式感。
+ * 4. **排版设计**：采用左侧 `border-l-2` 贯穿线，节点使用绝对定位对齐，悬停时触发 `translate-x-1` 的平滑位移。
+ * 5. **健壮性**：内置空状态（Empty State）处理，确保无记录时界面不突兀。
+ * * @requires @nuxt/content - 用于 queryCollection 数据检索。
+ * @requires Icon - 用于渲染进度图标。
+ */
+
 const { data: rawData } = await useAsyncData('timeline-content', () =>
     queryCollection('timeline').all()
 )

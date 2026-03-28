@@ -111,6 +111,19 @@
 </template>
 
 <script setup>
+/**
+ * @component GlobalCalendar
+ * @description 跨世界同好会官方日历组件。集成农历转换、节气显示、动态内容检索（Blog & Activities）及多维事件分类展示。
+ * * @features
+ * 1. **多源数据聚合**：自动从 `blog` 和 `activities` 集合中通过 `useAsyncData` 检索并建立日期映射 Map。
+ * 2. **玻璃拟态 UI**：基于 CSS 变量动态控制透明度、模糊度及边框效果。
+ * 3. **智能日历算法**：支持跨月补全（42格布局）、周一为起始日，并自动识别今日状态。
+ * 4. **时间线联动**：点击特定日期可触发下方的时间线详情（Timeline）面板，支持平滑过渡动画。
+ * 5. **中国传统文化支持**：使用 `lunar-javascript` 插件显示农历日或二十四节气。
+ * * @state {Ref<number>} year/month - 当前查看的年、月状态。
+ * @state {Ref<Object|null>} selectedDate - 当前用户点击选中的日期详情对象（含事件列表）。
+ * @dependency lunar-javascript - 用于阴阳历转换。
+ */
 import { computed, ref } from 'vue';
 import { Solar, Lunar } from 'lunar-javascript';
 

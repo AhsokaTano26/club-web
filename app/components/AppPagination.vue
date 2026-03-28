@@ -33,6 +33,19 @@
 </template>
 
 <script setup>
+/**
+ * @component Pagination
+ * @description 简洁的响应式分页组件，采用与卡片一致的玻璃拟态（Glassmorphism）设计语言。
+ * * @property {Number}  modelValue  - 当前激活的页码（双向绑定 v-model）
+ * @property {Number}  total       - 总页数，当 total <= 1 时组件自动隐藏
+ * @property {Boolean} scrollToTop - 翻页后是否平滑滚动回页面顶部，默认为 true
+ * * @emits update:modelValue        - 当页码改变时触发，用于同步父组件状态
+ * * @features
+ * 1. 自动隐藏：仅在多于一页时显示，节省布局空间。
+ * 2. 状态交互：包含禁用态（首尾页判断）、激活态（高亮阴影）及悬停反馈。
+ * 3. 平滑滚动：内置原生 smooth 滚动处理，提升用户翻页体验。
+ */
+
 const props = defineProps({
   modelValue: { type: Number, required: true }, // 当前页
   total: { type: Number, required: true },      // 总页数
