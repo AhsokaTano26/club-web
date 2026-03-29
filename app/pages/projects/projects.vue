@@ -94,7 +94,7 @@ const themeConfig = useState('themeConfig')
 const pageSize = 8
 
 // 获取所有项目数据
-const { data: projects } = await useAsyncData('projects-list', () => {
+const { data: projects } = await useAsyncData('all-projects', () => {
   return queryCollection('projects').all()
 })
 
@@ -124,7 +124,7 @@ const getStatusConfig = (status) => {
       label: '公招',
       icon: 'lucide:users',
       class: 'bg-gray-500/10 text-gray-400 border-gray-500/20'
-    }
+    },
   };
 
   return map[safeStatus] || map['others'];

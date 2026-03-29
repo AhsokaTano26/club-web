@@ -29,7 +29,7 @@ const currentPage = ref(1)
 const pageSize = 10
 
 // 获取所有数据
-const { data: allBlogs } = await useAsyncData('all-activities', () =>
+const { data: allBlogs } = await useAsyncData('all-archives', () =>
     queryCollection('archive').order('date', 'DESC').all()
 )
 

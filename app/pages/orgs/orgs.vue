@@ -161,7 +161,7 @@ const getMappedStyle = (category, value) => {
 }
 
 // 获取组织数据
-const { data: rawOrgs } = await useAsyncData('orgs-list-v2', async () => {
+const { data: rawOrgs } = await useAsyncData('all-orgs', async () => {
   const docs = await queryCollection('orgs').all()
   // 去重并按加入时间排序
   const uniqueDocs = Array.from(new Map(docs.map(item => [item.path, item])).values())

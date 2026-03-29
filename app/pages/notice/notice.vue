@@ -28,7 +28,7 @@ const currentPage = ref(1)
 const pageSize = 10
 
 // 抓取公告集合
-const { data: notices } = await useAsyncData('notices-blogs', () =>
+const { data: notices } = await useAsyncData('all-notices', () =>
     queryCollection('notice')
         .order('date', 'DESC') // 按时间倒序
         .all()
