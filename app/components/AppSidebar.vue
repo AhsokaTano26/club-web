@@ -106,7 +106,7 @@ const nav = [
     links: [
       {
         name: '关于联协',
-        path: '/about'
+        path: '/docs/about'
       },
       {
         name: '联协组织',

@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-12 pb-24">
     <PageHeader
-        title="Archive"
+        title="Blog"
         :count="allBlogs?.length|| 0"
         subTitle="记录同好会的点滴与未来计划 · SYNC LOGS"
         :themeColor="themeConfig.primaryColor"

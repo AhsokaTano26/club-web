@@ -3,6 +3,14 @@ import type { Config } from 'tailwindcss'
 import typography from '@tailwindcss/typography'
 
 export default <Partial<Config>>{
+    content: [
+        "./components/**/*.{js,vue,ts}",
+        "./layouts/**/*.vue",
+        "./pages/**/*.vue",
+        "./plugins/**/*.{js,ts}",
+        "./utils/**/*.{js,ts}",
+        "./app.vue",
+    ],
     theme: {
         extend: {
             colors: {
