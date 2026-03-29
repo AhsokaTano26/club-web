@@ -30,20 +30,12 @@
 
           <div class="relative z-10 space-y-4">
             <div class="flex justify-between items-center">
-              <div v-if="project.status"
-                   :class="[
-                     'text-[10px] font-mono px-2 py-0.5 rounded-sm border transition-colors',
-                     project.status === 'funding' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
-                     project.status === 'need_creator' ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' :
-                     project.status === 'finding_resonance' ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' :
-                     'bg-gray-500/10 text-gray-400 border-gray-500/20'
-                   ]">
-                {{
-                  project.status === 'funding' ? '众筹中' :
-                      project.status === 'need_creator' ? '寻找创作者' :
-                          project.status === 'finding_resonance' ? '寻求共鸣' : '其他公招'
-                }}
+              <div v-if="project.statusStyle"
+                   :class="['text-[10px] font-mono px-2 py-0.5 rounded-sm border transition-colors', project.statusStyle.class]">
+                <Icon :name="project.statusStyle.icon" class="w-3 h-3 inline-block mr-1" />
+                {{ project.statusStyle.label }}
               </div>
+
               <time class="text-[10px] font-mono text-blue-400 font-bold bg-blue-950/40 px-2 py-0.5 rounded border border-blue-500/20">
                 {{ project.date }}
               </time>
@@ -77,8 +69,7 @@
 
               <div class="flex gap-2">
                 <a v-if="project.link" :target="'_blank'" :href="project.link"
-                   class="p-1.5 text-gray-400 hover:text-blue-400 hover:bg-white/5 rounded transition-all"
-                   title="组织链接">
+                   class="p-1.5 text-gray-400 hover:text-blue-400 hover:bg-white/5 rounded transition-all">
                   <Icon name="lucide:external-link" class="w-4 h-4" />
                 </a>
               </div>
@@ -90,77 +81,98 @@
       <div v-if="group.allCount === 0"
            class="py-12 border border-dashed border-white/10 bg-white/5 backdrop-blur-sm rounded-2xl flex flex-col items-center justify-center opacity-60">
         <Icon name="lucide:box-select" class="w-8 h-8 mb-3 text-gray-500" />
-        <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">No Projects Found</span>
+        <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">No Projects in this category</span>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
+import { computed, reactive } from 'vue';
+
 const themeConfig = useState('themeConfig')
 const pageSize = 8
 
 // 获取所有项目数据
-const { data: projects, error } = await useAsyncData('projects-list', () => {
+const { data: projects } = await useAsyncData('projects-list', () => {
   return queryCollection('projects').all()
 })
 
-// 响应式对象：存储每个分组对应的当前页码
+/**
+ * 核心：Status 映射配置（全小写处理）
+ */
+const getStatusConfig = (status) => {
+  const safeStatus = String(status || '').toLowerCase().trim();
+
+  const map = {
+    'funding': {
+      label: '众筹中',
+      icon: 'lucide:coins',
+      class: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
+    },
+    'need_creator': {
+      label: '寻找创作者',
+      icon: 'lucide:brush',
+      class: 'bg-blue-500/10 text-blue-400 border-blue-500/20'
+    },
+    'finding_resonance': {
+      label: '寻求共鸣',
+      icon: 'lucide:heart-handshake',
+      class: 'bg-purple-500/10 text-purple-400 border-purple-500/20'
+    },
+    'others': {
+      label: '公招',
+      icon: 'lucide:users',
+      class: 'bg-gray-500/10 text-gray-400 border-gray-500/20'
+    }
+  };
+
+  return map[safeStatus] || map['others'];
+}
+
+// 分页状态
 const groupPages = reactive({
-  'need help': 1,
-  'ongoing': 1,
-  'todo': 1,
-  'completed': 1
+  'funding': 1,
+  'need_creator': 1,
+  'finding_resonance': 1,
+  'others': 1
 })
 
-// 计算分组数据（包含分页逻辑）
+/**
+ * 计算分组数据
+ * 1. 统一将原始数据中的 status 转为小写
+ * 2. 根据归一化后的 status 进行过滤和分组
+ */
 const projectGroups = computed(() => {
   const all = projects.value || []
 
-  // 统一定义分组元数据
   const categories = [
-    {
-      id: 'Funding',
-      label: 'Funding / 众筹中',
-      color: 'bg-red-800',
-      status:'funding'
-    },
-    {
-      id: 'Need Creator',
-      label: 'Need Creator / 需要创作者',
-      color: 'bg-orange-500',
-      status: 'need_creator'
-    },
-    {
-      id: 'Finding Resonance',
-      label: 'Finding resonance / 寻求共鸣',
-      color: 'bg-blue-500',
-      status: 'finding_resonance' },
-    {
-      id: 'others',
-      label: 'others / 其他',
-      color: 'bg-gray-800',
-      status: 'others'
-    }
+    { id: 'funding', label: 'Funding / 众筹中', color: 'bg-emerald-600' },
+    { id: 'need_creator', label: 'Need Creator / 需要创作者', color: 'bg-blue-600' },
+    { id: 'finding_resonance', label: 'Finding resonance / 寻求共鸣', color: 'bg-purple-600' },
+    { id: 'others', label: 'Others / 其他公招', color: 'bg-zinc-700' }
   ]
 
   return categories.map(cat => {
-    // 1. 过滤出属于该分类的所有项目
-    const categoryItems = all.filter(p => p.status === cat.status)
+    // 过滤：将 p.status 转小写后与 cat.id (也是小写) 对比
+    const categoryItems = all.filter(p => {
+      const pStatus = String(p.status || 'others').toLowerCase().trim();
+      return pStatus === cat.id;
+    }).map(p => ({
+      ...p,
+      // 预先计算好样式对象，供模板使用
+      statusStyle: getStatusConfig(p.status)
+    }));
 
-    // 2. 计算该分类的总页数
     const total = Math.ceil(categoryItems.length / pageSize)
-
-    // 3. 对该分类的数据进行切片
     const currentPage = groupPages[cat.id] || 1
     const start = (currentPage - 1) * pageSize
-    const paginatedItems = categoryItems.slice(start, start + pageSize)
 
     return {
       ...cat,
       allCount: categoryItems.length,
       total: total,
-      items: paginatedItems
+      items: categoryItems.slice(start, start + pageSize)
     }
   })
 })

@@ -68,16 +68,36 @@
  * - 交互反馈：悬停时标题位移并变色，渐变分割线提供节奏感。
  */
 
-const today = new Date().toISOString().split('T')[0]
+const today = new Date().toISOString()
 
-// 查询 blog 集合中日期 > 今天的文章
-const { data: upcomingPosts } = await useAsyncData('upcoming-blog', () =>
+const { data: upcomingPosts } = await useAsyncData('upcoming-combined', async () => {
+  // 1. 并行获取两个集合的数据
+  const [blogs, activities] = await Promise.all([
     queryCollection('blog')
         .where('date', '>=', today)
-        .order('date', 'ASC') // 升序，最近的未来排第一
+        .order('date', 'ASC')
+        .limit(5) // 先各自限额，减少传输量
+        .all(),
+    queryCollection('activities')
+        .where('date', '>=', today)
+        .order('date', 'ASC')
         .limit(5)
         .all()
-)
+  ])
+
+  // 2. 合并数组
+  const combined = [...blogs, ...activities]
+
+  // 3. 统一排序（升序：离今天最近的排在前面）
+  combined.sort((a, b) => {
+    const dateA = new Date(a.date).getTime()
+    const dateB = new Date(b.date).getTime()
+    return dateA - dateB
+  })
+
+  // 4. 返回前 5 条结果
+  return combined.slice(0, 5)
+})
 
 // 计算距离天数 (用于显示 "Soon" 标签)
 const getDaysReady = (targetDate) => {

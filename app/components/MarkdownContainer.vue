@@ -153,25 +153,42 @@ const props = defineProps({
 })
 
 const route = useRoute()
+
+// 1. 获取数据
 const { data: page } = await useAsyncData(`doc-${route.path}`, () => {
-  return queryCollection(props.collection).path(route.path).first()
+  // 即使 props 传入的是大写，这里也进行容错处理
+  const safeCollection = props.collection?.toLowerCase().trim() || 'blog'
+  return queryCollection(safeCollection).path(route.path).first()
 })
 
 // --- 核心归一化逻辑 ---
-// 获取格式化后的 type 标识符，用于后续所有匹配
+
+/**
+ * 核心：将所有可能的类型字段（Type）转换为标准小写
+ * 这样 Markdown 里写 "Official"、"official " 或 "OFFICIAL" 都能正确匹配
+ */
 const normalizedType = computed(() => {
-  return page.value?.type?.toString().toLowerCase().trim() || ''
+  const rawType = page.value?.type || 'default'
+  return String(rawType).toLowerCase().trim()
+})
+
+/**
+ * 核心：将 Collection 属性也进行小写处理
+ */
+const normalizedCollection = computed(() => {
+  return String(props.collection || '').toLowerCase().trim()
 })
 
 // 1. 格式化标签文字 (去掉下划线，美化显示)
 const formatLabel = (text) => {
   if (!text) return ''
-  return text.toString().replace(/_/g, ' ')
+  // 统一转字符串处理，并替换下划线
+  return String(text).replace(/_/g, ' ')
 }
 
-// 2. Type 颜色映射 (归一化匹配)
+// 2. Type 颜色映射 (基于归一化后的 normalizedType)
 const getTypeColor = computed(() => {
-  const val = normalizedType.value // 使用归一化后的值
+  const val = normalizedType.value
   const colorMap = {
     // 官方/活动/公告
     official: 'bg-blue-600',
@@ -189,21 +206,23 @@ const getTypeColor = computed(() => {
     tweet: 'bg-blue-400',
     // 组织类型
     fc: 'bg-pink-400',
-    dkk: 'bg-orange-500'
+    dkk: 'bg-orange-500',
+    // 默认回退
+    default: 'bg-gray-500'
   }
-  return colorMap[val] || 'bg-gray-500'
+  return colorMap[val] || colorMap.default
 })
 
-// 3. 标签逻辑
+// 3. 标签逻辑 (保持数组输出)
 const allTags = computed(() => {
   if (!page.value) return []
   const t = page.value.tags || page.value.tag || []
   return Array.isArray(t) ? t : [t]
 })
 
-// 4. 左侧大图标映射 (归一化匹配)
+// 4. 左侧大图标映射 (基于归一化后的 normalizedType)
 const getAutoIcon = computed(() => {
-  const type = normalizedType.value // 使用归一化后的值
+  const type = normalizedType.value
   const iconMap = {
     docu: 'lucide:file-text',
     rese: 'lucide:microscope',
@@ -214,12 +233,13 @@ const getAutoIcon = computed(() => {
     fc: 'lucide:heart-handshake',
     dkk: 'lucide:users'
   }
+  // 如果 type 没匹配上，则回退到集合图标
   return iconMap[type] || categoryIcon.value
 })
 
-// 5. 导航栏分类图标 (Props 归一化)
+// 5. 导航栏分类图标 (基于归一化后的 normalizedCollection)
 const categoryIcon = computed(() => {
-  const col = props.collection?.toLowerCase().trim()
+  const col = normalizedCollection.value
   const map = {
     activities: 'lucide:sparkles',
     blog: 'lucide:pen-tool',

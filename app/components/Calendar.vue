@@ -111,52 +111,36 @@
 </template>
 
 <script setup>
-/**
- * @component GlobalCalendar
- * @description 跨世界同好会官方日历组件。集成农历转换、节气显示、动态内容检索（Blog & Activities）及多维事件分类展示。
- * * @features
- * 1. **多源数据聚合**：自动从 `blog` 和 `activities` 集合中通过 `useAsyncData` 检索并建立日期映射 Map。
- * 2. **玻璃拟态 UI**：基于 CSS 变量动态控制透明度、模糊度及边框效果。
- * 3. **智能日历算法**：支持跨月补全（42格布局）、周一为起始日，并自动识别今日状态。
- * 4. **时间线联动**：点击特定日期可触发下方的时间线详情（Timeline）面板，支持平滑过渡动画。
- * 5. **中国传统文化支持**：使用 `lunar-javascript` 插件显示农历日或二十四节气。
- * * @state {Ref<number>} year/month - 当前查看的年、月状态。
- * @state {Ref<Object|null>} selectedDate - 当前用户点击选中的日期详情对象（含事件列表）。
- * @dependency lunar-javascript - 用于阴阳历转换。
- */
 import { computed, ref } from 'vue';
-import { Solar, Lunar } from 'lunar-javascript';
+import { Lunar } from 'lunar-javascript';
 
 // --- 配置与样式 ---
 const quote = "Stay focused, be present.";
 const monthNamesEn = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-// 背景色配置（用于日历小圆点、Badge 标签背景）
+
+/**
+ * 颜色配置映射 (Key 统一小写)
+ */
 const colors = {
-  // --- 活动性质 ---
-  Official: 'bg-blue-400',       // 官方
-  Anniversary: 'bg-purple-400',  // 纪念日
-  Nexus: 'bg-indigo-500',        // 联协（使用靛蓝色区别于官方蓝）
-
-  // --- 内容载体 ---
-  docu: 'bg-emerald-500',        // 文件（翠绿色，给人正式感）
-  artic: 'bg-sky-400',           // 推文（天蓝色，类似 Twitter/X）
-  rese: 'bg-amber-500',          // 研究成果（琥珀色，代表学术/成果）
-
+  // 活动性质
+  official: 'bg-blue-400',
+  anniversary: 'bg-purple-400',
+  nexus: 'bg-indigo-500',
+  // 内容载体
+  docu: 'bg-emerald-500',
+  artic: 'bg-sky-400',
+  rese: 'bg-amber-500',
+  // 备用
   default: 'bg-gray-400'
 };
 
-// 文字颜色配置（用于标题、详情页文本、幽灵按钮）
 const textColors = {
-  // --- 活动性质 ---
-  Official: 'text-blue-400',
-  Anniversary: 'text-purple-400',
-  Nexus: 'text-indigo-500',
-
-  // --- 内容载体 ---
+  official: 'text-blue-400',
+  anniversary: 'text-purple-400',
+  nexus: 'text-indigo-500',
   docu: 'text-emerald-500',
   artic: 'text-sky-400',
   rese: 'text-amber-500',
-
   default: 'text-gray-400'
 };
 
@@ -180,9 +164,12 @@ const year = ref(now.getFullYear());
 const month = ref(now.getMonth());
 const selectedDate = ref(null);
 
-// --- 数据抓取与预处理 ---
-// 获取数据并建立以 "YYYY-MM-DD" 为 Key 的 Map
+/**
+ * 数据抓取与预处理
+ * 关键改动：将 post.type 统一转为小写存储在 eventMap 中
+ */
 const { data: eventMap } = await useAsyncData('calendar-events', async () => {
+  // 适配 Nuxt Content v3 / Nuxt 4 的 queryCollection
   const [blogPosts, activityPosts] = await Promise.all([
     queryCollection('blog').all(),
     queryCollection('activities').all()
@@ -194,17 +181,21 @@ const { data: eventMap } = await useAsyncData('calendar-events', async () => {
   combined.forEach(post => {
     if (!post.date) return;
 
-    // 关键修复：统一将各种日期输入转为 YYYY-MM-DD 字符串
     const d = new Date(post.date);
     if (isNaN(d.getTime())) return;
 
+    // 标准化日期 Key (YYYY-MM-DD)
     const dateKey = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 
     if (!map[dateKey]) map[dateKey] = [];
+
+    // 【核心改动】: 这里的 type 统一转小写，防止匹配失败
+    const safeType = String(post.type || 'default').toLowerCase();
+
     map[dateKey].push({
       id: post.path,
       title: post.title,
-      type: post.type || 'N/A'
+      type: safeType
     });
   });
 
@@ -214,19 +205,13 @@ const { data: eventMap } = await useAsyncData('calendar-events', async () => {
 // --- 日历生成逻辑 ---
 const days = computed(() => {
   const res = [];
-  // 获取本月第一天是周几 (0是周日)
   const firstDayInstance = new Date(year.value, month.value, 1);
   let firstDay = firstDayInstance.getDay();
-
-  // 调整周一为开始 (如果周日则设为7，以便计算)
   const startOffset = firstDay === 0 ? 6 : firstDay - 1;
 
-  // 生成 6x7 共 42 个格子
   for (let i = 0; i < 42; i++) {
     const date = new Date(year.value, month.value, i - startOffset + 1);
     const isCurrent = date.getMonth() === month.value;
-
-    // 生成格式化的 Key 用于从 Map 中取数据
     const dateKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 
     const lunar = Lunar.fromDate(date);
@@ -242,6 +227,11 @@ const days = computed(() => {
   }
   return res;
 });
+
+// --- 辅助方法：获取样式 ---
+// 在模板中调用此方法，传入小写化的 type
+const getDotColor = (type) => colors[type] || colors.default;
+const getEventTextColor = (type) => textColors[type] || textColors.default;
 
 // --- 交互方法 ---
 const handleDateClick = (day) => {

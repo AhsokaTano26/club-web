@@ -71,32 +71,34 @@ const props = defineProps({
 
 // 组织信息归一化处理
 const formatOrgs = (post) => {
-  if (Array.isArray(post.orgs)) return post.orgs
-  if (post.org) return [post.org]
-  return []
+  const raw = post.orgs || post.org || []
+  const arr = Array.isArray(raw) ? raw : [raw]
+  return arr.map(id => String(id).toLowerCase()).filter(Boolean)
 }
 
 // 类型(Type) 映射配置
 const getTypeStyle = (type) => {
+  const safeType = String(type || '').toLowerCase()
   const map = {
-    // 活动 & 博客 & 公告
-    'Official': { label: '官方', icon: 'lucide:award', class: 'bg-blue-500/20 text-blue-200 border-blue-400/30' },
-    'Anniversary': { label: '纪念日', icon: 'lucide:cake', class: 'bg-rose-500/20 text-rose-200 border-rose-400/30' },
-    'Nexus': { label: '联协', icon: 'lucide:network', class: 'bg-indigo-500/20 text-indigo-200 border-indigo-400/30' },
+    'official': { label: '官方', icon: 'lucide:award', class: 'bg-blue-500/20 text-blue-200 border-blue-400/30' },
+    'anniversary': { label: '纪念日', icon: 'lucide:cake', class: 'bg-rose-500/20 text-rose-200 border-rose-400/30' },
+    'nexus': { label: '联协', icon: 'lucide:network', class: 'bg-indigo-500/20 text-indigo-200 border-indigo-400/30' },
     'docu': { label: '文件', icon: 'lucide:file-text', class: 'bg-slate-500/20 text-slate-200 border-slate-400/30' },
     'artic': { label: '推文', icon: 'lucide:hash', class: 'bg-sky-500/20 text-sky-200 border-sky-400/30' },
     'rese': { label: '研究成果', icon: 'lucide:microscope', class: 'bg-emerald-500/20 text-emerald-200 border-emerald-400/30' },
     'regula': { label: '条例', icon: 'lucide:gavel', class: 'bg-amber-500/20 text-amber-200 border-amber-400/30' },
     'event': { label: '官方活动', icon: 'lucide:calendar', class: 'bg-blue-500/20 text-blue-200 border-blue-400/30' },
     'notice': { label: '公告', icon: 'lucide:megaphone', class: 'bg-orange-500/20 text-orange-200 border-orange-400/30' },
-    'Gallery': { label: '图册', icon: 'lucide:images', class: 'bg-purple-500/20 text-purple-200 border-purple-400/30' },
+    'gallery': { label: '图册', icon: 'lucide:images', class: 'bg-purple-500/20 text-purple-200 border-purple-400/30' },
     'tweet': { label: '推文', icon: 'lucide:twitter', class: 'bg-sky-400/20 text-sky-200 border-sky-300/30' }
   }
-  return map[type] || { label: type, icon: 'lucide:tag', class: 'bg-gray-500/20 text-gray-200 border-gray-400/30' }
+  return map[safeType] || { label: type, icon: 'lucide:tag', class: 'bg-gray-500/20 text-gray-200 border-gray-400/30' }
 }
 
 // 状态(Status) 映射配置
 const getStatusStyle = (status) => {
+  const safeStatus = String(status || '').toLowerCase()
+
   const map = {
     'online': { label: 'Online', icon: 'lucide:globe', class: 'bg-green-500/20 text-green-200 border-green-400/30' },
     'in_person': { label: 'In Person', icon: 'lucide:map-pin', class: 'bg-orange-500/20 text-orange-200 border-orange-400/30' },
@@ -107,6 +109,6 @@ const getStatusStyle = (status) => {
     'finding_resonance': { label: '寻求共鸣', icon: 'lucide:heart-handshake', class: 'bg-lime-500/20 text-lime-200 border-lime-400/30' },
     'others': { label: '公招', icon: 'lucide:users', class: 'bg-gray-500/20 text-gray-200 border-gray-400/30' }
   }
-  return map[status] || { label: status, icon: 'lucide:info', class: 'bg-gray-500/20 text-gray-200 border-gray-400/30' }
+  return map[safeStatus] || { label: status, icon: 'lucide:info', class: 'bg-gray-500/20 text-gray-200 border-gray-400/30' }
 }
 </script>
