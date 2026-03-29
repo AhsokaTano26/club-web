@@ -25,23 +25,27 @@
 
         <div class="flex items-center gap-3">
           <time :class="[
-            'text-[10px] font-mono font-bold uppercase tracking-wider',
-            p.isToday ? 'text-blue-500' : 'text-blue-400/80'
+            'flex items-center gap-1 text-[9px] md:text-[10px] font-mono px-1.5 py-0.5 rounded-sm border font-bold transition-colors',
+            p.isToday
+              ? 'bg-blue-600 text-white border-blue-700 shadow-sm'
+              : 'bg-blue-50 text-blue-600 border-blue-100'
           ]">
-            {{ p.date }} <span v-if="p.isToday" class="ml-2 italic text-[8px] opacity-70">TODAY</span>
+            <Icon name="lucide:calendar" class="w-2.5 h-2.5" />
+            {{ p.date }}
+            <span v-if="p.isToday" class="ml-1 text-[8px] uppercase">Today</span>
           </time>
 
           <span
               v-if="p.statusStyle"
-              :class="['px-2 py-0.5 rounded text-[10px] font-bold border flex items-center gap-1.5 transition-colors', p.statusStyle.class]"
+              :class="['flex items-center gap-1 text-[9px] md:text-[10px] font-mono px-1.5 py-0.5 rounded-sm border transition-colors', p.statusStyle.class]"
           >
-            <Icon :name="p.statusStyle.icon" class="w-3 h-3" />
+            <Icon :name="p.statusStyle.icon" class="w-2.5 h-2.5" />
             {{ p.statusStyle.label }}
           </span>
         </div>
 
         <h4 :class="[
-          'text-base font-black mt-1 transition-colors flex items-center gap-2 group-hover:text-blue-400',
+          'text-base font-black mt-1.5 transition-colors flex items-center gap-2 group-hover:text-blue-400',
           p.isToday ? 'text-white' : 'text-gray-300'
         ]">
           {{ p.title }}
@@ -52,9 +56,9 @@
           {{ p.description }}
         </p>
 
-        <div class="flex items-center gap-3 mt-2">
-          <span v-if="p.author" class="flex items-center gap-1 text-[10px] font-mono px-1.5 py-0.5 bg-white/5 text-gray-300 rounded-sm border border-white/10">
-            <Icon name="lucide:user-pen" class="w-2.5 h-2.5 text-blue-400" />
+        <div class="flex items-center gap-3 mt-2.5">
+          <span v-if="p.author" class="flex items-center gap-1 text-[9px] md:text-[10px] font-mono px-1.5 py-0.5 bg-orange-50 text-orange-600 rounded-sm border border-orange-100">
+            <Icon name="lucide:user-pen" class="w-2.5 h-2.5" />
             {{ p.author }}
           </span>
         </div>
@@ -62,10 +66,7 @@
     </div>
 
     <div v-if="totalPages > 1" class="pt-8">
-      <AppPagination
-          v-model="currentPage"
-          :total="totalPages"
-      />
+      <AppPagination v-model="currentPage" :total="totalPages" />
     </div>
 
     <div v-if="!allTimelines?.length" class="text-center py-20 text-gray-500 text-xs tracking-widest uppercase italic">
@@ -127,7 +128,4 @@ a {
   50% { transform: scale(1.2); opacity: 0.8; }
 }
 
-.animate-pulse {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
 </style>

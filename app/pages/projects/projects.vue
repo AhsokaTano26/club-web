@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-12 pb-24">
+  <div class="space-y-12 pb-24 px-4 py-8">
     <PageHeader
         title="Project Recruitment"
         :count="projects?.length || 0"
@@ -12,8 +12,8 @@
         <div :class="['px-3 py-1 text-[9px] md:text-[10px] font-bold uppercase tracking-widest rounded-full shadow-sm text-white shrink-0', group.color]">
           {{ group.label }}
         </div>
-        <div class="h-px flex-grow bg-gray-200/50"></div>
-        <span class="text-[10px] font-mono text-gray-400 whitespace-nowrap">
+        <div class="h-px flex-grow bg-gray-200/80"></div>
+        <span class="text-[10px] font-mono text-gray-200 whitespace-nowrap">
           {{ group.allCount }} PROJECTS
         </span>
       </div>
@@ -21,7 +21,7 @@
       <div v-if="group.items.length > 0" class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
         <div v-for="project in group.items" :key="project.path"
              class="group/card relative overflow-hidden transition-all duration-500
-                    bg-white/10 backdrop-blur-xl border border-white/10 rounded-2xl
+                    bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl
                     hover:bg-white/20 hover:border-blue-500/30 hover:-translate-y-1 p-5 md:p-6 shadow-sm">
 
           <Icon :name="project.statusStyle.icon || 'lucide:component'"
@@ -31,12 +31,13 @@
           <div class="relative z-10 space-y-4">
             <div class="flex justify-between items-center">
               <div v-if="project.statusStyle"
-                   :class="['text-[10px] font-mono px-2 py-0.5 rounded-sm border transition-colors', project.statusStyle.class]">
-                <Icon :name="project.statusStyle.icon" class="w-3 h-3 inline-block mr-1" />
+                   :class="['flex items-center gap-1 text-[9px] md:text-[10px] font-mono px-1.5 py-0.5 rounded-sm border transition-colors', project.statusStyle.class]">
+                <Icon :name="project.statusStyle.icon" class="w-2.5 h-2.5" />
                 {{ project.statusStyle.label }}
               </div>
 
-              <time class="text-[10px] font-mono text-blue-400 font-bold bg-blue-950/40 px-2 py-0.5 rounded border border-blue-500/20">
+              <time class="flex items-center gap-1 text-[9px] md:text-[10px] font-mono px-1.5 py-0.5 bg-blue-50 text-blue-600 rounded-sm border border-blue-100 font-bold">
+                <Icon name="lucide:calendar" class="w-2.5 h-2.5" />
                 {{ project.date }}
               </time>
             </div>
@@ -51,17 +52,17 @@
             </div>
 
             <div class="flex flex-wrap gap-2">
-              <span v-if="project.orgs" class="flex items-center gap-1 text-[10px] font-mono px-1.5 py-0.5 bg-white/5 text-blue-300 rounded-sm border border-white/10">
-                <Icon name="lucide:building-2" class="w-2.5 h-2.5 text-blue-400" />
+              <span v-if="project.orgs" class="flex items-center gap-1 text-[9px] md:text-[10px] font-mono px-1.5 py-0.5 bg-slate-100 text-slate-600 rounded-sm border border-slate-200">
+                <Icon name="lucide:building-2" class="w-2.5 h-2.5" />
                 {{ project.orgs }}
               </span>
-              <span v-if="project.author" class="flex items-center gap-1 text-[10px] font-mono px-1.5 py-0.5 bg-white/5 text-gray-300 rounded-sm border border-white/10">
-                <Icon name="lucide:user-pen" class="w-2.5 h-2.5 text-blue-400" />
+              <span v-if="project.author" class="flex items-center gap-1 text-[9px] md:text-[10px] font-mono px-1.5 py-0.5 bg-orange-50 text-orange-600 rounded-sm border border-orange-100">
+                <Icon name="lucide:user-pen" class="w-2.5 h-2.5" />
                 {{ project.author }}
               </span>
             </div>
 
-            <div class="pt-4 flex items-center justify-between border-t border-white/5">
+            <div class="pt-4 flex items-center justify-between border-t border-white/10">
               <NuxtLink :to="project.path"
                         class="text-[10px] font-black uppercase tracking-widest text-blue-400/80 hover:text-blue-400 flex items-center gap-1.5 transition-colors">
                 VIEW DETAILS <Icon name="lucide:chevron-right" class="w-3.5 h-3.5" />

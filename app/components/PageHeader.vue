@@ -8,8 +8,8 @@
 
     <h1 class="text-4xl font-black tracking-tighter text-gray-100 uppercase italic flex items-baseline gap-3">
       {{ title }}
-      <span class="text-gray-500 not-italic">/</span>
-      <span class="text-2xl not-italic opacity-40 font-mono tracking-normal">{{ count }}</span>
+      <span class="text-gray-200 not-italic">/</span>
+      <span class="text-2xl not-italic opacity-40 text-gray-200 font-mono tracking-normal">{{ count }}</span>
     </h1>
 
     <p class="mt-4 text-[10px] font-black uppercase tracking-[0.5em] text-gray-200 truncate leading-none">

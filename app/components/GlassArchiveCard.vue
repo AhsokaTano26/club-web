@@ -7,22 +7,23 @@
       <div class="flex flex-wrap gap-2">
         <span
             v-if="props.post.type"
-            :class="['px-2 py-0.5 rounded text-[10px] font-bold border flex items-center gap-1.5 transition-colors uppercase tracking-wider', typeStyle.class]"
+            :class="['flex items-center gap-1 text-[9px] md:text-[10px] font-mono px-1.5 py-0.5 rounded-sm border transition-colors uppercase tracking-wider', typeStyle.class]"
         >
-          <Icon :name="typeStyle.icon" class="w-3 h-3" />
+          <Icon :name="typeStyle.icon" class="w-2.5 h-2.5" />
           {{ typeStyle.label }}
         </span>
 
         <span
             v-if="props.post.status"
-            :class="['px-2 py-0.5 rounded text-[10px] font-bold border flex items-center gap-1.5 transition-colors', statusStyle.class]"
+            :class="['flex items-center gap-1 text-[9px] md:text-[10px] font-mono px-1.5 py-0.5 rounded-sm border transition-colors', statusStyle.class]"
         >
-          <Icon :name="statusStyle.icon" class="w-3 h-3" />
+          <Icon :name="statusStyle.icon" class="w-2.5 h-2.5" />
           {{ statusStyle.label }}
         </span>
       </div>
 
-      <time class="text-[10px] font-mono text-blue-400 font-bold bg-blue-950/40 px-2 py-0.5 rounded border border-blue-500/20">
+      <time class="flex items-center gap-1 text-[9px] md:text-[10px] font-mono px-1.5 py-0.5 bg-blue-50 text-blue-600 rounded-sm border border-blue-100 font-bold">
+        <Icon name="lucide:calendar" class="w-2.5 h-2.5" />
         {{ props.post.date }}
       </time>
     </div>
@@ -35,21 +36,25 @@
     </p>
 
     <div class="mt-5 pt-4 border-t border-white/10 flex items-center justify-between">
-      <div class="flex gap-3 flex-wrap">
-        <div v-if="formattedOrgs.length" class="flex flex-wrap gap-2">
-          <span v-for="o in formattedOrgs" :key="o" class="flex items-center gap-1 text-[10px] font-mono px-1.5 py-0.5 bg-white/5 text-gray-300 rounded-sm border border-white/10">
-            <Icon name="lucide:building-2" class="w-2.5 h-2.5 text-blue-400" />
+      <div class="flex gap-2 flex-wrap">
+        <template v-if="formattedOrgs.length">
+          <span v-for="o in formattedOrgs" :key="o"
+                class="flex items-center gap-1 text-[9px] md:text-[10px] font-mono px-1.5 py-0.5 bg-slate-100 text-slate-600 rounded-sm border border-slate-200">
+            <Icon name="lucide:building-2" class="w-2.5 h-2.5" />
             {{ o }}
           </span>
-        </div>
-        <span v-if="props.post.author" class="flex items-center gap-1 text-[10px] font-mono px-1.5 py-0.5 bg-white/5 text-gray-300 rounded-sm border border-white/10">
-          <Icon name="lucide:user-pen" class="w-2.5 h-2.5 text-blue-400" />
+        </template>
+
+        <span v-if="props.post.author"
+              class="flex items-center gap-1 text-[9px] md:text-[10px] font-mono px-1.5 py-0.5 bg-orange-50 text-orange-600 rounded-sm border border-orange-100">
+          <Icon name="lucide:user-pen" class="w-2.5 h-2.5" />
           {{ props.post.author }}
         </span>
       </div>
 
-      <div class="flex items-center text-xs font-bold text-blue-400 opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0 whitespace-nowrap">
-        {{ props.post.link ? 'Visit Link' : 'Details' }} <Icon name="lucide:arrow-right" class="ml-1 w-3 h-3" />
+      <div class="flex items-center text-[10px] font-black uppercase tracking-widest text-blue-400 opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0 whitespace-nowrap">
+        {{ props.post.link ? 'Visit Link' : 'Details' }}
+        <Icon name="lucide:chevron-right" class="ml-1 w-3 h-3" />
       </div>
     </div>
   </NuxtLink>
