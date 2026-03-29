@@ -52,7 +52,7 @@
           {{ p.description }}
         </p>
 
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-3 mt-2">
           <span v-if="p.author" class="flex items-center gap-1 text-[10px] font-mono px-1.5 py-0.5 bg-white/5 text-gray-300 rounded-sm border border-white/10">
             <Icon name="lucide:user-pen" class="w-2.5 h-2.5 text-blue-400" />
             {{ p.author }}
@@ -76,46 +76,14 @@
 
 <script setup>
 import { computed, ref } from 'vue';
+import { getTagStyle } from '~~/utils/tag-registry'; // 引入统一工具函数
 
-// --- 全局配置与状态 ---
 const themeConfig = useState('themeConfig')
 const currentPage = ref(1)
 const pageSize = 10
 
-/**
- * @method getStatusStyle
- * @description 全小写归一化状态映射
- */
-const getStatusStyle = (status) => {
-  const safeStatus = String(status || '').toLowerCase().trim();
-
-  const map = {
-    'prog': {
-      label: '进度',
-      icon: 'lucide:trending-up',
-      class: 'bg-blue-500/10 text-blue-400 border-blue-400/30'
-    },
-    'changes': {
-      label: '更改',
-      icon: 'lucide:refresh-cw',
-      class: 'bg-amber-500/10 text-amber-400 border-amber-400/30'
-    },
-    'record': {
-      label: '记录',
-      icon: 'lucide:clipboard-list',
-      class: 'bg-emerald-500/10 text-emerald-400 border-emerald-400/30'
-    }
-  };
-
-  return map[safeStatus] || (status ? {
-    label: safeStatus.toUpperCase(),
-    icon: 'lucide:tag',
-    class: 'bg-gray-500/10 text-gray-400 border-gray-400/20'
-  } : null);
-};
-
-// --- 数据获取 (Nuxt Content v3) ---
-const { data: allTimelines } = await useAsyncData('all-timelines', () =>
+// --- 数据获取 (唯一 Key 防止缓存冲突) ---
+const { data: allTimelines } = await useAsyncData('content-timeline-milestones', () =>
     queryCollection('timeline')
         .order('date', 'DESC')
         .all()
@@ -125,12 +93,14 @@ const { data: allTimelines } = await useAsyncData('all-timelines', () =>
 const processedTimelines = computed(() => {
   if (!allTimelines.value) return [];
 
+  // 这里的日期判断假设 item.date 是 'YYYY-MM-DD' 格式
   const todayStr = new Date().toISOString().split('T')[0];
 
   return allTimelines.value.map(item => ({
     ...item,
     isToday: item.date === todayStr,
-    statusStyle: getStatusStyle(item.status)
+    // 改为调用统一的 Registry 获取 'status' 分类下的样式
+    statusStyle: getTagStyle('status', item.status)
   }));
 })
 

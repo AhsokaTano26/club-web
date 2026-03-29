@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-12 pb-24">
+  <div class="space-y-12 pb-24 px-4 py-8">
     <PageHeader
         title="Organization Directory"
         :count="orgs?.length || 0"
@@ -126,45 +126,18 @@
 
 <script setup>
 import { computed, ref } from 'vue';
+import { getTagStyle } from '~~/utils/tag-registry'; // 引入工具函数
 
 const themeConfig = useState('themeConfig')
 const currentPage = ref(1)
 const pageSize = 10
 
-/**
- * 映射配置 (全小写处理)
- */
-const configMap = {
-  // 地区性映射
-  location: {
-    regional: { label: '地区性', icon: 'lucide:map-pin', class: 'bg-gray-100 text-gray-500 border-gray-200' },
-    global: { label: '全球性', icon: 'lucide:globe', class: 'bg-purple-50 text-purple-600 border-purple-200' }
-  },
-  // 组织性质映射
-  type: {
-    fc: { label: '应援团', icon: 'lucide:heart', class: 'bg-indigo-600 text-white border-indigo-700' },
-    dkk: { label: '同好会', icon: 'lucide:sparkles', class: 'bg-orange-500 text-white border-orange-600' }
-  },
-  // 组织状态标签
-  tag: {
-    branch: { label: '分支', class: 'bg-gray-800/80 text-gray-100 border-gray-700' },
-    official: { label: '官方', class: 'bg-blue-600 text-white border-blue-700' }
-  }
-}
-
-/**
- * 获取样式逻辑函数
- */
-const getMappedStyle = (category, value) => {
-  const safeValue = String(value || '').toLowerCase().trim();
-  return configMap[category][safeValue] || null;
-}
-
-// 获取组织数据
-const { data: rawOrgs } = await useAsyncData('all-orgs', async () => {
+// 获取组织数据 (使用唯一 Key 确保刷新)
+const { data: rawOrgs } = await useAsyncData('content-orgs-directory', async () => {
   const docs = await queryCollection('orgs').all()
-  // 去重并按加入时间排序
+  // 去重
   const uniqueDocs = Array.from(new Map(docs.map(item => [item.path, item])).values())
+  // 排序
   return uniqueDocs.sort((a, b) => {
     const dateA = a.joined_at ? new Date(a.joined_at).getTime() : 0
     const dateB = b.joined_at ? new Date(b.joined_at).getTime() : 0
@@ -176,16 +149,16 @@ const { data: rawOrgs } = await useAsyncData('all-orgs', async () => {
  * 数据加工：注入映射样式
  */
 const orgs = computed(() => {
-  return rawOrgs.value?.map((item, index) => ({
+  return rawOrgs.value?.map((item) => ({
     ...item,
-    index: index + 1,
-    // 注入归一化样式对象
-    locationStyle: getMappedStyle('location', item.location),
-    typeStyle: getMappedStyle('type', item.type),
-    tagStyle: getMappedStyle('tag', item.tag)
+    // 分别注入三个分类的样式
+    locationStyle: getTagStyle('location', item.location),
+    typeStyle: getTagStyle('type', item.type),
+    tagStyle: getTagStyle('tag', item.tag)
   }))
 })
 
+// 分页逻辑
 const totalPages = computed(() => Math.ceil((orgs.value?.length || 0) / pageSize))
 
 const paginatedorgs = computed(() => {
@@ -198,7 +171,6 @@ useHead({ title: '联协组织' })
 </script>
 
 <style scoped>
-/* 确保图片与玻璃拟态效果一致 */
 img {
   -webkit-backface-visibility: hidden;
   transform: translateZ(0);

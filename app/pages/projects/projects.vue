@@ -24,7 +24,7 @@
                     bg-white/10 backdrop-blur-xl border border-white/10 rounded-2xl
                     hover:bg-white/20 hover:border-blue-500/30 hover:-translate-y-1 p-5 md:p-6 shadow-sm">
 
-          <Icon :name="project.icon || 'lucide:component'"
+          <Icon :name="project.statusStyle.icon || 'lucide:component'"
                 class="absolute -right-6 -bottom-6 w-28 h-28 text-blue-500/10 opacity-[0.15]
                        group-hover/card:scale-110 group-hover/card:-rotate-12 transition-all duration-700" />
 
@@ -89,46 +89,15 @@
 
 <script setup>
 import { computed, reactive } from 'vue';
+import { getTagStyle } from '~~/utils/tag-registry'; // 引入工具函数
 
 const themeConfig = useState('themeConfig')
 const pageSize = 8
 
-// 获取所有项目数据
-const { data: projects } = await useAsyncData('all-projects', () => {
+// 获取所有项目数据，Key 已改为唯一以避免刷新问题
+const { data: projects } = await useAsyncData('content-recruitment-projects', () => {
   return queryCollection('projects').all()
 })
-
-/**
- * 核心：Status 映射配置（全小写处理）
- */
-const getStatusConfig = (status) => {
-  const safeStatus = String(status || '').toLowerCase().trim();
-
-  const map = {
-    'funding': {
-      label: '众筹中',
-      icon: 'lucide:coins',
-      class: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
-    },
-    'need_creator': {
-      label: '寻找创作者',
-      icon: 'lucide:brush',
-      class: 'bg-blue-500/10 text-blue-400 border-blue-500/20'
-    },
-    'finding_resonance': {
-      label: '寻求共鸣',
-      icon: 'lucide:heart-handshake',
-      class: 'bg-purple-500/10 text-purple-400 border-purple-500/20'
-    },
-    'others': {
-      label: '公招',
-      icon: 'lucide:users',
-      class: 'bg-gray-500/10 text-gray-400 border-gray-500/20'
-    },
-  };
-
-  return map[safeStatus] || map['others'];
-}
 
 // 分页状态
 const groupPages = reactive({
@@ -140,8 +109,6 @@ const groupPages = reactive({
 
 /**
  * 计算分组数据
- * 1. 统一将原始数据中的 status 转为小写
- * 2. 根据归一化后的 status 进行过滤和分组
  */
 const projectGroups = computed(() => {
   const all = projects.value || []
@@ -154,14 +121,14 @@ const projectGroups = computed(() => {
   ]
 
   return categories.map(cat => {
-    // 过滤：将 p.status 转小写后与 cat.id (也是小写) 对比
+    // 过滤并注入样式
     const categoryItems = all.filter(p => {
       const pStatus = String(p.status || 'others').toLowerCase().trim();
       return pStatus === cat.id;
     }).map(p => ({
       ...p,
-      // 预先计算好样式对象，供模板使用
-      statusStyle: getStatusConfig(p.status)
+      // 直接调用 registry 获取样式
+      statusStyle: getTagStyle('status', p.status || 'others')
     }));
 
     const total = Math.ceil(categoryItems.length / pageSize)
