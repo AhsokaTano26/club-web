@@ -14,7 +14,7 @@
     >
       <div class="hidden md:block mb-10 px-4 py-8">
         <NuxtLink to="/" class="block group">
-          <img src="/logo/logo.png" alt="Logo" class="h-auto w-48 opacity-90 group-hover:opacity-100 transition-all group-hover:scale-105" />
+          <img src="/logo/logo_white.png" alt="Logo" class="h-auto w-48 opacity-90 group-hover:opacity-100 transition-all group-hover:scale-105" />
         </NuxtLink>
       </div>
 
