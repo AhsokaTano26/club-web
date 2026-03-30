@@ -100,7 +100,7 @@ watch(() => route.path, () => { isOpen.value = false })
 // --- 1. 定义默认配置常量 ---
 const DEFAULT_THEME = {
   primaryColor: '#5b92e5',
-  bgImage: '/2043253.jpg',
+  bgImage: '/bg/65A5AD0DEB027D76BDFB5E0D08B9EFD0.jpg',
   bgOverlayOpacity: 0,
   sidebarOpacity: 0,
   mainOpacity: 0,
