@@ -88,6 +88,10 @@ const nav = [
         path: '/'
       },
       {
+        name: '关于同好会',
+        path: '/docs/about_us'
+      },
+      {
         name: '官方公告',
         path: '/notice/notice'
       },
