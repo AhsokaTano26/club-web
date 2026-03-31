@@ -1,9 +1,9 @@
 <template>
   <aside class="w-full lg:w-72 p-4 md:p-8">
-    <h3 class="text-xs font-bold text-gray-400 uppercase tracking-[0.2em] mb-8 flex items-center gap-3">
+    <h3 class="text-lg font-bold text-gray-300 uppercase tracking-[0.2em] mb-6 flex items-center gap-3">
       <Icon
           :name="'line-md:cog-loop'"
-          class="w-4 h-4
+          class="w-8 h-8
                 opacity-100
                 group-hover/item:grayscale-0 group-hover/item:opacity-100
                 transition-all duration-300 ease-in-out text-[#5b92e5]"
@@ -26,7 +26,7 @@
           <h4 class="text-sm font-bold text-gray-100 group-hover:text-blue-600 transition-colors line-clamp-1">
             {{ post.title }}
           </h4>
-          <p class="text-xs text-gray-400 mt-1.5 leading-relaxed line-clamp-2">
+          <p class="text-xs text-gray-200 mt-1.5 leading-relaxed line-clamp-2">
             {{ post.description }}
           </p>
         </NuxtLink>
