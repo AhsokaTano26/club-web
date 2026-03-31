@@ -12,9 +12,9 @@
         isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
       ]"
     >
-      <div class="hidden md:block mb-10 px-4 py-8">
+      <div class="hidden md:block mb-10 px-0 py-6">
         <NuxtLink to="/" class="block group">
-          <img src="/logo/logo_white.png" alt="Logo" class="h-auto w-48 opacity-90 group-hover:opacity-100 transition-all group-hover:scale-105" />
+          <img src="/logo/logo_white.png" alt="Logo" class="h-auto w-80 opacity-90 group-hover:opacity-100 transition-all group-hover:scale-125 " />
         </NuxtLink>
       </div>
 
