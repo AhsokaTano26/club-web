@@ -42,6 +42,7 @@ const REGISTRY = {
         in_person: { label: 'In Person', icon: 'lucide:map-pin', class: 'bg-orange-50 text-orange-600 border-orange-100' },
         regional: { label: 'Regional', icon: 'lucide:map', class: 'bg-cyan-50 text-cyan-600 border-cyan-100' },
     },
+    // orgs
     location: {
         regional: { label: '地区性', icon: 'lucide:map-pin', class: 'bg-gray-100 text-gray-500 border-gray-200' },
         global: { label: '全球性', icon: 'lucide:globe', class: 'bg-purple-50 text-purple-600 border-purple-100' }

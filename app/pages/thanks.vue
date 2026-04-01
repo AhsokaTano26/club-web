@@ -16,7 +16,7 @@
             </div>
             <div class="flex items-center gap-1 text-gray-100">
               <Icon name="lucide:git-branch" class="w-3 h-3" />
-              <span class="text-xs font-mono">V1.0.4-STABLE</span>
+              <span class="text-xs font-mono">V2.0.0-STABLE</span>
             </div>
           </div>
           <h1 class="text-4xl font-bold text-gray-800 tracking-tighter flex items-center gap-3">
