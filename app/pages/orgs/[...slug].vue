@@ -16,21 +16,18 @@
                 @error="(e) => e.target.src = '/default/aimi.jpg'"
             />
           </template>
-
           <Icon
               v-else
               :name="page.theme?.logo || 'lucide:users'"
               class="w-16 h-16 transition-all duration-700"
               :style="{ color: theme.primaryColor }"
           />
-
           <div class="absolute inset-0 pointer-events-none shadow-[inset_0_0_12px_rgba(0,0,0,0.05)]"></div>
         </div>
 
         <div class="flex-1 space-y-4">
           <div class="flex items-center gap-3">
             <h1 class="text-4xl font-black tracking-tighter text-gray-900">{{ page.title }}</h1>
-
             <span v-if="page.status"
                   class="flex items-center gap-1 text-[9px] md:text-[10px] font-mono px-1.5 py-0.5 rounded-sm shadow-sm transition-all duration-500 text-white"
                   :style="{ backgroundColor: theme.primaryColor }">
@@ -44,48 +41,19 @@
           </p>
 
           <div class="flex flex-wrap gap-2 pt-3">
-
             <span v-if="page.type" class="flex items-center gap-1 text-[9px] md:text-[10px] font-mono px-1.5 py-0.5 bg-indigo-600 text-white rounded-sm shadow-sm">
               <Icon name="lucide:tag" class="w-2.5 h-2.5" />
               {{ page.type }}
             </span>
-
-            <span v-if="page.founded" class="flex items-center gap-1 text-[9px] md:text-[10px] font-mono px-1.5 py-0.5 bg-orange-50 text-orange-600 rounded-sm">
-              <Icon name="lucide:flag" class="w-2.5 h-2.5" />
-              EST. {{ page.founded }}
-            </span>
-
-            <span v-if="page.joined_at" class="flex items-center gap-1 text-[9px] md:text-[10px] font-mono px-1.5 py-0.5 bg-emerald-50 text-emerald-600 rounded-sm">
-              <Icon name="lucide:user-plus" class="w-2.5 h-2.5" />
-              JOINED: {{ page.joined_at }}
-            </span>
-
-            <span v-if="page.leader" class="flex items-center gap-1 text-[9px] md:text-[10px] font-mono px-1.5 py-0.5 bg-rose-50 text-rose-600 rounded-sm">
-              <Icon name="lucide:user" class="w-2.5 h-2.5" />
-              LEADER: {{ page.leader }}
-            </span>
-
-            <span v-if="page.members_count" class="flex items-center gap-1 text-[9px] md:text-[10px] font-mono px-1.5 py-0.5 bg-teal-50 text-teal-600 rounded-sm">
-              <Icon name="lucide:users" class="w-2.5 h-2.5" />
-              MEMBERS: {{ page.members_count }}
-            </span>
-
-            <span v-if="page.orgs_id" class="flex items-center gap-1 text-[9px] md:text-[10px] font-mono px-1.5 py-0.5 bg-slate-100 text-slate-600 rounded-sm">
-              <Icon name="lucide:fingerprint" class="w-2.5 h-2.5" />
-              ID: {{ page.orgs_id }}
-            </span>
-
             <span v-if="page.location" class="flex items-center gap-1 text-[9px] md:text-[10px] font-mono px-1.5 py-0.5 bg-red-50 text-red-600 rounded-sm uppercase">
               <Icon name="lucide:map-pin" class="w-2.5 h-2.5" />
               {{ page.location }}
             </span>
-
           </div>
         </div>
       </header>
 
       <ProseGlass :value="page" />
-
 
       <footer class="mt-20 pt-10 border-t border-gray-100 flex justify-between items-center">
         <div class="flex gap-4">
@@ -104,7 +72,6 @@
     <div v-else class="py-24 text-center">
       <Icon name="svg-spinners:blocks-wave" class="w-12 h-12 text-gray-200 mx-auto mb-6" />
       <h2 class="text-xl font-black uppercase tracking-tighter">Decrypting Archive...</h2>
-      <p class="text-gray-400 text-xs mt-2 font-mono">If loading persists, the record might be redacted or path is incorrect.</p>
     </div>
   </main>
 </template>
@@ -113,9 +80,10 @@
 const route = useRoute()
 const theme = useState('themeConfig')
 
+// 1. 定义一份干净的初始默认配置，确保 bgImage 是绝对路径
 const DEFAULT_THEME = {
   primaryColor: '#5b92e5',
-  bgImage: '/2043253.jpg',
+  bgImage: '/bg/2043253.jpg',
   bgOverlayOpacity: 0,
   sidebarOpacity: 0,
   mainOpacity: 0,
@@ -123,24 +91,29 @@ const DEFAULT_THEME = {
   blurRadius: '0px'
 }
 
-// 1. 获取数据
+// 2. 获取数据
 const { data: page } = await useAsyncData(`org-detail-${route.path.replace(/\/$/, '')}`, () => {
   const cleanPath = route.path.replace(/\/$/, '')
   return queryCollection('orgs').path(cleanPath).first()
 })
-// 2. 修正后的主题应用逻辑
+
+// 3. 应用主题逻辑
 const applyTheme = (data) => {
   if (data?.theme) {
+    // 使用 Object.assign 确保响应式对象被正确更新
     theme.value = { ...DEFAULT_THEME, ...data.theme }
   } else {
     theme.value = { ...DEFAULT_THEME }
   }
 }
 
-// 3. 响应式监听
+// 4. 监听与生命周期控制
+// 立即应用当前页面的主题
 watch(page, (val) => applyTheme(val), { immediate: true })
 
-onUnmounted(() => {
+// 核心修正：在离开页面前，强制重置回默认主题
+// 使用 onBeforeUnmount 确保在 DOM 切换前状态已归位
+onBeforeUnmount(() => {
   theme.value = { ...DEFAULT_THEME }
 })
 
@@ -157,13 +130,10 @@ main {
 
 .custom-article-theme :deep(a) {
   color: var(--theme-primary);
-  text-decoration: underline;
-  text-underline-offset: 4px;
 }
 
 .custom-article-theme :deep(blockquote) {
   border-left-color: var(--theme-primary);
-  background-color: color-mix(in srgb, var(--theme-primary), transparent 95%);
 }
 
 .custom-article-theme :deep(strong) {
