@@ -33,6 +33,12 @@ export default defineNuxtConfig({
         default: 'github-light',
         dark: 'github-dark'
       }
+    },
+    markdown: {
+      remarkPlugins: ['remark-math'],
+      rehypePlugins: [
+        ['rehype-katex', { output: 'html' }] // 推荐只输出 HTML 提升性能
+      ]
     }
   },
   routeRules: {

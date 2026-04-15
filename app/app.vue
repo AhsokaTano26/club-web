@@ -129,10 +129,17 @@ nuxtApp.hook('page:finish', () => {
 })
 
 // --- 5. SEO 配置 ---
+// app.vue 的 script setup 中修改 useHead
 useHead({
   titleTemplate: (title) => title ? `${title} - Club Archive` : 'Project Club Archive',
   link: [
-    { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono&display=swap' }
+    { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono&display=swap' },
+    // 添加 KaTeX 样式表
+    {
+      rel: 'stylesheet',
+      href: 'https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css',
+      crossorigin: 'anonymous'
+    }
   ]
 })
 
