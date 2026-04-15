@@ -71,13 +71,13 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <CreditGroup
             v-for="group in [
-              { title: 'Organizer', label: 'EST', icon: 'lucide:building-2', items: organizers, headerBg: 'bg-blue-500/50', titleColor: 'text-blue-600' },
-              { title: 'Sponsors', label: 'FUND', icon: 'line-md:person', items: sponsors, headerBg: 'bg-purple-500/50', titleColor: 'text-purple-600' },
-              { title: 'Special Thanks', label: 'CREDIT', icon: 'line-md:star', items: specialThanks, headerBg: 'bg-orange-500/50', titleColor: 'text-orange-600' }
+              { title: '组织致谢', label: 'EST', icon: 'lucide:building-2', items: organizers, headerBg: 'bg-blue-500/50', titleColor: 'text-blue-600' },
+              { title: '个人致谢', label: 'FUND', icon: 'line-md:person', items: sponsors, headerBg: 'bg-purple-500/50', titleColor: 'text-purple-600' },
+              { title: '特别致谢', label: 'CREDIT', icon: 'line-md:star', items: specialThanks, headerBg: 'bg-orange-500/50', titleColor: 'text-orange-600' }
             ]"
             :key="group.title"
             v-bind="group"
-            class="bg-white/10 backdrop-blur-xl border border-white/10 rounded-2xl p-1"
+            class="bg-white/10 backdrop-blur-xl border border-white rounded-2xl p-1"
         />
       </div>
 
@@ -196,28 +196,94 @@ const contributors = [
 * */
 const organizers = [
   {
-    name: "Tano",
-    link: "https://www.tano.asia/"
+    name: "▲跨世界同好会▼",
+    link: "https://lokatiga.tano.asia",
+    label: "官网直属组织"
   },
   {
-    name: "跨世界同好会网站管理委员会",
-    link: "https://example.com"
+    name: "パラレルクロス社",
+    link: "https://b23.tv/u4DZfEk",
+    label: "同好会官方认证对外窗口组织"
+  },
+  {
+    name: "WTW団——「寰宇桥联」",
+    label: "同好会前身"
+  },
+  {
+    name: "PTCG小组",
+    label: "Paving The Golden Corridor"
+  },
+  {
+    name: "重庆大学学生蓝盟",
+    link: "https://mirrors.cqu.edu.cn/introductions/",
+    label: "Lanunion"
   }
 ];
 
 const sponsors = [
   {
-    name: "Cloudflare",
-    link: "https://pages.cloudflare.com",
-    icon: "logos:cloudflare-icon"
+    name: "秦",
+    link: "https://fauux.neocities.org/",
+    icon: "line-md--moon-loop",
+    color: "text-blue-600",
+    label: "「同好会会长|WTW団副团」"
+  },
+  {
+    name: "Tano",
+    link: "https://tano.asia",
+    icon: "material-symbols:star",
+    color: "text-red-600",
+    label: "「网站搭建与技术支持」"
+  },
+  {
+    name: "星天耀Star",
+    link: "https://b23.tv/tGemYwj",
+    icon: "line-md:star-filled",
+    color: "text-red-600",
+    label: "同好会主干成员|WTW団现任团长"
+  },
+  {
+    name: "Inter Kenot",
+    link: "https://www.xiaohongshu.com/user/profile/5e3507a800000000010027fa",
+    icon: "lucide-lab:unicorn-head",
+    color: "text-red-600",
+    label: "同好会第一美术指导|WTW団团员"
+  },
+  {
+    name: "QwCzy",
+    icon: "mingcute--monitor-line",
+    label: "PTGC小组永远的组长"
+  },
+  {
+    name: "憨憨/Kevin",
+    icon: "line-md--moon-loop",
+    color: "text-red-600",
+    label: "同好会主干成员"
+  },
+  {
+    name: "荡漾",
+    icon: "tabler:brand-discord",
+    color: "text-red-600",
+    label: "官网背景画师"
   }
 ];
 
 const specialThanks = [
   {
-    name: "Tano",
-    link: "https://gravatar.com/alpacagrand629cf54028"
-  }
+    name: "▲跨世界同好会▼主干成员",
+  },
+    {
+    name: "▲跨世界同好会▼全体成员",
+  },
+  {
+    name: "☆联协体系内的各方组织☆",
+  },
+  {
+    name: "☆支持陪伴同好会前进的大家☆",
+  },
+  {
+    name: "☆还有看到这里的你☆",
+  },
 ];
 
 
