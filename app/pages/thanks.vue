@@ -8,9 +8,9 @@
     <div class="max-w-4xl mx-auto space-y-8 pb-20">
 
       <div class="bg-white/5 backdrop-blur-xl border border-white/5 rounded-2xl shadow-sm overflow-hidden transition-all duration-500 hover:shadow-xl hover:shadow-blue-500/5">
-        <div class="bg-white/30 p-8 flex flex-col gap-3 border-b border-white/10">
+        <div class="bg-white/30 p-8 flex flex-col gap-6 border-b border-white/10 backdrop-blur-md">
           <div class="flex items-center gap-3">
-            <div class="flex items-center gap-1.5 bg-blue-500 text-white px-2 py-0.5 rounded-lg shadow-sm">
+            <div class="flex items-center gap-1.5 bg-blue-600 text-white px-2 py-0.5 rounded-lg shadow-sm">
               <Icon name="lucide:award" class="w-3 h-3" />
               <span class="text-[10px] font-black tracking-[0.2em] uppercase">Credits</span>
             </div>
@@ -19,13 +19,54 @@
               <span class="text-xs font-mono">V2.0.0-STABLE</span>
             </div>
           </div>
+
           <h1 class="text-4xl font-bold text-gray-800 tracking-tighter flex items-center gap-3">
-            致谢与鸣谢
+            ▲跨世界同好会▼ 致谢页
           </h1>
-          <p class="text-sm text-gray-200 font-medium leading-relaxed max-w-2xl">
-            本站 <span class="text-gray-700 font-bold underline decoration-blue-100/20">club-web</span>
-            采用 Nuxt 4 架构开发。感激每一位在代码、内容与基础设施上提供支持的伙伴。
+
+          <div class="space-y-1 italic border-l-2 border-blue-400 pl-4 py-1">
+            <p class="text-sm text-gray-700 font-serif">「Ad astra per aspera, ubi iterum conveniemus」</p>
+            <p class="text-sm text-gray-600">「跨尽尘艰赴星海，相逢同醉揽明月。」</p>
+          </div>
+
+          <div class="text-sm text-gray-700 font-medium leading-relaxed max-w-2xl space-y-3">
+            <p>
+              官网的正式上线，标志着同好会从筹备的第零阶段，正式迈入全新的第一阶段。
+              <span class="text-gray-800 font-bold">十余载的坚守与热爱</span>，终于迎来了此刻崭新的开始。
+            </p>
+            <p>在此由衷致谢：</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+            <div class="bg-white/40 p-4 rounded-xl border border-white/20">
+              <h3 class="text-xs font-bold text-blue-700 uppercase tracking-widest mb-2">技术与艺术指导</h3>
+              <p class="text-sm text-gray-800"><span class="font-bold">Tano</span> 「网站搭建与技术支持」</p>
+              <p class="text-sm text-gray-800"><span class="font-bold">Inter</span> 「美术指导与Logo设计」</p>
+            </div>
+            <div class="bg-white/40 p-4 rounded-xl border border-white/20">
+              <h3 class="text-xs font-bold text-blue-700 uppercase tracking-widest mb-2">特别致谢</h3>
+              <p class="text-sm text-gray-800">PTGC小组永远的组长 <span class="font-bold">QwCzy / LEDXO</span></p>
+              <p class="text-xs text-gray-500 mt-1">—— 感谢十四载的深情相伴</p>
+            </div>
+          </div>
+
+          <p class="text-xs text-gray-600 leading-relaxed italic">
+            感谢同好会所有为此付出的成员、联协体系下的所有联协组织，以及始终支持我们的大家！<br/>
+            你们的陪伴，是我们两人前行的不竭动力。
           </p>
+
+          <hr class="border-white w-1/4" />
+
+          <div class="flex flex-wrap gap-x-8 gap-y-2 text-sm">
+            <div class="flex flex-col">
+              <span class="text-[10px] text-gray-100 uppercase tracking-tighter">President / WTW団副团</span>
+              <span class="font-bold text-gray-800">秦</span>
+            </div>
+            <div class="flex flex-col">
+              <span class="text-[10px] text-gray-100 uppercase tracking-tighter">Core Member / WTW団现任团长</span>
+              <span class="font-bold text-gray-800">星天耀Star</span>
+            </div>
+          </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2">
@@ -231,8 +272,8 @@ const sponsors = [
   {
     name: "Tano",
     link: "https://tano.asia",
-    icon: "material-symbols:star",
-    color: "text-red-600",
+    icon: "solar:cat-broken",
+    color: "text-cyan-300",
     label: "「网站搭建与技术支持」"
   },
   {
@@ -247,16 +288,17 @@ const sponsors = [
     link: "https://www.xiaohongshu.com/user/profile/5e3507a800000000010027fa",
     icon: "lucide-lab:unicorn-head",
     color: "text-red-600",
-    label: "同好会第一美术指导|WTW団团员"
+    label: "同好会第一美术指导|WTW団团员",
   },
   {
     name: "QwCzy",
     icon: "mingcute:monitor-line",
-    label: "PTGC小组永远的组长"
+    label: "PTGC小组永远的组长",
+    color: "text-red-600",
   },
   {
     name: "憨憨/Kevin",
-    icon: "line-md:moon-loop",
+    icon: "lsolar:adhesive-plaster-broken",
     color: "text-red-600",
     label: "同好会主干成员"
   },
