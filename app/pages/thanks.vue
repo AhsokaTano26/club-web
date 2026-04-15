@@ -266,7 +266,7 @@ const sponsors = [
     name: "秦",
     link: "https://fauux.neocities.org/",
     icon: "line-md:moon-loop",
-    color: "text-blue-600",
+    color: "text-fuchsia-500",
     label: "「同好会会长|WTW団副团」"
   },
   {
@@ -280,32 +280,32 @@ const sponsors = [
     name: "星天耀Star",
     link: "https://b23.tv/tGemYwj",
     icon: "line-md:star-filled",
-    color: "text-red-600",
+    color: "text-blue-800",
     label: "同好会主干成员|WTW団现任团长"
   },
   {
     name: "Inter Kenot",
     link: "https://www.xiaohongshu.com/user/profile/5e3507a800000000010027fa",
     icon: "lucide-lab:unicorn-head",
-    color: "text-red-600",
+    color: "text-indigo-400",
     label: "同好会第一美术指导|WTW団团员",
   },
   {
     name: "QwCzy",
     icon: "mingcute:monitor-line",
     label: "PTGC小组永远的组长",
-    color: "text-red-600",
+    color: "text-cyan-300",
   },
   {
     name: "憨憨/Kevin",
-    icon: "lsolar:adhesive-plaster-broken",
-    color: "text-red-600",
+    icon: "solar:adhesive-plaster-broken",
+    color: "text-sky-400",
     label: "同好会主干成员"
   },
   {
     name: "荡漾",
     icon: "tabler:brand-discord",
-    color: "text-red-600",
+    color: "text-cyan-700",
     label: "官网背景画师"
   }
 ];
