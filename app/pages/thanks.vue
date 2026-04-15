@@ -224,7 +224,7 @@ const sponsors = [
   {
     name: "秦",
     link: "https://fauux.neocities.org/",
-    icon: "line-md--moon-loop",
+    icon: "line-md:moon-loop",
     color: "text-blue-600",
     label: "「同好会会长|WTW団副团」"
   },
@@ -251,12 +251,12 @@ const sponsors = [
   },
   {
     name: "QwCzy",
-    icon: "mingcute--monitor-line",
+    icon: "mingcute:monitor-line",
     label: "PTGC小组永远的组长"
   },
   {
     name: "憨憨/Kevin",
-    icon: "line-md--moon-loop",
+    icon: "line-md:moon-loop",
     color: "text-red-600",
     label: "同好会主干成员"
   },
