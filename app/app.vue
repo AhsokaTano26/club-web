@@ -1,6 +1,6 @@
 <template>
   <div
-      class="min-h-screen text-[#333] font-sans selection:bg-blue-100 selection:text-blue-900 bg-cover bg-center bg-scroll lg:bg-fixed transition-colors duration-700"
+      class="min-h-screen text-[#333] font-sans selection:bg-blue-100 selection:text-blue-900 bg-cover bg-center bg-scroll lg:bg-fixed transition-[background-color,color,backdrop-filter] duration-700"
       :style="containerStyle"
   >
     <div
@@ -40,10 +40,8 @@
 
       <div class="flex-1 flex flex-col lg:flex-row lg:ml-64">
         <main
-            class="flex-1 p-4 pt-20 md:p-8 md:pt-24 lg:p-12 lg:pt-12 backdrop-blur-none lg:backdrop-blur-sm transition-all duration-700"
-            :style="!isOpen
-            ? { backdropFilter: `blur(${themeConfig.blurRadius})` }
-            : { backdropFilter: 'none' }"
+            class="flex-1 p-4 pt-20 md:p-8 md:pt-24 lg:p-12 lg:pt-12 transition-[background-color,backdrop-filter] duration-700"
+            :style="mainStyle"
         >
           <div class="max-w-4xl mx-auto">
             <NuxtPage />
@@ -125,6 +123,28 @@ const containerStyle = computed(() => {
 
 const nuxtApp = useNuxtApp()
 const isLoading = ref(false)
+const isLargeScreen = ref(false)
+
+if (import.meta.client) {
+  const mediaQuery = window.matchMedia('(min-width: 1024px)')
+  const syncLargeScreenState = () => { isLargeScreen.value = mediaQuery.matches }
+  syncLargeScreenState()
+
+  onMounted(() => {
+    mediaQuery.addEventListener('change', syncLargeScreenState)
+  })
+
+  onBeforeUnmount(() => {
+    mediaQuery.removeEventListener('change', syncLargeScreenState)
+  })
+}
+
+const mainStyle = computed(() => {
+  if (isOpen.value || !isLargeScreen.value) {
+    return { backdropFilter: 'none' }
+  }
+  return { backdropFilter: `blur(${themeConfig.value.blurRadius})` }
+})
 
 // --- 4. 页面加载钩子 ---
 nuxtApp.hook('page:start', () => { isLoading.value = true })
