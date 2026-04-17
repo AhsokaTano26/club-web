@@ -1,6 +1,6 @@
 <template>
   <div
-      class="min-h-screen text-[#333] font-sans selection:bg-blue-100 selection:text-blue-900 bg-cover bg-center bg-fixed transition-all duration-700"
+      class="min-h-screen text-[#333] font-sans selection:bg-blue-100 selection:text-blue-900 bg-cover bg-center bg-scroll lg:bg-fixed transition-all duration-700"
       :style="containerStyle"
   >
     <div
@@ -36,7 +36,7 @@
 
       <div class="flex-1 flex flex-col lg:flex-row lg:ml-64">
         <main
-            class="flex-1 p-4 md:p-8 lg:p-12 backdrop-blur-sm transition-all duration-700"
+            class="flex-1 p-4 pt-20 md:p-8 md:pt-24 lg:p-12 lg:pt-12 backdrop-blur-sm transition-all duration-700"
             :style="!isOpen
             ? { backdropFilter: `blur(${themeConfig.blurRadius})` }
             : { backdropFilter: 'none' }"

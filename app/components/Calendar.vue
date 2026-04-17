@@ -1,31 +1,31 @@
 <template>
   <div class="calendar-container max-w-4xl mx-auto space-y-6" :style="glassStyles">
-    <header class="mb-8 pl-2">
-      <h1 class="text-4xl font-black text-white tracking-tighter mb-2">
+    <header class="mb-6 pl-1 md:mb-8 md:pl-2">
+      <h1 class="text-2xl md:text-4xl font-black text-white tracking-tighter mb-2">
         欢迎来到 <span class="text-blue-500">跨世界同好会官方网站</span>
       </h1>
-      <p class="text-white/40 text-sm font-light tracking-widest uppercase">
+      <p class="text-white/40 text-xs md:text-sm font-light tracking-widest uppercase">
         {{ quote || 'Stay focused, be present.' }}
       </p>
     </header>
 
     <div class="glass-effect rounded-xl overflow-hidden border border-[var(--glass-border)] shadow-2xl">
-      <div class="p-4 flex justify-between items-center border-b border-[var(--glass-border)] bg-white/[var(--glass-opacity)]">
+      <div class="p-3 md:p-4 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 border-b border-[var(--glass-border)] bg-white/[var(--glass-opacity)]">
         <div class="flex items-center gap-3">
-          <span class="text-xl font-bold text-white">{{ year }}年{{ month + 1 }}月</span>
-          <span class="text-xs px-2 py-0.5 border border-white/20 rounded text-white/50 tracking-wider">
+          <span class="text-base md:text-xl font-bold text-white">{{ year }}年{{ month + 1 }}月</span>
+          <span class="text-[10px] md:text-xs px-2 py-0.5 border border-white/20 rounded text-white/50 tracking-wider">
             {{ monthNamesEn[month] }}
           </span>
         </div>
         <div class="flex gap-1 text-white/70">
           <button @click="prevMonth" class="p-2 hover:bg-white/10 rounded-lg transition-all">◀</button>
-          <button @click="resetDate" class="px-4 py-1 text-xs font-bold hover:bg-white/10 rounded-lg">今天</button>
+          <button @click="resetDate" class="px-3 md:px-4 py-1 text-[11px] md:text-xs font-bold hover:bg-white/10 rounded-lg">今天</button>
           <button @click="nextMonth" class="p-2 hover:bg-white/10 rounded-lg transition-all">▶</button>
         </div>
       </div>
 
       <div class="grid grid-cols-7 border-b border-white/5 bg-white/5">
-        <div v-for="d in ['一', '二', '三', '四', '五', '六', '日']" :key="d" class="py-3 text-[11px] font-bold text-white/40 text-center uppercase">
+        <div v-for="d in ['一', '二', '三', '四', '五', '六', '日']" :key="d" class="py-2 md:py-3 text-[10px] md:text-[11px] font-bold text-white/40 text-center uppercase">
           {{ d }}
         </div>
       </div>
@@ -33,17 +33,17 @@
       <div class="grid grid-cols-7">
         <div v-for="(day, i) in days" :key="i"
              @click="handleDateClick(day)"
-             class="h-24 border-r border-b border-white/5 p-2 hover:bg-white/10 transition-colors group relative cursor-pointer"
+             class="h-16 sm:h-20 md:h-24 border-r border-b border-white/5 p-1.5 md:p-2 hover:bg-white/10 transition-colors group relative cursor-pointer"
              :class="[day.isCurrent ? 'opacity-100' : 'opacity-20']">
 
           <div class="flex justify-between items-start">
-            <span class="text-lg font-mono" :class="day.isToday ? 'text-blue-400 font-bold' : 'text-white/80'">{{ day.d }}</span>
-            <span class="text-[10px] text-white/20">{{ day.lunar }}</span>
+            <span class="text-sm md:text-lg font-mono" :class="day.isToday ? 'text-blue-400 font-bold' : 'text-white/80'">{{ day.d }}</span>
+            <span class="hidden sm:inline text-[10px] text-white/20">{{ day.lunar }}</span>
           </div>
 
-          <div class="mt-2 flex flex-wrap gap-1">
+          <div class="mt-1 md:mt-2 flex flex-wrap gap-1">
             <div v-for="ev in day.events" :key="ev.id"
-                 :class="['w-1.5 h-1.5 rounded-full shadow-glow', colors[ev.type] || colors.default]">
+                 :class="['w-1 h-1 md:w-1.5 md:h-1.5 rounded-full shadow-glow', colors[ev.type] || colors.default]">
             </div>
           </div>
         </div>
@@ -79,7 +79,7 @@
     </div>
 
     <transition name="slide-up">
-      <div v-if="selectedDate && selectedDate.events.length > 0" class="bg-white/5 backdrop-blur-xl p-6 border border-white/10 rounded-lg shadow-2xl">
+      <div v-if="selectedDate && selectedDate.events.length > 0" class="bg-white/5 backdrop-blur-xl p-4 md:p-6 border border-white/10 rounded-lg shadow-2xl">
         <div class="flex items-center justify-between mb-6">
           <h4 class="text-xs font-black text-white/80 uppercase tracking-[0.2em]">
             {{ selectedDate.dateStr }} · Timeline
@@ -89,7 +89,7 @@
           </span>
         </div>
 
-        <div class="relative border-l-2 border-white/80 ml-2 pl-6 space-y-8">
+        <div class="relative border-l-2 border-white/80 ml-1 md:ml-2 pl-5 md:pl-6 space-y-6 md:space-y-8">
           <div v-for="ev in selectedDate.events" :key="ev.id"
                class="relative group cursor-pointer">
             <div :class="['absolute -left-[31px] top-1 w-4 h-4 rounded-full border-4 border-[#1a1a1a] shadow-lg transition-transform group-hover:scale-125', colors[ev.type] || colors.default]"></div>
