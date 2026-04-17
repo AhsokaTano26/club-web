@@ -38,7 +38,7 @@
 
           <div class="flex justify-between items-start">
             <span class="text-sm md:text-lg font-mono" :class="day.isToday ? 'text-blue-400 font-bold' : 'text-white/80'">{{ day.d }}</span>
-            <span class="hidden sm:inline text-[10px] text-white/20">{{ day.lunar }}</span>
+            <span class="text-[8px] md:text-[10px] text-white/20 max-w-[2.5rem] md:max-w-none truncate text-right">{{ day.lunar }}</span>
           </div>
 
           <div class="mt-1 md:mt-2 flex flex-wrap gap-1">
