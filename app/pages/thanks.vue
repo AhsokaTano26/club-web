@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen py-12 px-4 relative overflow-hidden">
-    <div class="fixed inset-0 -z-10 pointer-events-none">
+    <div class="absolute md:fixed inset-0 -z-10 pointer-events-none">
       <div class="absolute top-1/4 -left-20 w-96 h-96 bg-blue-400/10 blur-[120px] rounded-full"></div>
       <div class="absolute bottom-1/4 -right-20 w-96 h-96 bg-purple-400/10 blur-[120px] rounded-full"></div>
     </div>

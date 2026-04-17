@@ -1,6 +1,6 @@
 <template>
   <div
-      class="min-h-screen text-[#333] font-sans selection:bg-blue-100 selection:text-blue-900 bg-cover bg-center bg-scroll lg:bg-fixed transition-all duration-700"
+      class="min-h-screen text-[#333] font-sans selection:bg-blue-100 selection:text-blue-900 bg-cover bg-center bg-scroll lg:bg-fixed transition-[background-color,color,backdrop-filter] duration-700"
       :style="containerStyle"
   >
     <div
@@ -17,10 +17,14 @@
       </div>
     </Transition>
 
-    <div class="lg:hidden fixed top-0 left-0 right-0 h-16 flex items-center justify-end px-4 z-[80] bg-transparent">
+    <div
+        class="lg:hidden fixed top-0 left-0 right-0 h-16 flex items-center justify-end px-4 z-[80] bg-transparent"
+        :style="{ paddingTop: 'env(safe-area-inset-top)' }"
+    >
       <button
           @click="isOpen = !isOpen"
-          class="p-3 text-gray-600 hover:text-blue-500 transition-colors bg-white/20 backdrop-blur-sm rounded-full shadow-sm"
+          aria-label="Toggle menu"
+          class="p-3 text-gray-800 hover:text-blue-600 transition-colors bg-white/90 border border-white/70 rounded-full shadow-md"
       >
         <Icon v-if="!isOpen" name="lucide:menu" class="w-6 h-6" />
         <Icon v-else name="lucide:x" class="w-6 h-6" />
@@ -36,10 +40,8 @@
 
       <div class="flex-1 flex flex-col lg:flex-row lg:ml-64">
         <main
-            class="flex-1 p-4 pt-20 md:p-8 md:pt-24 lg:p-12 lg:pt-12 backdrop-blur-sm transition-all duration-700"
-            :style="!isOpen
-            ? { backdropFilter: `blur(${themeConfig.blurRadius})` }
-            : { backdropFilter: 'none' }"
+            class="flex-1 p-4 pt-20 md:p-8 md:pt-24 lg:p-12 lg:pt-12 transition-[background-color,backdrop-filter] duration-700"
+            :style="mainStyle"
         >
           <div class="max-w-4xl mx-auto">
             <NuxtPage />
@@ -121,6 +123,40 @@ const containerStyle = computed(() => {
 
 const nuxtApp = useNuxtApp()
 const isLoading = ref(false)
+const isLargeScreen = ref(false)
+const LG_BREAKPOINT_PX = '1024px'
+let mediaQueryList = null
+let mediaQueryListenerBound = false
+const syncLargeScreenState = () => {
+  if (mediaQueryList) {
+    isLargeScreen.value = mediaQueryList.matches
+  }
+}
+
+onMounted(() => {
+  if (import.meta.client) {
+    mediaQueryList = window.matchMedia(`(min-width: ${LG_BREAKPOINT_PX})`)
+    syncLargeScreenState()
+    if (!mediaQueryListenerBound) {
+      mediaQueryList.addEventListener('change', syncLargeScreenState)
+      mediaQueryListenerBound = true
+    }
+  }
+})
+
+onBeforeUnmount(() => {
+  if (import.meta.client && mediaQueryList && mediaQueryListenerBound) {
+    mediaQueryList.removeEventListener('change', syncLargeScreenState)
+    mediaQueryListenerBound = false
+  }
+})
+
+const mainStyle = computed(() => {
+  if (isOpen.value || !isLargeScreen.value) {
+    return { backdropFilter: 'none' }
+  }
+  return { backdropFilter: `blur(${themeConfig.value.blurRadius})` }
+})
 
 // --- 4. 页面加载钩子 ---
 nuxtApp.hook('page:start', () => { isLoading.value = true })
