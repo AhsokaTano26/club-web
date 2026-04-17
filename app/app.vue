@@ -23,7 +23,7 @@
     >
       <button
           @click="isOpen = !isOpen"
-          aria-label="切换菜单"
+          aria-label="Toggle menu"
           class="p-3 text-gray-800 hover:text-blue-600 transition-colors bg-white/90 border border-white/70 rounded-full shadow-md"
       >
         <Icon v-if="!isOpen" name="lucide:menu" class="w-6 h-6" />
@@ -124,20 +124,26 @@ const containerStyle = computed(() => {
 const nuxtApp = useNuxtApp()
 const isLoading = ref(false)
 const isLargeScreen = ref(false)
-
-if (import.meta.client) {
-  const mediaQuery = window.matchMedia('(min-width: 1024px)')
-  const syncLargeScreenState = () => { isLargeScreen.value = mediaQuery.matches }
-  syncLargeScreenState()
-
-  onMounted(() => {
-    mediaQuery.addEventListener('change', syncLargeScreenState)
-  })
-
-  onBeforeUnmount(() => {
-    mediaQuery.removeEventListener('change', syncLargeScreenState)
-  })
+let mediaQuery
+const syncLargeScreenState = () => {
+  if (mediaQuery) {
+    isLargeScreen.value = mediaQuery.matches
+  }
 }
+
+onMounted(() => {
+  if (import.meta.client) {
+    mediaQuery = window.matchMedia('(min-width: 1024px)')
+    syncLargeScreenState()
+    mediaQuery.addEventListener('change', syncLargeScreenState)
+  }
+})
+
+onBeforeUnmount(() => {
+  if (mediaQuery) {
+    mediaQuery.removeEventListener('change', syncLargeScreenState)
+  }
+})
 
 const mainStyle = computed(() => {
   if (isOpen.value || !isLargeScreen.value) {
