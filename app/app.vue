@@ -125,7 +125,8 @@ const nuxtApp = useNuxtApp()
 const isLoading = ref(false)
 const isLargeScreen = ref(false)
 const LG_BREAKPOINT_PX = '1024px'
-let mediaQueryList
+let mediaQueryList = null
+let mediaQueryListenerBound = false
 const syncLargeScreenState = () => {
   if (mediaQueryList) {
     isLargeScreen.value = mediaQueryList.matches
@@ -136,13 +137,17 @@ onMounted(() => {
   if (import.meta.client) {
     mediaQueryList = window.matchMedia(`(min-width: ${LG_BREAKPOINT_PX})`)
     syncLargeScreenState()
-    mediaQueryList.addEventListener('change', syncLargeScreenState)
+    if (!mediaQueryListenerBound) {
+      mediaQueryList.addEventListener('change', syncLargeScreenState)
+      mediaQueryListenerBound = true
+    }
   }
 })
 
 onBeforeUnmount(() => {
-  if (import.meta.client && mediaQueryList) {
+  if (import.meta.client && mediaQueryList && mediaQueryListenerBound) {
     mediaQueryList.removeEventListener('change', syncLargeScreenState)
+    mediaQueryListenerBound = false
   }
 })
 
