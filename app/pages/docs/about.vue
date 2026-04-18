@@ -36,7 +36,11 @@
                         prose-headings:font-black prose-headings:tracking-tight
                         prose-p:leading-relaxed">
 
-          <h5 id="section-1">修订中***</h5>
+          <div class="text-center">
+            <h1 class="text-3xl font-bold tracking-tight text-sky-500 dark:text-gray-100 sm:text-4xl">
+                内容修订中 凸^-^凸
+            </h1>
+          </div>
 
           <div class="mt-12 p-6 bg-blue-950/30 border border-blue-500/20 rounded-2xl italic space-y-4 shadow-inner text-center">
 
