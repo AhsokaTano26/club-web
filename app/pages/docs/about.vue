@@ -37,9 +37,13 @@
                         prose-p:leading-relaxed">
 
           <div class="text-center">
-            <h1 class="text-3xl font-bold tracking-tight text-sky-500 dark:text-gray-100 sm:text-4xl">
-                内容修订中 凸^-^凸
+            <h1 class="text-3xl font-bold tracking-tight text-white-500 dark:text-gray-100 sm:text-4xl">
+                内容修订中
             </h1>
+            <div class="text-2xl font-bold tracking-tight text-sky-500 dark:text-gray-100 sm:text-1xl">
+              凸^-^凸<br><br>
+              ~~~~(>_<)~~~~
+            </div>
           </div>
 
           <div class="mt-12 p-6 bg-blue-950/30 border border-blue-500/20 rounded-2xl italic space-y-4 shadow-inner text-center">
