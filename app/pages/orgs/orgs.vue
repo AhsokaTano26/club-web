@@ -113,6 +113,9 @@
     </div>
 
     <AppPagination v-model="currentPage" :total="totalPages" />
+    <div v-if="!orgs?.length" class="text-center py-20 text-gray-200 text-xs tracking-widest uppercase italic">
+        Protocol: No data records found.
+    </div>
 
     <div class="mt-12 p-8 border-2 border-dashed border-gray-200 rounded-xl text-center">
       <h3 class="text-sm font-black uppercase tracking-widest text-gray-100 mb-2">想要加入组织名录？</h3>

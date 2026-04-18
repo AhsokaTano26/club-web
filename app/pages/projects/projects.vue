@@ -82,7 +82,7 @@
       <div v-if="group.allCount === 0"
            class="py-12 border border-dashed border-white/10 bg-white/5 backdrop-blur-sm rounded-2xl flex flex-col items-center justify-center opacity-60">
         <Icon name="lucide:box-select" class="w-8 h-8 mb-3 text-gray-500" />
-        <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">No Projects in this category</span>
+        <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-200">No Projects in this category</span>
       </div>
     </div>
   </div>

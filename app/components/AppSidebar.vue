@@ -81,7 +81,7 @@ const route = useRoute()
 
 const nav = [
   {
-    title: '内容存档',
+    title: '官方内容',
     links: [
       {
         name: '主页面',
@@ -106,7 +106,7 @@ const nav = [
     ]
   },
   {
-    title: '联协印象',
+    title: '联协组织',
     links: [
       {
         name: '关于联协',
@@ -131,7 +131,7 @@ const nav = [
     ]
   },
   {
-    title: '致谢',
+    title: '致谢页',
     links: [
       {
         name: '致谢',

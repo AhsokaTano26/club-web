@@ -115,7 +115,7 @@ import { computed, ref } from 'vue';
 import { Lunar } from 'lunar-javascript';
 
 // --- 配置与样式 ---
-const quote = "Stay focused, be present.";
+const quote = "Ad astra per aspera.ubi iterum conveniemus";
 const monthNamesEn = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 /**
