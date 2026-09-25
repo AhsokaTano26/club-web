@@ -1,8 +1,9 @@
 <template>
   <div
-      class="min-h-screen text-[#333] font-sans selection:bg-blue-100 selection:text-blue-900 bg-cover bg-center bg-scroll lg:bg-fixed transition-[background-color,color,backdrop-filter] duration-700"
-      :style="containerStyle"
+      class="relative isolate min-h-screen text-[#333] font-sans selection:bg-blue-100 selection:text-blue-900 transition-[background-color,color,backdrop-filter] duration-700"
+      :style="{ '--theme-primary': themeConfig.primaryColor }"
   >
+    <div class="page-background" :style="backgroundStyle" aria-hidden="true"></div>
     <div
         class="fixed top-0 left-0 right-0 h-1 z-[70] transition-colors duration-700"
         :style="{ backgroundColor: themeConfig.primaryColor }"
@@ -114,10 +115,9 @@ const DEFAULT_THEME = {
 const themeConfig = useState('themeConfig', () => ({ ...DEFAULT_THEME }))
 
 // --- 3. 计算动态样式 ---
-const containerStyle = computed(() => {
+const backgroundStyle = computed(() => {
   return {
-    backgroundImage: `linear-gradient(rgba(255, 255, 255, ${themeConfig.value.bgOverlayOpacity}), rgba(255, 255, 255, ${themeConfig.value.bgOverlayOpacity})), url('${themeConfig.value.bgImage}')`,
-    '--theme-primary': themeConfig.value.primaryColor
+    backgroundImage: `linear-gradient(rgba(255, 255, 255, ${themeConfig.value.bgOverlayOpacity}), rgba(255, 255, 255, ${themeConfig.value.bgOverlayOpacity})), url('${themeConfig.value.bgImage}')`
   }
 })
 
@@ -200,6 +200,16 @@ const socialLinks = [
 </script>
 
 <style>
+.page-background {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: #0c1430;
+  background-position: center;
+  background-size: cover;
+}
+
 html {
   font-family: 'Inter', -apple-system, sans-serif;
   scroll-behavior: smooth;
